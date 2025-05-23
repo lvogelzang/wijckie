@@ -12,3 +12,5 @@ Personal start page
 - Add .prettierrc
 - Run Prettier  
   `yarn prettier --write 'src/**/*.{js,ts,tsx}'`
+- Add SASS
+  `yarn add sass`
