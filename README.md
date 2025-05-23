@@ -14,5 +14,7 @@ Personal start page
 - Add SASS, Bootstrap
   `yarn add sass`
   `yarn add bootstrap react-bootstrap`
+- Add routing
+  `yarn add react-router-dom`
 - Run application
   `yarn run dev`
