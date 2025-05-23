@@ -7,10 +7,12 @@ Personal start page
 - Setup front-end:  
   `yarn create vite front-end --template react-ts`  
   `yarn install`
-- Add Prettier
+- Add Prettier, add configuration, write changes:
   `yarn add --dev prettier`
-- Add .prettierrc
-- Run Prettier  
+  `nano .prettierrc`
   `yarn prettier --write 'src/**/*.{js,ts,tsx}'`
-- Add SASS
+- Add SASS, Bootstrap
   `yarn add sass`
+  `yarn add bootstrap react-bootstrap`
+- Run application
+  `yarn run dev`
