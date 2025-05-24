@@ -1,128 +1,119 @@
+from configurations import Configuration
 from decouple import config
 from pathlib import Path
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
 
+class Base(Configuration):
+    SECRET_KEY = config("SECRET_KEY")
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
+    ALLOWED_HOSTS = []
+    FRONTEND_HOST = config("FRONTEND_HOST")
+    BACKEND_HOST = config("BACKEND_HOST")
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config("SECRET_KEY")
+    CORS_ALLOWED_ORIGINS = [FRONTEND_HOST, BACKEND_HOST]
+    CORS_ALLOW_CREDENTIALS = True
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+    CSRF_TRUSTED_ORIGINS = [FRONTEND_HOST, BACKEND_HOST]
 
-ALLOWED_HOSTS = []
+    SESSION_COOKIE_SECURE = False
 
-FRONTEND_HOST = config("FRONTEND_HOST")
-BACKEND_HOST = config("BACKEND_HOST")
+    INSTALLED_APPS = [
+        "django.contrib.admin",
+        "django.contrib.auth",
+        "django.contrib.contenttypes",
+        "django.contrib.sessions",
+        "django.contrib.messages",
+        "django.contrib.staticfiles",
+        "corsheaders",
+        "rest_framework",
+    ]
 
-CORS_ALLOWED_ORIGINS = [FRONTEND_HOST, BACKEND_HOST]
-CORS_ALLOW_CREDENTIALS = True
+    MIDDLEWARE = [
+        "django.middleware.security.SecurityMiddleware",
+        "corsheaders.middleware.CorsMiddleware",
+        "django.contrib.sessions.middleware.SessionMiddleware",
+        "django.middleware.common.CommonMiddleware",
+        "django.middleware.csrf.CsrfViewMiddleware",
+        "django.contrib.auth.middleware.AuthenticationMiddleware",
+        "django.contrib.messages.middleware.MessageMiddleware",
+        "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    ]
 
-CSRF_TRUSTED_ORIGINS = [FRONTEND_HOST, BACKEND_HOST]
-CSRF_COOKIE_SECURE = False
+    ROOT_URLCONF = "wijckie.urls"
 
-SESSION_COOKIE_SECURE = False
-
-# Application definition
-
-INSTALLED_APPS = [
-    "django.contrib.admin",
-    "django.contrib.auth",
-    "django.contrib.contenttypes",
-    "django.contrib.sessions",
-    "django.contrib.messages",
-    "django.contrib.staticfiles",
-    "corsheaders",
-    "rest_framework",
-]
-
-MIDDLEWARE = [
-    "django.middleware.security.SecurityMiddleware",
-    "corsheaders.middleware.CorsMiddleware",
-    "django.contrib.sessions.middleware.SessionMiddleware",
-    "django.middleware.common.CommonMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",
-    "django.contrib.auth.middleware.AuthenticationMiddleware",
-    "django.contrib.messages.middleware.MessageMiddleware",
-    "django.middleware.clickjacking.XFrameOptionsMiddleware",
-]
-
-ROOT_URLCONF = "wijckie.urls"
-
-TEMPLATES = [
-    {
-        "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
-        "APP_DIRS": True,
-        "OPTIONS": {
-            "context_processors": [
-                "django.template.context_processors.request",
-                "django.contrib.auth.context_processors.auth",
-                "django.contrib.messages.context_processors.messages",
-            ],
+    TEMPLATES = [
+        {
+            "BACKEND": "django.template.backends.django.DjangoTemplates",
+            "DIRS": [],
+            "APP_DIRS": True,
+            "OPTIONS": {
+                "context_processors": [
+                    "django.template.context_processors.request",
+                    "django.contrib.auth.context_processors.auth",
+                    "django.contrib.messages.context_processors.messages",
+                ],
+            },
         },
-    },
-]
+    ]
 
-WSGI_APPLICATION = "wijckie.wsgi.application"
+    WSGI_APPLICATION = "wijckie.wsgi.application"
 
+    AUTH_PASSWORD_VALIDATORS = [
+        {
+            "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+        },
+        {
+            "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+        },
+        {
+            "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
+        },
+        {
+            "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
+        },
+    ]
 
-# Database
-# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
+    LANGUAGE_CODE = "en-us"
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+    TIME_ZONE = "UTC"
+
+    USE_I18N = True
+
+    USE_TZ = True
+
+    STATIC_URL = "static/"
+
+    DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+    REST_FRAMEWORK = {
+        "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.IsAdminUser"],
     }
-}
 
 
-# Password validation
-# https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
+class Dev(Base):
+    DEBUG = True
+    CSRF_COOKIE_SECURE = False
+    BASE_DIR = Path(__file__).resolve().parent.parent
 
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
-    },
-]
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/5.2/topics/i18n/
+class Prod(Base):
+    DEBUG = False
+    CSRF_COOKIE_SECURE = True
 
-LANGUAGE_CODE = "en-us"
-
-TIME_ZONE = "UTC"
-
-USE_I18N = True
-
-USE_TZ = True
-
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.2/howto/static-files/
-
-STATIC_URL = "static/"
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
-
-DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
-REST_FRAMEWORK = {
-    "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.IsAdminUser"],
-}
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": config("DJANGO_DATABASE_NAME", ""),
+            "USER": config("DJANGO_DATABASE_USER", ""),
+            "PASSWORD": config("DJANGO_DATABASE_PASSWORD", ""),
+            "HOST": config("DJANGO_DATABASE_HOST", ""),
+            "PORT": config("DJANGO_DATABASE_PORT", ""),
+        }
+    }
