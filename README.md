@@ -11,11 +11,9 @@ Personal start page
   `yarn add --dev prettier`
   `nano .prettierrc`
   `yarn prettier --write 'src/**/*.{js,ts,tsx}'`
-- Add SASS, Bootstrap
-  `yarn add sass`
-  `yarn add bootstrap react-bootstrap`
-- Add routing
-  `yarn add react-router-dom`
+- Add packages and type definitions:
+  `yarn add sass bootstrap react-bootstrap react-router-dom react-hook-form axios js-cookie`
+  `yarn add --dev @types/js-cookie @types/node`
 - Run application
   `yarn run dev`
 
@@ -28,4 +26,4 @@ Personal start page
 - `django-admin startproject wijckie .`
 - `python manage.py migrate`
 - `python manage.py createsuperuser`
-- `python manage.py runserver`
+- `DJANGO_RUNSERVER_HIDE_WARNING=true python manage.py runserver`
