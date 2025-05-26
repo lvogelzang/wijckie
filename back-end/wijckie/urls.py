@@ -15,6 +15,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth.models import User
 from django.urls import include, path
@@ -36,12 +38,26 @@ class UserViewSet(viewsets.ModelViewSet):
 router = routers.DefaultRouter()
 router.register(r"users", UserViewSet)
 
-urlpatterns = [
-    path("", include(router.urls)),
-    path("admin/", admin.site.urls),
-    path("api-auth/", include("rest_framework.urls")),
-    path("auth/csrf/", csrf),
-    path("auth/login/", login),
-    path("auth/me/", me),
-    path("auth/logout/", logout),
-]
+urlpatterns = (
+    [
+        path("", include(router.urls)),
+        path("admin/", admin.site.urls),
+        path("api-auth/", include("rest_framework.urls")),
+        path("auth/csrf/", csrf),
+        path("auth/login/", login),
+        path("auth/me/", me),
+        path("auth/logout/", logout),
+    ]
+    # Makes static files accessible in debug mode.
+    + (
+        static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+        if settings.DEBUG
+        else []
+    )
+    # Makes media files accessible in debug mode.
+    + (
+        static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+        if settings.DEBUG
+        else []
+    )
+)

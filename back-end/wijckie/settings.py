@@ -29,6 +29,7 @@ class Base(Configuration):
     ]
 
     MIDDLEWARE = [
+        "wijckie.middleware.HealthCheckMiddleware",
         "django.middleware.security.SecurityMiddleware",
         "corsheaders.middleware.CorsMiddleware",
         "django.contrib.sessions.middleware.SessionMiddleware",
@@ -95,6 +96,15 @@ class Dev(Base):
     CSRF_COOKIE_SECURE = False
     BASE_DIR = Path(__file__).resolve().parent.parent
 
+    STATIC_URL = "static/"
+    STATIC_ROOT = "static/"
+    MEDIA_URL = "media/"
+    MEDIA_ROOT = BASE_DIR / "media"
+    STORAGES = {
+        "default": {"BACKEND": "wijckie.mediaStorage.DevMediaStorage"},
+        "staticfiles": {"BACKEND": "wijckie.staticStorage.DevStaticStorage"},
+    }
+
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.sqlite3",
@@ -116,4 +126,18 @@ class Prod(Base):
             "HOST": config("DJANGO_DATABASE_HOST", ""),
             "PORT": config("DJANGO_DATABASE_PORT", ""),
         }
+    }
+
+    AWS_ACCESS_KEY_ID = config("AWS_ACCESS_KEY_ID", "")
+    AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY", "")
+    AWS_STORAGE_BUCKET_NAME = config("AWS_STORAGE_BUCKET_NAME", "")
+    AWS_STATIC_BUCKET_NAME = config("AWS_STATIC_BUCKET_NAME", "")
+    AWS_S3_REGION_NAME = config("AWS_S3_REGION_NAME", "")
+    AWS_SES_REGION_NAME = config("AWS_SES_REGION_NAME", "")
+    AWS_S3_OBJECT_PARAMETERS = {"CacheControl": "max-age=86400"}
+    AWS_DEFAULT_ACL = None
+    AWS_QUERYSTRING_EXPIRE = 3600
+    STORAGES = {
+        "default": {"BACKEND": "storages.backends.s3.S3Storage"},
+        "staticfiles": {"BACKEND": "wijckie.staticStorage.StaticStorage"},
     }

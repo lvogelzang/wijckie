@@ -9,9 +9,10 @@ https://docs.djangoproject.com/en/5.2/howto/deployment/wsgi/
 
 import os
 from decouple import config
-from configurations.wsgi import get_wsgi_application
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "wijckie.settings")
 os.environ.setdefault("DJANGO_CONFIGURATION", config("DJANGO_CONFIGURATION"))
+
+from configurations.wsgi import get_wsgi_application
 
 application = get_wsgi_application()
