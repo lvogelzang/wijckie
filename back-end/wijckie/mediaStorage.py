@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
+from wijckie.utils import add_protocol
 
 
 # Default storage system, enforcing absolute URLs for development.
@@ -9,7 +10,7 @@ class DevMediaStorage(FileSystemStorage):
             raise Exception()
 
         kwargs["base_url"] = "%s/%s" % (
-            settings.BACKEND_HOST,
+            add_protocol(settings.USE_TLS, settings.BACKEND_HOST),
             settings.MEDIA_URL,
         )
         super(DevMediaStorage, self).__init__(*args, **kwargs)

@@ -1,19 +1,32 @@
 from configurations import Configuration
 from decouple import config
 from pathlib import Path
+from wijckie.utils import add_protocol
 
 
 class Base(Configuration):
     SECRET_KEY = config("SECRET_KEY")
 
-    ALLOWED_HOSTS = []
     FRONTEND_HOST = config("FRONTEND_HOST")
     BACKEND_HOST = config("BACKEND_HOST")
+    ALLOWED_HOSTS = [FRONTEND_HOST, BACKEND_HOST]
 
-    CORS_ALLOWED_ORIGINS = [FRONTEND_HOST, BACKEND_HOST]
     CORS_ALLOW_CREDENTIALS = True
+    CSRF_COOKIE_DOMAIN = config("COOKIE_DOMAIN")
 
-    CSRF_TRUSTED_ORIGINS = [FRONTEND_HOST, BACKEND_HOST]
+    @property
+    def CSRF_TRUSTED_ORIGINS(self):
+        return [
+            add_protocol(self.USE_TLS, self.FRONTEND_HOST),
+            add_protocol(self.USE_TLS, self.BACKEND_HOST),
+        ]
+
+    @property
+    def CORS_ALLOWED_ORIGINS(self):
+        return [
+            add_protocol(self.USE_TLS, self.FRONTEND_HOST),
+            add_protocol(self.USE_TLS, self.BACKEND_HOST),
+        ]
 
     SESSION_COOKIE_SECURE = False
 
@@ -91,8 +104,11 @@ class Base(Configuration):
     }
 
 
+
 class Dev(Base):
     DEBUG = True
+    USE_TLS = False
+    ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
     CSRF_COOKIE_SECURE = False
     BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -115,6 +131,7 @@ class Dev(Base):
 
 class Prod(Base):
     DEBUG = False
+    USE_TLS = True
     CSRF_COOKIE_SECURE = True
 
     DATABASES = {

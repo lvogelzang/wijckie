@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.contrib.staticfiles.storage import StaticFilesStorage
 from storages.backends.s3 import S3StaticStorage
+from wijckie.utils import add_protocol
 
 
 class StaticStorage(S3StaticStorage):
@@ -16,7 +17,7 @@ class DevStaticStorage(StaticFilesStorage):
             raise Exception()
 
         kwargs["base_url"] = "%s/%s" % (
-            settings.BACKEND_HOST,
+            add_protocol(settings.USE_TLS, settings.BACKEND_HOST),
             settings.STATIC_URL,
         )
         super(DevStaticStorage, self).__init__(*args, **kwargs)
