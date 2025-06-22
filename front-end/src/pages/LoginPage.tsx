@@ -1,8 +1,8 @@
 import { useCallback, useContext, type FC } from "react"
 import { Button, Form } from "react-bootstrap"
 import { useForm, type SubmitHandler } from "react-hook-form"
-import { Link } from "react-router-dom"
-import { useOptionalCurrentUser, UserSettingsContext } from "../contexts/UserSettingsContext"
+import { useTranslation } from "react-i18next"
+import { UserSettingsContext } from "../contexts/UserSettingsContext"
 import { setOptionalError } from "../helpers/FormHelper"
 import { login } from "../services/User"
 
@@ -12,8 +12,8 @@ interface Inputs {
 }
 
 const LoginPage: FC = () => {
+    const { t } = useTranslation()
     const { reloadUserSettings } = useContext(UserSettingsContext)
-    const currentUser = useOptionalCurrentUser()
 
     const {
         register,
@@ -41,23 +41,22 @@ const LoginPage: FC = () => {
 
     return (
         <div>
-            <h1>Login {currentUser?.username}</h1>
-            <Link to="/dashboard">Dashboard</Link>
+            <h1>{t("LoginPage.title")}</h1>
             <Form noValidate onSubmit={handleSubmit(onSubmit)}>
                 <Form.Group>
-                    <Form.Label>E-mailadres</Form.Label>
+                    <Form.Label>{t("LoginPage.email_address")}</Form.Label>
                     <Form.Control type="email" autoComplete="email" {...register("username")} isInvalid={!!errors.username} autoFocus />
                     <Form.Control.Feedback type="invalid" data-cy="email_errors">
                         {errors.username?.message}
                     </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group>
-                    <Form.Label>Wachtwoord</Form.Label>
+                    <Form.Label>{t("LoginPage.password")}</Form.Label>
                     <Form.Control type="password" {...register("password")} isInvalid={!!errors.password} />
                     <Form.Control.Feedback type="invalid">{errors.password?.message}</Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group>
-                    <Button type="submit">Login</Button>
+                    <Button type="submit">{t("Buttons.login")}</Button>
                 </Form.Group>
                 <Form.Group hidden={!errors.root}>
                     <Form.Control type="hidden" isInvalid={!!errors.root} />

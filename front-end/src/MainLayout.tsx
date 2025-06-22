@@ -1,5 +1,6 @@
 import { useContext, useEffect, type FC } from "react"
 import { Navigate, Route, Routes } from "react-router-dom"
+import TopBar from "./components/TopBar"
 import { ensureCsrfToken, UserSettingsContext } from "./contexts/UserSettingsContext"
 import DashboardPage from "./pages/DashboardPage"
 import LoginPage from "./pages/LoginPage"
@@ -16,12 +17,15 @@ const MainLayout: FC = () => {
     return loading ? (
         <div>loading...</div>
     ) : (
-        <Routes>
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/dashboard" element={<DashboardPage />} />
-            <Route path="/logout" element={<LogoutPage />} />
-            <Route path="*" element={<Navigate to="/dashboard" />} />
-        </Routes>
+        <div>
+            <TopBar />
+            <Routes>
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/dashboard" element={<DashboardPage />} />
+                <Route path="/logout" element={<LogoutPage />} />
+                <Route path="*" element={<Navigate to="/dashboard" />} />
+            </Routes>
+        </div>
     )
 }
 

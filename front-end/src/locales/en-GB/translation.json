@@ -1,0 +1,17 @@
+{
+  "TopBar": {
+    "anonymous_user": "Anonymous"
+  },
+  "LoginPage": {
+    "title": "Login",
+    "email_address": "E-mail address",
+    "password": "Password"
+  },
+  "DashboardPage": {
+    "title": "Dashboard"
+  },
+  "Buttons": {
+    "logout": "Logout",
+    "login": "Login"
+  }
+}
