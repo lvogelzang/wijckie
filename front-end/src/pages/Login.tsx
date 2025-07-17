@@ -30,6 +30,7 @@ const Login: FC = () => {
 
     const onFailure = useCallback(
         (error: unknown) => {
+            console.log(error)
             handleFormErrors(setError, error, [])
         },
         [handleFormErrors, setError]
