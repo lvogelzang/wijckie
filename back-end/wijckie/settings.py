@@ -38,7 +38,12 @@ class Base(Configuration):
         "django.contrib.messages",
         "django.contrib.staticfiles",
         "corsheaders",
+        "allauth",
+        "allauth.account",
+        "allauth.mfa",
+        "allauth.headless",
         "rest_framework",
+        "drf_spectacular",
     ]
 
     MIDDLEWARE = [
@@ -51,6 +56,7 @@ class Base(Configuration):
         "django.contrib.auth.middleware.AuthenticationMiddleware",
         "django.contrib.messages.middleware.MessageMiddleware",
         "django.middleware.clickjacking.XFrameOptionsMiddleware",
+        "allauth.account.middleware.AccountMiddleware",
     ]
 
     ROOT_URLCONF = "wijckie.urls"
@@ -99,8 +105,40 @@ class Base(Configuration):
 
     DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+    EMAIL_USE_TLS = config("DJANGO_EMAIL_USE_TLS", True, cast=bool)
+    EMAIL_HOST = config("DJANGO_EMAIL_HOST", "")
+    EMAIL_HOST_USER = config("DJANGO_EMAIL_HOST_USER", "")
+    EMAIL_HOST_PASSWORD = config("DJANGO_EMAIL_HOST_PASSWORD", "")
+    EMAIL_PORT = config("DJANGO_EMAIL_PORT", 587)
+    DEFAULT_FROM_EMAIL = config("DJANGO_DEFAULT_FROM_EMAIL", "")
+
+    AUTHENTICATION_BACKENDS = ["allauth.account.auth_backends.AuthenticationBackend"]
+
+    ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+    ACCOUNT_LOGIN_METHODS = {"email"}
+    ACCOUNT_EMAIL_VERIFICATION_BY_CODE_ENABLED = True
+    ACCOUNT_SIGNUP_FIELDS = ["email*"]
+
+    HEADLESS_ONLY = True
+    HEADLESS_SERVE_SPECIFICATION = True
+
+    MFA_SUPPORTED_TYPES = ["webauthn"]
+    MFA_PASSKEY_LOGIN_ENABLED = True
+    MFA_PASSKEY_SIGNUP_ENABLED = True
+    PASSKEY_SIGNUP_ENABLED = True
+    PASSKEY_LOGIN_ENABLED = True
+
     REST_FRAMEWORK = {
         "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.IsAdminUser"],
+        "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    }
+
+    SPECTACULAR_SETTINGS = {
+        "TITLE": "Wijckie API",
+        "DESCRIPTION": "Default API for Wijckie",
+        "VERSION": "1.0.0",
+        "SERVE_INCLUDE_SCHEMA": False,
+        "EXTERNAL_DOCS": {"description": "allauth", "url": "/_allauth/openapi.html"},
     }
 
     LOGGING = {

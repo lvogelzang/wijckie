@@ -1,17 +1,36 @@
 {
-  "TopBar": {
-    "anonymous_user": "Anonymous"
+  "NavBar": {
+    "language": "Language"
+  },
+  "ErrorMessage": {
+    "invalid": "Invalid value",
+    "general": "Something went wrong...",
+    "incorrect_code": "Incorrect code"
+  },
+  "CreateSignupPasskey": {
+    "title": "Save Passkey",
+    "passkey_name": "Name",
+    "submit_button": "Save"
+  },
+  "Dashboard": {
+    "title": "Dashboard"
   },
   "LoginPage": {
     "title": "Login",
-    "email_address": "E-mail address",
-    "password": "Password"
+    "no_account_yet": "No account yet?<1>Create account</1>"
   },
-  "DashboardPage": {
-    "title": "Dashboard"
+  "WebAuthnLoginButton": {
+    "title": "Login"
   },
-  "Buttons": {
-    "logout": "Logout",
-    "login": "Login"
+  "SignUpPage": {
+    "title": "Create account",
+    "already_an_account": "Already have an account?<1>Login here.</1>",
+    "email_address": "Email address",
+    "submit_button": "Create account"
+  },
+  "VerifyEmailPage": {
+    "title": "Verify e-mail address",
+    "code": "Code",
+    "submit_button": "Submit"
   }
 }

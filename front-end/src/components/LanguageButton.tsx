@@ -9,7 +9,7 @@ interface Props {
 }
 
 function LanguageButton({ language }: Props) {
-    const { i18n, t } = useTranslation()
+    const { i18n } = useTranslation()
 
     const onClick = useCallback(() => {
         i18n.changeLanguage(language)
@@ -23,13 +23,9 @@ function LanguageButton({ language }: Props) {
             case "nl":
                 return "Nederlands"
         }
-    }, [t, language])
+    }, [language])
 
-    return (
-        <NavDropdown.Item onClick={onClick} data-cy={language}>
-            {title}
-        </NavDropdown.Item>
-    )
+    return <NavDropdown.Item onClick={onClick}>{title}</NavDropdown.Item>
 }
 
 export default LanguageButton

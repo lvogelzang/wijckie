@@ -13,6 +13,8 @@ Personal start page
   `yarn add --dev @types/js-cookie`
 - Sync translations  
   `npx i18next 'src/**/*.{ts,tsx}'`
+- Sync models/endpoints with back-end schema  
+  `npx orval`
 - Run application  
   `yarn run dev`
 

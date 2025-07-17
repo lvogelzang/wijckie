@@ -11,8 +11,8 @@ const getLocale = () => {
     if (cookieLocale && ["en-GB", "nl"].includes(cookieLocale)) {
         return cookieLocale
     }
-    Cookies.set("django_language", process.env.REACT_APP_DEFAULT_LOCALE!)
-    return process.env.REACT_APP_DEFAULT_LOCALE
+    Cookies.set("django_language", import.meta.env.VITE_APP_DEFAULT_LOCALE!)
+    return import.meta.env.VITE_APP_DEFAULT_LOCALE!
 }
 
 i18n.use(initReactI18next).init({

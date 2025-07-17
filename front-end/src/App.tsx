@@ -1,17 +1,19 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import "bootstrap/dist/js/bootstrap.js"
-import { BrowserRouter } from "react-router-dom"
-import { UserSettingsProvider } from "./contexts/UserSettingsContext"
+import AuthContextProvider from "./auth/AuthContextProvider"
 import "./i18n"
-import MainLayout from "./MainLayout"
+import Router from "./Router"
 import "./sass/main.scss"
+
+const queryClient = new QueryClient()
 
 function App() {
     return (
-        <BrowserRouter>
-            <UserSettingsProvider>
-                <MainLayout />
-            </UserSettingsProvider>
-        </BrowserRouter>
+        <QueryClientProvider client={queryClient}>
+            <AuthContextProvider>
+                <Router />
+            </AuthContextProvider>
+        </QueryClientProvider>
     )
 }
 

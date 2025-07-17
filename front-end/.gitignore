@@ -24,3 +24,5 @@ dist-ssr
 *.sw?
 
 translation_old.json
+src/api/
+.eslintcache
