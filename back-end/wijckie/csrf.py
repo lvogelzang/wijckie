@@ -18,5 +18,10 @@ from rest_framework.permissions import AllowAny
 @api_view(["GET"])
 @permission_classes([AllowAny])
 @ensure_csrf_cookie
-def csrf(_):
+def csrf(request):
+    from django.contrib.sites.models import Site
+
+    site = Site.objects.get_current(request)
+    print("SITESITE:", site.domain, site.name)
+
     return Response({"status": "OK"})

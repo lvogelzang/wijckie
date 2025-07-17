@@ -6,6 +6,7 @@ from wijckie.utils import add_protocol
 
 class Base(Configuration):
     SECRET_KEY = config("SECRET_KEY")
+    SITE_ID = 1
 
     FRONTEND_HOST = config("FRONTEND_HOST")
     BACKEND_HOST = config("BACKEND_HOST")
@@ -13,6 +14,7 @@ class Base(Configuration):
 
     CORS_ALLOW_CREDENTIALS = True
     CSRF_COOKIE_DOMAIN = config("COOKIE_DOMAIN")
+    SESSION_COOKIE_DOMAIN = config("COOKIE_DOMAIN")
 
     @property
     def CSRF_TRUSTED_ORIGINS(self):
@@ -35,6 +37,7 @@ class Base(Configuration):
         "django.contrib.auth",
         "django.contrib.contenttypes",
         "django.contrib.sessions",
+        "django.contrib.sites",
         "django.contrib.messages",
         "django.contrib.staticfiles",
         "corsheaders",
@@ -121,6 +124,23 @@ class Base(Configuration):
 
     HEADLESS_ONLY = True
     HEADLESS_SERVE_SPECIFICATION = True
+
+    @property
+    def HEADLESS_FRONTEND_URLS(self):
+        return {
+            "account_confirm_email": add_protocol(self.USE_TLS, self.FRONTEND_HOST)
+            + "/account/verify-email/{key}",
+            "account_reset_password": add_protocol(self.USE_TLS, self.FRONTEND_HOST)
+            + "/account/password/reset",
+            "account_reset_password_from_key": add_protocol(
+                self.USE_TLS, self.FRONTEND_HOST
+            )
+            + "/account/password/reset/key/{key}",
+            "account_signup": add_protocol(self.USE_TLS, self.FRONTEND_HOST)
+            + "/account/signup",
+            "socialaccount_login_error": add_protocol(self.USE_TLS, self.FRONTEND_HOST)
+            + "/account/provider/callback",
+        }
 
     MFA_SUPPORTED_TYPES = ["webauthn"]
     MFA_PASSKEY_LOGIN_ENABLED = True
