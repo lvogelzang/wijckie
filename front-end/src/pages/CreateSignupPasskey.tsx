@@ -2,7 +2,8 @@ import { create, parseCreationOptionsFromJSON, type CredentialCreationOptionsJSO
 import { useCallback, useMemo, type FC } from "react"
 import { Button, Form } from "react-bootstrap"
 import { useForm, type SubmitHandler } from "react-hook-form"
-import { useTranslation } from "react-i18next"
+import { Trans, useTranslation } from "react-i18next"
+import { Link } from "react-router-dom"
 import type { ObjectSchema } from "yup"
 import * as yup from "yup"
 import { getAllauthClientV1AuthWebauthnSignup, putAllauthClientV1AuthWebauthnSignup } from "../api/endpoints/allauth"
@@ -92,6 +93,12 @@ const CreateSignupPasskey: FC = () => {
                     </Form.Control.Feedback>
                 </Form.Group>
             </Form>
+            <p>
+                <Trans i18nKey="CreateSignupPasskey.already_an_account">
+                    Already have an account? Go to
+                    <Link to="/account/login">Login</Link>.
+                </Trans>
+            </p>
         </div>
     )
 }

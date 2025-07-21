@@ -30,7 +30,6 @@ const Login: FC = () => {
 
     const onFailure = useCallback(
         (error: unknown) => {
-            console.log(error)
             handleFormErrors(setError, error, [])
         },
         [handleFormErrors, setError]
@@ -66,11 +65,15 @@ const Login: FC = () => {
                 </Form.Group>
             </Form>
             <p>
+                <Trans i18nKey="LoginPage.no_passkey_yet">
+                    No passkey on this device yet? Go to
+                    <Link to="/account/login/code">Request a sign-in code</Link>.
+                </Trans>
+            </p>
+            <p>
                 <Trans i18nKey="LoginPage.no_account_yet">
-                    No account yet?
-                    <Link className="ms-1" to="/account/signup/passkey">
-                        Sign up here.
-                    </Link>
+                    No account yet? Go to the
+                    <Link to="/account/signup/passkey">Sign-up page</Link>.
                 </Trans>
             </p>
         </div>

@@ -5,24 +5,24 @@ import { Trans, useTranslation } from "react-i18next"
 import { Link, useNavigate } from "react-router-dom"
 import * as yup from "yup"
 import { ObjectSchema } from "yup"
-import { postAllauthClientV1AuthEmailVerify } from "../api/endpoints/allauth"
+import { postAllauthClientV1AuthCodeRequest } from "../api/endpoints/allauth"
 import ErrorMessage from "../components/ErrorMessage"
 import { isAllauthResponse401 } from "../helpers/AllauthHelper"
 import { useErrorHandler } from "../helpers/useErrorHandler"
 import { useYupValidationResolver } from "../helpers/useYupValidationResolver"
 
 interface Inputs {
-    key: string
+    email: string
 }
 
-const VerifyEmailByCode: FC = () => {
+const RequestLoginCode: FC = () => {
     const { t } = useTranslation()
     const navigate = useNavigate()
     const { handleFormErrors } = useErrorHandler()
 
     const validationSchema: ObjectSchema<Inputs> = useMemo(() => {
         return yup.object({
-            key: yup.string().required(),
+            email: yup.string().required(),
         })
     }, [])
 
@@ -36,7 +36,7 @@ const VerifyEmailByCode: FC = () => {
     } = useForm<Inputs>({ resolver, mode: "onSubmit", reValidateMode: "onSubmit" })
 
     const onSuccess = useCallback(() => {
-        navigate("/account/signup/passkey/create")
+        navigate("/account/login/code/confirm")
     }, [navigate])
 
     const onFailure = useCallback(
@@ -45,31 +45,32 @@ const VerifyEmailByCode: FC = () => {
                 onSuccess()
                 return
             }
-            handleFormErrors(setError, error, ["key"])
+            handleFormErrors(setError, error, ["email"])
         },
-        [onSuccess, handleFormErrors, setError]
+        [onSuccess, setError, handleFormErrors]
     )
 
     const onSubmit: SubmitHandler<Inputs> = useCallback(
-        ({ key }) => {
-            postAllauthClientV1AuthEmailVerify("browser", { key }).then(onSuccess).catch(onFailure)
+        ({ email }) => {
+            postAllauthClientV1AuthCodeRequest("browser", { email }).then(onSuccess).catch(onFailure)
         },
         [onSuccess, onFailure]
     )
 
     return (
         <div>
-            <h1>{t("VerifyEmailPage.title")}</h1>
+            <h1>{t("RequestLoginCodePage.title")}</h1>
+            <p>{t("RequestLoginCodePage.body")}</p>
             <Form noValidate onSubmit={handleSubmit(onSubmit)}>
                 <Form.Group>
-                    <Form.Label>{t("VerifyEmailPage.code")}</Form.Label>
-                    <Form.Control type="text" {...register("key")} isInvalid={!!errors.key} autoFocus />
+                    <Form.Label>{t("RequestLoginCodePage.email_address")}</Form.Label>
+                    <Form.Control type="email" autoComplete="email" {...register("email")} isInvalid={!!errors.email} autoFocus />
                     <Form.Control.Feedback type="invalid">
-                        <ErrorMessage error={errors.key} />
+                        <ErrorMessage error={errors.email} />
                     </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group>
-                    <Button type="submit">{t("VerifyEmailPage.submit_button")}</Button>
+                    <Button type="submit">{t("RequestLoginCodePage.submit_button")}</Button>
                 </Form.Group>
                 <Form.Group hidden={!errors.root}>
                     <Form.Control type="hidden" isInvalid={!!errors.root} />
@@ -77,15 +78,15 @@ const VerifyEmailByCode: FC = () => {
                         <ErrorMessage error={errors.root} />
                     </Form.Control.Feedback>
                 </Form.Group>
+                <p>
+                    <Trans i18nKey="RequestLoginCodePage.back_to_login">
+                        Already a passkey? Go back to
+                        <Link to="/account/login">Login</Link>.
+                    </Trans>
+                </p>
             </Form>
-            <p>
-                <Trans i18nKey="VerifyEmailByCode.already_an_account">
-                    Already have an account? Go to
-                    <Link to="/account/login">Login</Link>.
-                </Trans>
-            </p>
         </div>
     )
 }
 
-export default VerifyEmailByCode
+export default RequestLoginCode

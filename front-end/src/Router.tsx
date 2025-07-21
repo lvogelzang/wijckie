@@ -3,10 +3,12 @@ import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom"
 import AnonymousRoute from "./auth/AnonymousRoute"
 import { AuthContext } from "./auth/AuthContext"
 import AuthenticatedRoute from "./auth/AuthenticatedRoute"
+import ConfirmLoginCode from "./pages/ConfirmLoginCode"
 import CreateSignupPasskey from "./pages/CreateSignupPasskey"
 import Dashboard from "./pages/Dashboard"
 import Login from "./pages/Login"
 import Logout from "./pages/Logout"
+import RequestLoginCode from "./pages/RequestLoginCode"
 import SignupByPasskey from "./pages/SignupByPasskey"
 import VerifyEmailByCode from "./pages/VerifyEmailByCode"
 import Root from "./Root"
@@ -27,6 +29,22 @@ const createRouter = () => {
                     element: (
                         <AnonymousRoute>
                             <Login />
+                        </AnonymousRoute>
+                    ),
+                },
+                {
+                    path: "/account/login/code",
+                    element: (
+                        <AnonymousRoute>
+                            <RequestLoginCode />
+                        </AnonymousRoute>
+                    ),
+                },
+                {
+                    path: "/account/login/code/confirm",
+                    element: (
+                        <AnonymousRoute>
+                            <ConfirmLoginCode />
                         </AnonymousRoute>
                     ),
                 },

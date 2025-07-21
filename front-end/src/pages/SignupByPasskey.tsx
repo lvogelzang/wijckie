@@ -60,14 +60,6 @@ const SignupByPasskey: FC = () => {
     return (
         <div>
             <h1>{t("SignUpPage.title")}</h1>
-            <p>
-                <Trans i18nKey="SignUpPage.already_an_account">
-                    Already have an account?
-                    <Link className="ms-1" to="/account/login">
-                        Login here.
-                    </Link>
-                </Trans>
-            </p>
             <Form noValidate onSubmit={handleSubmit(onSubmit)}>
                 <Form.Group>
                     <Form.Label>{t("SignUpPage.email_address")}</Form.Label>
@@ -86,6 +78,12 @@ const SignupByPasskey: FC = () => {
                     </Form.Control.Feedback>
                 </Form.Group>
             </Form>
+            <p>
+                <Trans i18nKey="SignUpPage.already_an_account">
+                    Already have an account? Go to
+                    <Link to="/account/login">Login</Link>.
+                </Trans>
+            </p>
         </div>
     )
 }

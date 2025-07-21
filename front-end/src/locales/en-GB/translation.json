@@ -7,30 +7,49 @@
     "general": "Something went wrong...",
     "incorrect_code": "Incorrect code"
   },
+  "ConfirmLoginCode": {
+    "title": "Enter sign-in code",
+    "body": "The code expires shortly, so please enter it soon.",
+    "code": "Code",
+    "submit_button": "Sign in",
+    "back_to_login": "Already a passkey? Go back to<1>Login</1>."
+  },
   "CreateSignupPasskey": {
     "title": "Save Passkey",
     "passkey_name": "Name",
-    "submit_button": "Save"
+    "submit_button": "Save",
+    "already_an_account": "Already have an account? Go to<1>Login</1>."
   },
   "Dashboard": {
     "title": "Dashboard"
   },
   "LoginPage": {
     "title": "Login",
-    "no_account_yet": "No account yet?<1>Create account</1>"
+    "no_passkey_yet": "No passkey on this device yet? Go to<1>Request a sign-in code</1>.",
+    "no_account_yet": "No account yet? Go to <1>Create account</1>."
   },
   "WebAuthnLoginButton": {
     "title": "Login"
   },
+  "RequestLoginCodePage": {
+    "title": "Request sign-in code",
+    "body": "You will receive an email containing a special code for a password-free sign-in.",
+    "email_address": "E-mail address",
+    "submit_button": "Request code",
+    "back_to_login": "Already have a passkey? Go back to <1>Login</1>."
+  },
   "SignUpPage": {
     "title": "Create account",
-    "already_an_account": "Already have an account?<1>Login here.</1>",
     "email_address": "Email address",
-    "submit_button": "Create account"
+    "submit_button": "Create account",
+    "already_an_account": "Already have an account? Go to <1>Login</1>."
   },
   "VerifyEmailPage": {
     "title": "Verify e-mail address",
     "code": "Code",
     "submit_button": "Submit"
+  },
+  "VerifyEmailByCode": {
+    "already_an_account": "Already have an account? Go to <1>Login</1>."
   }
 }

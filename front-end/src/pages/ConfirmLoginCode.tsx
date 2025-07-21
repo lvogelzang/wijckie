@@ -2,27 +2,26 @@ import { useCallback, useMemo, type FC } from "react"
 import { Button, Form } from "react-bootstrap"
 import { useForm, type SubmitHandler } from "react-hook-form"
 import { Trans, useTranslation } from "react-i18next"
-import { Link, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
+import type { ObjectSchema } from "yup"
 import * as yup from "yup"
-import { ObjectSchema } from "yup"
-import { postAllauthClientV1AuthEmailVerify } from "../api/endpoints/allauth"
+import { postAllauthClientV1AuthCodeConfirm } from "../api/endpoints/allauth"
+import type { AuthenticatedResponse } from "../api/models/allauth"
 import ErrorMessage from "../components/ErrorMessage"
-import { isAllauthResponse401 } from "../helpers/AllauthHelper"
 import { useErrorHandler } from "../helpers/useErrorHandler"
 import { useYupValidationResolver } from "../helpers/useYupValidationResolver"
 
 interface Inputs {
-    key: string
+    code: string
 }
 
-const VerifyEmailByCode: FC = () => {
+const ConfirmLoginCode: FC = () => {
     const { t } = useTranslation()
-    const navigate = useNavigate()
     const { handleFormErrors } = useErrorHandler()
 
     const validationSchema: ObjectSchema<Inputs> = useMemo(() => {
         return yup.object({
-            key: yup.string().required(),
+            code: yup.string().required(),
         })
     }, [])
 
@@ -35,41 +34,39 @@ const VerifyEmailByCode: FC = () => {
         handleSubmit,
     } = useForm<Inputs>({ resolver, mode: "onSubmit", reValidateMode: "onSubmit" })
 
-    const onSuccess = useCallback(() => {
-        navigate("/account/signup/passkey/create")
-    }, [navigate])
+    const onSuccess = useCallback((response: AuthenticatedResponse) => {
+        const event = new CustomEvent("allauth.auth.change", { detail: response })
+        document.dispatchEvent(event)
+    }, [])
 
     const onFailure = useCallback(
         (error: unknown) => {
-            if (isAllauthResponse401(error)) {
-                onSuccess()
-                return
-            }
-            handleFormErrors(setError, error, ["key"])
+            handleFormErrors(setError, error, ["code"])
         },
-        [onSuccess, handleFormErrors, setError]
+        [onSuccess, setError, handleFormErrors]
     )
 
     const onSubmit: SubmitHandler<Inputs> = useCallback(
-        ({ key }) => {
-            postAllauthClientV1AuthEmailVerify("browser", { key }).then(onSuccess).catch(onFailure)
+        ({ code }) => {
+            postAllauthClientV1AuthCodeConfirm("browser", { code }).then(onSuccess).catch(onFailure)
         },
         [onSuccess, onFailure]
     )
 
     return (
         <div>
-            <h1>{t("VerifyEmailPage.title")}</h1>
+            <h1>{t("ConfirmLoginCode.title")}</h1>
+            <p>{t("ConfirmLoginCode.body")}</p>
             <Form noValidate onSubmit={handleSubmit(onSubmit)}>
                 <Form.Group>
-                    <Form.Label>{t("VerifyEmailPage.code")}</Form.Label>
-                    <Form.Control type="text" {...register("key")} isInvalid={!!errors.key} autoFocus />
+                    <Form.Label>{t("ConfirmLoginCode.code")}</Form.Label>
+                    <Form.Control {...register("code")} isInvalid={!!errors.code} autoFocus />
                     <Form.Control.Feedback type="invalid">
-                        <ErrorMessage error={errors.key} />
+                        <ErrorMessage error={errors.code} />
                     </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group>
-                    <Button type="submit">{t("VerifyEmailPage.submit_button")}</Button>
+                    <Button type="submit">{t("ConfirmLoginCode.submit_button")}</Button>
                 </Form.Group>
                 <Form.Group hidden={!errors.root}>
                     <Form.Control type="hidden" isInvalid={!!errors.root} />
@@ -77,15 +74,15 @@ const VerifyEmailByCode: FC = () => {
                         <ErrorMessage error={errors.root} />
                     </Form.Control.Feedback>
                 </Form.Group>
+                <p>
+                    <Trans i18nKey="ConfirmLoginCode.back_to_login">
+                        Already a passkey? Go back to
+                        <Link to="/account/login">Login</Link>.
+                    </Trans>
+                </p>
             </Form>
-            <p>
-                <Trans i18nKey="VerifyEmailByCode.already_an_account">
-                    Already have an account? Go to
-                    <Link to="/account/login">Login</Link>.
-                </Trans>
-            </p>
         </div>
     )
 }
 
-export default VerifyEmailByCode
+export default ConfirmLoginCode

@@ -119,11 +119,14 @@ class Base(Configuration):
 
     ACCOUNT_EMAIL_VERIFICATION = "mandatory"
     ACCOUNT_LOGIN_METHODS = {"email"}
+    ACCOUNT_LOGIN_BY_CODE_ENABLED = True
     ACCOUNT_EMAIL_VERIFICATION_BY_CODE_ENABLED = True
     ACCOUNT_SIGNUP_FIELDS = ["email*"]
 
     HEADLESS_ONLY = True
     HEADLESS_SERVE_SPECIFICATION = True
+
+    MFA_ADAPTER = "wijckie.mfaAdapter.MFAAdapter"
 
     @property
     def HEADLESS_FRONTEND_URLS(self):

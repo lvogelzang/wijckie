@@ -7,30 +7,49 @@
     "general": "Er is iets misgegaan...",
     "incorrect_code": "Incorrecte code"
   },
+  "ConfirmLoginCode": {
+    "title": "Inlogcode invoeren",
+    "body": "De inlogcode is tijdelijk geldig, voer hem snel in.",
+    "code": "Code",
+    "submit_button": "Inloggen",
+    "back_to_login": "Already a passkey? Go back to<1>Login</1>."
+  },
   "CreateSignupPasskey": {
     "title": "Passkey aanmaken",
     "passkey_name": "Naam",
-    "submit_button": "Opslaan"
+    "submit_button": "Opslaan",
+    "already_an_account": "Already have an account? Go to<1>Login</1>."
   },
   "Dashboard": {
     "title": "Dashboard"
   },
   "LoginPage": {
     "title": "Login",
-    "no_account_yet": "Nog geen account?<1>Account aanmaken</1>"
+    "no_passkey_yet": "Nog geen passkey op dit apparaat? Ga naar <1>Logincode aanvragen</1>.",
+    "no_account_yet": "Nog geen account? Ga naar <1>Account aanmaken</1>."
   },
   "WebAuthnLoginButton": {
     "title": "Login"
   },
+  "RequestLoginCodePage": {
+    "title": "Inlogcode aanvragen",
+    "body": "Je ontvangt een e-mail met een code om zonder wachtwoord in te loggen.",
+    "email_address": "E-mailadres",
+    "submit_button": "Aanvragen",
+    "back_to_login": "Heb je al een passkey? Ga terug naar <1>Inloggen</1>."
+  },
   "SignUpPage": {
     "title": "Account aanmaken",
-    "already_an_account": "Heb je al een account?<1>Log hier in.</1>",
     "email_address": "E-mailadres",
-    "submit_button": "Account aanmaken"
+    "submit_button": "Account aanmaken",
+    "already_an_account": "Heb je al een account? Ga naar <1>Inloggen</1>."
   },
   "VerifyEmailPage": {
     "title": "Verifieer je e-mailadres",
     "code": "Code",
     "submit_button": "Bevestig"
+  },
+  "VerifyEmailByCode": {
+    "already_an_account": "Heb je al een account? Ga naar <1>Inloggen</1>."
   }
 }
