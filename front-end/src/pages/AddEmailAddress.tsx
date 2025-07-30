@@ -1,75 +1,70 @@
 import { useCallback, useMemo, type FC } from "react"
 import { Button, Form } from "react-bootstrap"
 import { useForm, type SubmitHandler } from "react-hook-form"
-import { Trans, useTranslation } from "react-i18next"
-import { Link, useNavigate } from "react-router-dom"
+import { useTranslation } from "react-i18next"
+import { useNavigate } from "react-router-dom"
+import type { ObjectSchema } from "yup"
 import * as yup from "yup"
-import { ObjectSchema } from "yup"
-import { postAllauthClientV1AuthEmailVerify } from "../api/endpoints/allauth"
+import { postAllauthClientV1AccountEmail } from "../api/endpoints/allauth"
 import ErrorMessage from "../components/ErrorMessage"
-import { isAllauthResponse401 } from "../helpers/AllauthHelper"
 import { useErrorHandler } from "../helpers/useErrorHandler"
 import { useYupValidationResolver } from "../helpers/useYupValidationResolver"
 
 interface Inputs {
-    key: string
+    email: string
 }
 
-const VerifyEmailByCode: FC = () => {
+const AddEmailAddress: FC = () => {
     const { t } = useTranslation()
     const navigate = useNavigate()
     const { handleFormErrors } = useErrorHandler()
 
     const validationSchema: ObjectSchema<Inputs> = useMemo(() => {
         return yup.object({
-            key: yup.string().required(),
+            email: yup.string().email().required(),
         })
     }, [])
 
     const resolver = useYupValidationResolver(validationSchema)
 
     const {
-        register,
-        setError,
         formState: { errors },
         handleSubmit,
+        register,
+        setError,
     } = useForm<Inputs>({ resolver, mode: "onSubmit", reValidateMode: "onSubmit" })
 
     const onSuccess = useCallback(() => {
-        navigate("/account/signup/passkey/create")
+        navigate("/account/verify-email")
     }, [navigate])
 
     const onFailure = useCallback(
         (error: unknown) => {
-            if (isAllauthResponse401(error)) {
-                onSuccess()
-                return
-            }
-            handleFormErrors(setError, error, ["key"])
+            handleFormErrors(setError, error, ["email"])
         },
-        [onSuccess, handleFormErrors, setError]
+        [handleFormErrors, setError]
     )
 
     const onSubmit: SubmitHandler<Inputs> = useCallback(
-        ({ key }) => {
-            postAllauthClientV1AuthEmailVerify("browser", { key }).then(onSuccess).catch(onFailure)
+        ({ email }) => {
+            postAllauthClientV1AccountEmail("browser", { email }).then(onSuccess).catch(onFailure)
         },
         [onSuccess, onFailure]
     )
 
     return (
         <div>
-            <h1>{t("VerifyEmailPage.title")}</h1>
+            <h1>{t("AddEmailAddress.title")}</h1>
             <Form noValidate onSubmit={handleSubmit(onSubmit)}>
                 <Form.Group>
-                    <Form.Label>{t("VerifyEmailPage.code")}</Form.Label>
-                    <Form.Control type="text" {...register("key")} isInvalid={!!errors.key} autoFocus />
+                    <Form.Label>{t("AddEmailAddress.email")}</Form.Label>
+                    <Form.Control {...register("email")} isInvalid={!!errors.email} />
                     <Form.Control.Feedback type="invalid">
-                        <ErrorMessage error={errors.key} />
+                        <ErrorMessage error={errors.email} />
                     </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group>
-                    <Button type="submit">{t("VerifyEmailPage.submit_button")}</Button>
+                    <Button type="submit">{t("AddEmailAddress.submit_button")}</Button>
                 </Form.Group>
                 <Form.Group hidden={!errors.root}>
                     <Form.Control type="hidden" isInvalid={!!errors.root} />
@@ -78,14 +73,8 @@ const VerifyEmailByCode: FC = () => {
                     </Form.Control.Feedback>
                 </Form.Group>
             </Form>
-            <p>
-                <Trans i18nKey="VerifyEmailByCode.already_an_account">
-                    Already have an account? Go to
-                    <Link to="/account/authenticate/webauthn">Login</Link>.
-                </Trans>
-            </p>
         </div>
     )
 }
 
-export default VerifyEmailByCode
+export default AddEmailAddress

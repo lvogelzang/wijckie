@@ -1,15 +1,22 @@
 import { useContext, useEffect, useState, type FC } from "react"
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom"
+import { AuthenticatorTypes, Flows } from "./auth/allauth"
 import AnonymousRoute from "./auth/AnonymousRoute"
 import { AuthContext } from "./auth/AuthContext"
 import AuthenticatedRoute from "./auth/AuthenticatedRoute"
+import { listAuthenticators } from "./loaders/listAuthenticators"
+import AddEmailAddress from "./pages/AddEmailAddress"
+import AuthenticateWebAuthn from "./pages/AuthenticateWebAuthn"
 import ConfirmLoginCode from "./pages/ConfirmLoginCode"
+import CreatePasskey from "./pages/CreatePasskey"
 import CreateSignupPasskey from "./pages/CreateSignupPasskey"
 import Dashboard from "./pages/Dashboard"
-import Login from "./pages/Login"
 import Logout from "./pages/Logout"
+import MyAccount from "./pages/MyAccount"
+import ReauthenticateWebAuthn from "./pages/ReauthenticateWebAuthn"
 import RequestLoginCode from "./pages/RequestLoginCode"
 import SignupByPasskey from "./pages/SignupByPasskey"
+import UpdatePasskey from "./pages/UpdatePasskey"
 import VerifyEmailByCode from "./pages/VerifyEmailByCode"
 import Root from "./Root"
 
@@ -25,17 +32,25 @@ const createRouter = () => {
                     element: <Navigate to="/dashboard" />,
                 },
                 {
-                    path: "/account/login",
+                    path: "/account/authenticate/webauthn",
                     element: (
-                        <AnonymousRoute>
-                            <Login />
+                        <AnonymousRoute flowId={Flows.MFA_AUTHENTICATE} authenticatorType={AuthenticatorTypes.WEBAUTHN}>
+                            <AuthenticateWebAuthn />
+                        </AnonymousRoute>
+                    ),
+                },
+                {
+                    path: "/account/reauthenticate/webauthn",
+                    element: (
+                        <AnonymousRoute flowId={Flows.MFA_REAUTHENTICATE} authenticatorType={AuthenticatorTypes.WEBAUTHN}>
+                            <ReauthenticateWebAuthn />
                         </AnonymousRoute>
                     ),
                 },
                 {
                     path: "/account/login/code",
                     element: (
-                        <AnonymousRoute>
+                        <AnonymousRoute flowId={Flows.LOGIN_BY_CODE}>
                             <RequestLoginCode />
                         </AnonymousRoute>
                     ),
@@ -43,7 +58,7 @@ const createRouter = () => {
                 {
                     path: "/account/login/code/confirm",
                     element: (
-                        <AnonymousRoute>
+                        <AnonymousRoute flowId={Flows.LOGIN_BY_CODE}>
                             <ConfirmLoginCode />
                         </AnonymousRoute>
                     ),
@@ -59,18 +74,48 @@ const createRouter = () => {
                 {
                     path: "/account/signup/passkey/create",
                     element: (
-                        <AnonymousRoute>
+                        <AnonymousRoute flowId={Flows.MFA_WEBAUTHN_SIGNUP} authenticatorType={AuthenticatorTypes.WEBAUTHN}>
                             <CreateSignupPasskey />
                         </AnonymousRoute>
                     ),
                 },
                 {
                     path: "/account/verify-email",
+                    element: <VerifyEmailByCode />,
+                },
+                {
+                    path: "/account/my",
                     element: (
-                        <AnonymousRoute>
-                            <VerifyEmailByCode />
-                        </AnonymousRoute>
+                        <AuthenticatedRoute>
+                            <MyAccount />
+                        </AuthenticatedRoute>
                     ),
+                    loader: listAuthenticators,
+                },
+                {
+                    path: "/account/my/email-addresses/add",
+                    element: (
+                        <AuthenticatedRoute>
+                            <AddEmailAddress />
+                        </AuthenticatedRoute>
+                    ),
+                },
+                {
+                    path: "/account/my/passkeys/add",
+                    element: (
+                        <AuthenticatedRoute>
+                            <CreatePasskey />
+                        </AuthenticatedRoute>
+                    ),
+                },
+                {
+                    path: "/account/my/passkeys/:id",
+                    element: (
+                        <AuthenticatedRoute>
+                            <UpdatePasskey />
+                        </AuthenticatedRoute>
+                    ),
+                    loader: listAuthenticators,
                 },
                 {
                     path: "/account/logout",

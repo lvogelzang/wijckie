@@ -14,7 +14,7 @@ const AuthenticatedRoute: FC<Props> = ({ children }) => {
     if (isAuthenticated) {
         return children
     } else {
-        return <Navigate to={`/account/login?${next}`} />
+        return <Navigate to={`/account/authenticate/webauthn?${next}`} />
     }
 }
 

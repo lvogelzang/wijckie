@@ -12,3 +12,6 @@ class MFAAdapter(DefaultMFAAdapter):
             "id": settings.SESSION_COOKIE_DOMAIN,
             "name": name,
         }
+
+    def is_mfa_enabled(self, user, types=None) -> bool:
+        return False

@@ -22,7 +22,7 @@ const SignupByPasskey: FC = () => {
 
     const validationSchema: ObjectSchema<Inputs> = useMemo(() => {
         return yup.object({
-            email: yup.string().required(),
+            email: yup.string().email().required(),
         })
     }, [])
 
@@ -81,7 +81,7 @@ const SignupByPasskey: FC = () => {
             <p>
                 <Trans i18nKey="SignUpPage.already_an_account">
                     Already have an account? Go to
-                    <Link to="/account/login">Login</Link>.
+                    <Link to="/account/authenticate/webauthn">Login</Link>.
                 </Trans>
             </p>
         </div>

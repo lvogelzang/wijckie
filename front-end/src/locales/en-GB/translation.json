@@ -1,35 +1,76 @@
 {
+  "ErrorModal": {
+    "title": "Error"
+  },
   "NavBar": {
     "language": "Language"
   },
   "ErrorMessage": {
     "invalid": "Invalid value",
     "general": "Something went wrong...",
-    "incorrect_code": "Incorrect code"
+    "incorrect_code": "Incorrect code",
+    "required": "This field is required",
+    "email": "Enter a valid e-mail address"
+  },
+  "AddEmailAddress": {
+    "title": "Add e-mail address",
+    "email": "E-mail address",
+    "submit_button": "Add"
+  },
+  "AuthenticateWebAuthn": {
+    "title": "Login",
+    "no_passkey_yet": "No passkey on this device yet? Go to <1>Request a sign-in code</1>.",
+    "no_account_yet": "No account yet? Go to <1>Create account</1>."
+  },
+  "WebAuthnLoginButton": {
+    "title": "Login"
   },
   "ConfirmLoginCode": {
     "title": "Enter sign-in code",
     "body": "The code expires shortly, so please enter it soon.",
     "code": "Code",
     "submit_button": "Sign in",
-    "back_to_login": "Already a passkey? Go back to<1>Login</1>."
+    "back_to_login": "Already a passkey? Go back to <1>Login</1>."
+  },
+  "CreatePasskey": {
+    "title": "Add passkey",
+    "submit_button": "Add"
+  },
+  "UpdatePasskey": {
+    "name": "Name",
+    "title": "Update passkey",
+    "submit_button": "Save",
+    "delete_button": "Delete"
   },
   "CreateSignupPasskey": {
     "title": "Save Passkey",
     "passkey_name": "Name",
     "submit_button": "Save",
-    "already_an_account": "Already have an account? Go to<1>Login</1>."
+    "already_an_account": "Already have an account? Go to <1>Login</1>."
   },
   "Dashboard": {
     "title": "Dashboard"
   },
-  "LoginPage": {
-    "title": "Login",
-    "no_passkey_yet": "No passkey on this device yet? Go to<1>Request a sign-in code</1>.",
-    "no_account_yet": "No account yet? Go to <1>Create account</1>."
+  "MyAccount": {
+    "title": "My account",
+    "email_addresses": "E-mail addresses",
+    "email_address": "E-mail address",
+    "email_verified": "Verified",
+    "email_primary": "Primary",
+    "email_verify": "Verify",
+    "email_delete": "Delete",
+    "add_email_address": "Add e-mail address",
+    "passkeys": "Passkeys",
+    "passkey_name": "Name",
+    "passkey_created_at": "Created",
+    "passkey_last_used_at": "Last used",
+    "add_passkey": "Add passkey"
   },
-  "WebAuthnLoginButton": {
-    "title": "Login"
+  "ReauthenticateWebAuthn": {
+    "title": "Reauthenticate"
+  },
+  "LoginPage": {
+    "no_passkey_yet": "No passkey on this device yet? Go to<1>Request a sign-in code</1>."
   },
   "RequestLoginCodePage": {
     "title": "Request sign-in code",

@@ -4,7 +4,7 @@ import { Button, Form } from "react-bootstrap"
 import { useForm } from "react-hook-form"
 import { Trans, useTranslation } from "react-i18next"
 import { Link } from "react-router-dom"
-import { getAllauthClientV1AuthWebauthnLogin, postAllauthClientV1AuthWebauthnLogin } from "../api/endpoints/allauth"
+import { getAllauthClientV1AuthWebauthnReauthenticate, postAllauthClientV1AuthWebauthnReauthenticate } from "../api/endpoints/allauth"
 import type { AuthenticatedResponse, WebAuthnCredential } from "../api/models/allauth"
 import ErrorMessage from "../components/ErrorMessage"
 import { useErrorHandler } from "../helpers/useErrorHandler"
@@ -13,7 +13,7 @@ import { useErrorHandler } from "../helpers/useErrorHandler"
 interface Inputs {}
 /* eslint-enable */
 
-const Login: FC = () => {
+const ReauthenticateWebAuthn: FC = () => {
     const { t } = useTranslation()
     const { handleFormErrors } = useErrorHandler()
 
@@ -36,12 +36,12 @@ const Login: FC = () => {
     )
 
     const onSubmit = useCallback(() => {
-        getAllauthClientV1AuthWebauthnLogin("browser")
+        getAllauthClientV1AuthWebauthnReauthenticate("browser")
             .then((optionsResponse) => {
                 const options = parseRequestOptionsFromJSON(optionsResponse.data.request_options)
                 get(options)
                     .then((credential: AuthenticationPublicKeyCredential) => {
-                        postAllauthClientV1AuthWebauthnLogin("browser", { credential: credential as unknown as WebAuthnCredential })
+                        postAllauthClientV1AuthWebauthnReauthenticate("browser", { credential: credential as unknown as WebAuthnCredential })
                             .then(onSuccess)
                             .catch(onFailure)
                     })
@@ -52,7 +52,7 @@ const Login: FC = () => {
 
     return (
         <div>
-            <h1>{t("LoginPage.title")}</h1>
+            <h1>{t("ReauthenticateWebAuthn.title")}</h1>
             <Form noValidate onSubmit={handleSubmit(onSubmit)}>
                 <Form.Group>
                     <Button type="submit">{t("WebAuthnLoginButton.title")}</Button>
@@ -70,14 +70,8 @@ const Login: FC = () => {
                     <Link to="/account/login/code">Request a sign-in code</Link>.
                 </Trans>
             </p>
-            <p>
-                <Trans i18nKey="LoginPage.no_account_yet">
-                    No account yet? Go to the
-                    <Link to="/account/signup/passkey">Sign-up page</Link>.
-                </Trans>
-            </p>
         </div>
     )
 }
 
-export default Login
+export default ReauthenticateWebAuthn

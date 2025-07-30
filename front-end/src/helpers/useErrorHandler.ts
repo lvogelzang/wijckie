@@ -5,9 +5,9 @@ import { useTranslation } from "react-i18next"
 // Invalid: shows message that a value is invalid, like an e-mail address without @.
 // None: shows no message, useful when input components make the error clear without text.
 // General: show a general error message, useful if no field-related errors could be found.
-export type ErrorMessageType = "invalid" | "none" | "general" | "incorrect_code"
+export type ErrorMessageType = "invalid" | "none" | "general" | "incorrect_code" | "required" | "email"
 
-const errorMessageTypes: ErrorMessageType[] = ["invalid", "none", "general", "incorrect_code"]
+const errorMessageTypes: ErrorMessageType[] = ["invalid", "none", "general", "incorrect_code", "required", "email"]
 
 export const useErrorHandler = () => {
     const { t } = useTranslation()
@@ -18,6 +18,8 @@ export const useErrorHandler = () => {
         translations.set("none", null)
         translations.set("general", t("ErrorMessage.general"))
         translations.set("incorrect_code", t("ErrorMessage.incorrect_code"))
+        translations.set("required", t("ErrorMessage.required"))
+        translations.set("email", t("ErrorMessage.email"))
         return translations
     }, [t])
 

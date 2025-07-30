@@ -22,7 +22,7 @@ const RequestLoginCode: FC = () => {
 
     const validationSchema: ObjectSchema<Inputs> = useMemo(() => {
         return yup.object({
-            email: yup.string().required(),
+            email: yup.string().email().required(),
         })
     }, [])
 
@@ -81,7 +81,7 @@ const RequestLoginCode: FC = () => {
                 <p>
                     <Trans i18nKey="RequestLoginCodePage.back_to_login">
                         Already a passkey? Go back to
-                        <Link to="/account/login">Login</Link>.
+                        <Link to="/account/authenticate/webauthn">Login</Link>.
                     </Trans>
                 </p>
             </Form>

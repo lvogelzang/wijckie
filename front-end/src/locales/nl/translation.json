@@ -1,35 +1,76 @@
 {
+  "ErrorModal": {
+    "title": "Fout"
+  },
   "NavBar": {
     "language": "Taal"
   },
   "ErrorMessage": {
     "invalid": "Vul een geldige waarde in",
     "general": "Er is iets misgegaan...",
-    "incorrect_code": "Incorrecte code"
+    "incorrect_code": "Incorrecte code",
+    "required": "Dit veld is verplicht",
+    "email": "Vul een geldig e-mailadres in"
   },
-  "ConfirmLoginCode": {
-    "title": "Inlogcode invoeren",
-    "body": "De inlogcode is tijdelijk geldig, voer hem snel in.",
-    "code": "Code",
-    "submit_button": "Inloggen",
-    "back_to_login": "Already a passkey? Go back to<1>Login</1>."
+  "AddEmailAddress": {
+    "title": "E-mailadres toevoegen",
+    "email": "E-mailadres",
+    "submit_button": "Toevoegen"
   },
-  "CreateSignupPasskey": {
-    "title": "Passkey aanmaken",
-    "passkey_name": "Naam",
-    "submit_button": "Opslaan",
-    "already_an_account": "Already have an account? Go to<1>Login</1>."
-  },
-  "Dashboard": {
-    "title": "Dashboard"
-  },
-  "LoginPage": {
+  "AuthenticateWebAuthn": {
     "title": "Login",
     "no_passkey_yet": "Nog geen passkey op dit apparaat? Ga naar <1>Logincode aanvragen</1>.",
     "no_account_yet": "Nog geen account? Ga naar <1>Account aanmaken</1>."
   },
   "WebAuthnLoginButton": {
     "title": "Login"
+  },
+  "ConfirmLoginCode": {
+    "title": "Inlogcode invoeren",
+    "body": "De inlogcode is tijdelijk geldig, voer hem snel in.",
+    "code": "Code",
+    "submit_button": "Inloggen",
+    "back_to_login": "Already a passkey? Go back to <1>Login</1>."
+  },
+  "CreatePasskey": {
+    "title": "Passkey toevoegen",
+    "submit_button": "Voeg toe"
+  },
+  "UpdatePasskey": {
+    "name": "Naam",
+    "title": "Passkey bewerken",
+    "submit_button": "Opslaan",
+    "delete_button": "Verwijder"
+  },
+  "CreateSignupPasskey": {
+    "title": "Passkey aanmaken",
+    "passkey_name": "Naam",
+    "submit_button": "Opslaan",
+    "already_an_account": "Already have an account? Go to <1>Login</1>."
+  },
+  "Dashboard": {
+    "title": "Dashboard"
+  },
+  "MyAccount": {
+    "title": "Mijn account",
+    "email_addresses": "E-mailadressen",
+    "email_address": "E-mailadres",
+    "email_verified": "Geverifieerd",
+    "email_primary": "Primair",
+    "email_verify": "Verifieer",
+    "email_delete": "Verwijder",
+    "add_email_address": "Voeg e-mailadres toe",
+    "passkeys": "Passkeys",
+    "passkey_name": "Naam",
+    "passkey_created_at": "Aangemaakt",
+    "passkey_last_used_at": "Laatst gebruikt",
+    "add_passkey": "Voeg passkey toe"
+  },
+  "ReauthenticateWebAuthn": {
+    "title": "Opnieuw inloggen"
+  },
+  "LoginPage": {
+    "no_passkey_yet": "No passkey on this device yet? Go to<1>Request a sign-in code</1>."
   },
   "RequestLoginCodePage": {
     "title": "Inlogcode aanvragen",

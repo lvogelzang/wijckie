@@ -43,7 +43,7 @@ const ConfirmLoginCode: FC = () => {
         (error: unknown) => {
             handleFormErrors(setError, error, ["code"])
         },
-        [onSuccess, setError, handleFormErrors]
+        [handleFormErrors, setError]
     )
 
     const onSubmit: SubmitHandler<Inputs> = useCallback(
@@ -77,7 +77,7 @@ const ConfirmLoginCode: FC = () => {
                 <p>
                     <Trans i18nKey="ConfirmLoginCode.back_to_login">
                         Already a passkey? Go back to
-                        <Link to="/account/login">Login</Link>.
+                        <Link to="/account/authenticate/webauthn">Login</Link>.
                     </Trans>
                 </p>
             </Form>

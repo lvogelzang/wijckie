@@ -32,7 +32,7 @@ const NavBar: FC = () => {
                     <ul className="navbar-nav me-auto mb-2 mb-md-0">
                         {isAuthenticated ? <NavBarItem to="/dashboard" name="Dashboard" /> : null}
                         {isAuthenticated ? <NavBarItem to="/account/logout" name="Logout" /> : null}
-                        {user ? <NavBarItem name={user.username ?? ""} /> : null}
+                        {user ? <NavBarItem to="/account/my" name={user.username ?? ""} /> : null}
                         <NavDropdown title={t("NavBar.language")}>
                             {languageOptions.map((language) => (
                                 <LanguageButton key={language} language={language} />
