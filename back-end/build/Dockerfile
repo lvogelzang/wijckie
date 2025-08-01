@@ -29,6 +29,7 @@ RUN pip install -r requirements.txt
 
 # copy project
 COPY wijckie/ wijckie/
+COPY wijckie_models/ wijckie_models/
 COPY manage.py .
 COPY build/entrypoint.sh .
 RUN chmod +x entrypoint.sh
