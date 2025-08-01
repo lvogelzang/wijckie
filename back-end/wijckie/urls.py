@@ -1,10 +1,10 @@
 from django.conf import settings
 from django.conf.urls.static import static
-from django.contrib.auth.models import User
 from django.urls import include, path
 from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView
 from rest_framework import routers, serializers, viewsets
 from wijckie.csrf import csrf
+from wijckie_models.models import User
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):

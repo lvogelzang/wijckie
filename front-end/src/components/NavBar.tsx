@@ -31,13 +31,14 @@ const NavBar: FC = () => {
                 <div className="collapse navbar-collapse" id="navbarCollapse">
                     <ul className="navbar-nav me-auto mb-2 mb-md-0">
                         {isAuthenticated ? <NavBarItem to="/dashboard" name="Dashboard" /> : null}
-                        {isAuthenticated ? <NavBarItem to="/account/logout" name="Logout" /> : null}
-                        {user ? <NavBarItem to="/account/my" name={user.username ?? ""} /> : null}
+                        {isAuthenticated ? <NavBarItem to="/modules" name="Modules" /> : null}
                         <NavDropdown title={t("NavBar.language")}>
                             {languageOptions.map((language) => (
                                 <LanguageButton key={language} language={language} />
                             ))}
                         </NavDropdown>
+                        {user ? <NavBarItem to="/account/my" name={user.username ?? ""} /> : null}
+                        {isAuthenticated ? <NavBarItem to="/account/logout" name="Logout" /> : null}
                     </ul>
                 </div>
             </div>

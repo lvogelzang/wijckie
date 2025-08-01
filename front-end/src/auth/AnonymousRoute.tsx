@@ -23,7 +23,7 @@ const AnonymousRoute: FC<Props> = ({ flowId, authenticatorType, children }) => {
 
     if (isAuthenticated) {
         return <Navigate to="/dashboard" />
-    } else if (pendingFlowId && (pendingFlowId !== flowId || pendingFlowAuthenticatorId !== authenticatorType)) {
+    } else if (pendingFlowId && (pendingFlowId !== flowId || (pendingFlowAuthenticatorId && pendingFlowAuthenticatorId !== authenticatorType))) {
         return <Navigate to={getPathForFlow(pendingFlowId, pendingFlowAuthenticatorId)} />
     } else {
         return children

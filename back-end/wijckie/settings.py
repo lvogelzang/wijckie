@@ -33,7 +33,6 @@ class Base(Configuration):
     SESSION_COOKIE_SECURE = False
 
     INSTALLED_APPS = [
-        "django.contrib.admin",
         "django.contrib.auth",
         "django.contrib.contenttypes",
         "django.contrib.sessions",
@@ -41,6 +40,7 @@ class Base(Configuration):
         "django.contrib.messages",
         "django.contrib.staticfiles",
         "corsheaders",
+        "wijckie_models",
         "allauth",
         "allauth.account",
         "allauth.mfa",
@@ -81,6 +81,8 @@ class Base(Configuration):
 
     WSGI_APPLICATION = "wijckie.wsgi.application"
 
+    AUTH_USER_MODEL = "wijckie_models.User"
+
     AUTH_PASSWORD_VALIDATORS = [
         {
             "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
@@ -117,6 +119,10 @@ class Base(Configuration):
 
     AUTHENTICATION_BACKENDS = ["allauth.account.auth_backends.AuthenticationBackend"]
 
+    ACCOUNT_ADAPTER = "wijckie.adapters.AccountAdapter"
+    MFA_ADAPTER = "wijckie.adapters.MFAAdapter"
+    HEADLESS_ADAPTER = "wijckie.adapters.HeadlessAdapter"
+
     ACCOUNT_EMAIL_VERIFICATION = "mandatory"
     ACCOUNT_LOGIN_METHODS = {"email"}
     ACCOUNT_LOGIN_BY_CODE_ENABLED = True
@@ -125,8 +131,6 @@ class Base(Configuration):
 
     HEADLESS_ONLY = True
     HEADLESS_SERVE_SPECIFICATION = True
-
-    MFA_ADAPTER = "wijckie.mfaAdapter.MFAAdapter"
 
     @property
     def HEADLESS_FRONTEND_URLS(self):
