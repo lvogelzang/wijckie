@@ -224,13 +224,13 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { Provider } from './provider';
-import type { ProviderAccountID } from './providerAccountID';
+import type { Provider } from "./provider"
+import type { ProviderAccountID } from "./providerAccountID"
 
 export interface ProviderAccount {
-  /** A name derived from the third-party provider account data.
- */
-  display: string;
-  provider: Provider;
-  uid: ProviderAccountID;
+    /** A name derived from the third-party provider account data.
+     */
+    display: string
+    provider: Provider
+    uid: ProviderAccountID
 }

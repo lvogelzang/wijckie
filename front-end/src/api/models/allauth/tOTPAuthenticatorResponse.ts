@@ -224,10 +224,10 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { TOTPAuthenticator } from './tOTPAuthenticator';
-import type { StatusOK } from './statusOK';
+import type { TOTPAuthenticator } from "./tOTPAuthenticator"
+import type { StatusOK } from "./statusOK"
 
 export type TOTPAuthenticatorResponse = {
-  data: TOTPAuthenticator;
-  status: StatusOK;
-};
+    data: TOTPAuthenticator
+    status: StatusOK
+}

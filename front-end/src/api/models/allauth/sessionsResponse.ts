@@ -224,10 +224,10 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { Session } from './session';
-import type { StatusOK } from './statusOK';
+import type { Session } from "./session"
+import type { StatusOK } from "./statusOK"
 
 export type SessionsResponse = {
-  data: Session[];
-  status: StatusOK;
-};
+    data: Session[]
+    status: StatusOK
+}

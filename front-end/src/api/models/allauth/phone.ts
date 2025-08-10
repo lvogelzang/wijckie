@@ -229,4 +229,4 @@ return authenticator names as follows:
  * The phone number.
 
  */
-export type Phone = string;
+export type Phone = string

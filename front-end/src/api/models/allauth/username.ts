@@ -229,4 +229,4 @@ return authenticator names as follows:
  * The username.
 
  */
-export type Username = string;
+export type Username = string

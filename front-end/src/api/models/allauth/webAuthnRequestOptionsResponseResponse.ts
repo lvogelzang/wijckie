@@ -224,10 +224,10 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { WebAuthnCredentialRequestOptions } from './webAuthnCredentialRequestOptions';
-import type { StatusOK } from './statusOK';
+import type { WebAuthnCredentialRequestOptions } from "./webAuthnCredentialRequestOptions"
+import type { StatusOK } from "./statusOK"
 
 export type WebAuthnRequestOptionsResponseResponse = {
-  data: WebAuthnCredentialRequestOptions;
-  status: StatusOK;
-};
+    data: WebAuthnCredentialRequestOptions
+    status: StatusOK
+}

@@ -224,6 +224,6 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { ConfirmLoginCode } from './confirmLoginCode';
+import type { ConfirmLoginCode } from "./confirmLoginCode"
 
-export type ConfirmLoginCodeBody = ConfirmLoginCode;
+export type ConfirmLoginCodeBody = ConfirmLoginCode

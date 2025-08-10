@@ -229,4 +229,4 @@ return authenticator names as follows:
  * Authenticator ID.
 
  */
-export type AuthenticatorID = number;
+export type AuthenticatorID = number

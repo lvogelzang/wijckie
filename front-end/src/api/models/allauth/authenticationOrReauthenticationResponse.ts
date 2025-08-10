@@ -224,7 +224,7 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { AuthenticationResponse } from './authenticationResponse';
-import type { ReauthenticationResponse } from './reauthenticationResponse';
+import type { AuthenticationResponse } from "./authenticationResponse"
+import type { ReauthenticationResponse } from "./reauthenticationResponse"
 
-export type AuthenticationOrReauthenticationResponse = AuthenticationResponse | ReauthenticationResponse;
+export type AuthenticationOrReauthenticationResponse = AuthenticationResponse | ReauthenticationResponse

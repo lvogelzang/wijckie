@@ -224,16 +224,16 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { AccountConfigurationLoginMethodsItem } from './accountConfigurationLoginMethodsItem';
+import type { AccountConfigurationLoginMethodsItem } from "./accountConfigurationLoginMethodsItem"
 
 /**
  * Configuration of the Django `allauth.account` app.
 
  */
 export interface AccountConfiguration {
-  email_verification_by_code_enabled: boolean;
-  is_open_for_signup: boolean;
-  login_by_code_enabled: boolean;
-  login_methods?: AccountConfigurationLoginMethodsItem[];
-  password_reset_by_code_enabled?: boolean;
+    email_verification_by_code_enabled: boolean
+    is_open_for_signup: boolean
+    login_by_code_enabled: boolean
+    login_methods?: AccountConfigurationLoginMethodsItem[]
+    password_reset_by_code_enabled?: boolean
 }

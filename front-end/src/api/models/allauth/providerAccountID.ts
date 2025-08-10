@@ -229,4 +229,4 @@ return authenticator names as follows:
  * The provider specific account ID.
 
  */
-export type ProviderAccountID = string;
+export type ProviderAccountID = string

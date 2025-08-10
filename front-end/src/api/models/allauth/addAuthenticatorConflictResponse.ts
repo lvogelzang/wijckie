@@ -224,10 +224,10 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { ConflictResponse } from './conflictResponse';
+import type { ConflictResponse } from "./conflictResponse"
 
 /**
  * The account prohibits adding an authenticator, e.g. because of an unverified email address.
 
  */
-export type AddAuthenticatorConflictResponse = ConflictResponse;
+export type AddAuthenticatorConflictResponse = ConflictResponse

@@ -229,4 +229,4 @@ return authenticator names as follows:
  * The client ID (in case of OAuth2 or OpenID Connect based providers)
 
  */
-export type ClientID = string;
+export type ClientID = string

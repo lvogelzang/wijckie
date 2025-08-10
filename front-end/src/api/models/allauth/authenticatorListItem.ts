@@ -224,8 +224,8 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { TOTPAuthenticator } from './tOTPAuthenticator';
-import type { RecoveryCodesAuthenticator } from './recoveryCodesAuthenticator';
-import type { WebAuthnAuthenticator } from './webAuthnAuthenticator';
+import type { TOTPAuthenticator } from "./tOTPAuthenticator"
+import type { RecoveryCodesAuthenticator } from "./recoveryCodesAuthenticator"
+import type { WebAuthnAuthenticator } from "./webAuthnAuthenticator"
 
-export type AuthenticatorListItem = TOTPAuthenticator | RecoveryCodesAuthenticator | WebAuthnAuthenticator;
+export type AuthenticatorListItem = TOTPAuthenticator | RecoveryCodesAuthenticator | WebAuthnAuthenticator

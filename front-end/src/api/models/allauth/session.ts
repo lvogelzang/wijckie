@@ -224,13 +224,13 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { Timestamp } from './timestamp';
+import type { Timestamp } from "./timestamp"
 
 export interface Session {
-  created_at: Timestamp;
-  id: number;
-  ip: string;
-  is_current: boolean;
-  last_seen_at?: Timestamp;
-  user_agent: string;
+    created_at: Timestamp
+    id: number
+    ip: string
+    is_current: boolean
+    last_seen_at?: Timestamp
+    user_agent: string
 }

@@ -224,6 +224,6 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { EndSessions } from './endSessions';
+import type { EndSessions } from "./endSessions"
 
-export type EndSessionsBody = EndSessions;
+export type EndSessionsBody = EndSessions

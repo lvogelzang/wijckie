@@ -225,4 +225,6 @@ return authenticator names as follows:
  * OpenAPI spec version: 1
  */
 
-export interface WebAuthnCredential { [key: string]: unknown }
+export interface WebAuthnCredential {
+    [key: string]: unknown
+}

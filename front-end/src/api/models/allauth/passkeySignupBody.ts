@@ -224,9 +224,9 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { PasskeySignup } from './passkeySignup';
+import type { PasskeySignup } from "./passkeySignup"
 
 /**
  * Signup using a passkey
  */
-export type PasskeySignupBody = PasskeySignup;
+export type PasskeySignupBody = PasskeySignup

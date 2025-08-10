@@ -226,7 +226,7 @@ return authenticator names as follows:
  */
 
 export type EmailBody = {
-  /** An email address.
- */
-  email: string;
-};
+    /** An email address.
+     */
+    email: string
+}

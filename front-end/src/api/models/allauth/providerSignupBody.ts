@@ -224,9 +224,9 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { ProviderSignup } from './providerSignup';
+import type { ProviderSignup } from "./providerSignup"
 
 /**
  * Provider signup.
  */
-export type ProviderSignupBody = ProviderSignup;
+export type ProviderSignupBody = ProviderSignup

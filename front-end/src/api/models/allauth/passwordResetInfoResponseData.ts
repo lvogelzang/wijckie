@@ -224,8 +224,8 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { User } from './user';
+import type { User } from "./user"
 
 export type PasswordResetInfoResponseData = {
-  user?: User;
-};
+    user?: User
+}

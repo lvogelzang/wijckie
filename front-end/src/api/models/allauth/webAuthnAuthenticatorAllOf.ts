@@ -224,14 +224,14 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { AuthenticatorID } from './authenticatorID';
-import type { WebAuthnAuthenticatorAllOfType } from './webAuthnAuthenticatorAllOfType';
+import type { AuthenticatorID } from "./authenticatorID"
+import type { WebAuthnAuthenticatorAllOfType } from "./webAuthnAuthenticatorAllOfType"
 
 export type WebAuthnAuthenticatorAllOf = {
-  id: AuthenticatorID;
-  /** Whether or not this authenticator represents a passkey. Absent if it is not specified.
- */
-  is_passwordless?: boolean;
-  name: string;
-  type: WebAuthnAuthenticatorAllOfType;
-};
+    id: AuthenticatorID
+    /** Whether or not this authenticator represents a passkey. Absent if it is not specified.
+     */
+    is_passwordless?: boolean
+    name: string
+    type: WebAuthnAuthenticatorAllOfType
+}

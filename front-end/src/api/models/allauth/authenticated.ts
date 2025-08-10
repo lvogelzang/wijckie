@@ -224,12 +224,12 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { AuthenticationMethod } from './authenticationMethod';
-import type { User } from './user';
+import type { AuthenticationMethod } from "./authenticationMethod"
+import type { User } from "./user"
 
 export interface Authenticated {
-  /** A list of methods used to authenticate.
- */
-  methods: AuthenticationMethod[];
-  user: User;
+    /** A list of methods used to authenticate.
+     */
+    methods: AuthenticationMethod[]
+    user: User
 }

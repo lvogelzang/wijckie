@@ -224,12 +224,12 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { WebAuthnAuthenticator } from './webAuthnAuthenticator';
-import type { AddWebAuthnAuthenticatorResponseMeta } from './addWebAuthnAuthenticatorResponseMeta';
-import type { StatusOK } from './statusOK';
+import type { WebAuthnAuthenticator } from "./webAuthnAuthenticator"
+import type { AddWebAuthnAuthenticatorResponseMeta } from "./addWebAuthnAuthenticatorResponseMeta"
+import type { StatusOK } from "./statusOK"
 
 export type AddWebAuthnAuthenticatorResponse = {
-  data: WebAuthnAuthenticator;
-  meta: AddWebAuthnAuthenticatorResponseMeta;
-  status: StatusOK;
-};
+    data: WebAuthnAuthenticator
+    meta: AddWebAuthnAuthenticatorResponseMeta
+    status: StatusOK
+}

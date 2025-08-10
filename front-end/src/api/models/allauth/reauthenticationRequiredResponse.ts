@@ -229,4 +229,4 @@ return authenticator names as follows:
  * The response indicates reauthentication is required.
 
  */
-export type ReauthenticationRequiredResponse = unknown;
+export type ReauthenticationRequiredResponse = unknown

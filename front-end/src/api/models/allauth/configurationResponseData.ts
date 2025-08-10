@@ -224,14 +224,14 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { AccountConfiguration } from './accountConfiguration';
-import type { MFAConfiguration } from './mFAConfiguration';
-import type { SocialAccountConfiguration } from './socialAccountConfiguration';
-import type { UserSessionsConfiguration } from './userSessionsConfiguration';
+import type { AccountConfiguration } from "./accountConfiguration"
+import type { MFAConfiguration } from "./mFAConfiguration"
+import type { SocialAccountConfiguration } from "./socialAccountConfiguration"
+import type { UserSessionsConfiguration } from "./userSessionsConfiguration"
 
 export type ConfigurationResponseData = {
-  account: AccountConfiguration;
-  mfa?: MFAConfiguration;
-  socialaccount?: SocialAccountConfiguration;
-  usersessions?: UserSessionsConfiguration;
-};
+    account: AccountConfiguration
+    mfa?: MFAConfiguration
+    socialaccount?: SocialAccountConfiguration
+    usersessions?: UserSessionsConfiguration
+}

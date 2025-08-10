@@ -226,7 +226,7 @@ return authenticator names as follows:
  */
 
 export type AddWebAuthnAuthenticatorResponseMeta = {
-  /** Whether or not recovery codes where generated automatically.
- */
-  recovery_codes_generated?: boolean;
-};
+    /** Whether or not recovery codes where generated automatically.
+     */
+    recovery_codes_generated?: boolean
+}

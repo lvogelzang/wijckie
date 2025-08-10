@@ -224,11 +224,11 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { Password } from './password';
+import type { Password } from "./password"
 
 export type ChangePasswordBody = {
-  current_password?: Password;
-  /** The current password.
- */
-  new_password: string;
-};
+    current_password?: Password
+    /** The current password.
+     */
+    new_password: string
+}

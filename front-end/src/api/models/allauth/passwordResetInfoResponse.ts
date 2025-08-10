@@ -224,10 +224,10 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { PasswordResetInfoResponseData } from './passwordResetInfoResponseData';
-import type { StatusOK } from './statusOK';
+import type { PasswordResetInfoResponseData } from "./passwordResetInfoResponseData"
+import type { StatusOK } from "./statusOK"
 
 export type PasswordResetInfoResponse = {
-  data: PasswordResetInfoResponseData;
-  status: StatusOK;
-};
+    data: PasswordResetInfoResponseData
+    status: StatusOK
+}

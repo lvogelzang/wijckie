@@ -224,18 +224,18 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { ClientID } from './clientID';
+import type { ClientID } from "./clientID"
 
 /**
  * The token.
 
  */
 export type ProviderTokenToken = {
-  /** The access token.
- */
-  access_token?: string;
-  client_id: ClientID;
-  /** The ID token.
- */
-  id_token?: string;
-};
+    /** The access token.
+     */
+    access_token?: string
+    client_id: ClientID
+    /** The ID token.
+     */
+    id_token?: string
+}

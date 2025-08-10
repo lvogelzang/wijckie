@@ -224,7 +224,7 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { BaseAuthenticationMeta } from './baseAuthenticationMeta';
-import type { AuthenticationMetaAllOf } from './authenticationMetaAllOf';
+import type { BaseAuthenticationMeta } from "./baseAuthenticationMeta"
+import type { AuthenticationMetaAllOf } from "./authenticationMetaAllOf"
 
-export type AuthenticationMeta = BaseAuthenticationMeta & AuthenticationMetaAllOf;
+export type AuthenticationMeta = BaseAuthenticationMeta & AuthenticationMetaAllOf

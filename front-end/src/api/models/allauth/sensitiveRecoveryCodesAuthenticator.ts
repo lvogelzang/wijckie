@@ -224,7 +224,7 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { RecoveryCodesAuthenticator } from './recoveryCodesAuthenticator';
-import type { SensitiveRecoveryCodesAuthenticatorAllOf } from './sensitiveRecoveryCodesAuthenticatorAllOf';
+import type { RecoveryCodesAuthenticator } from "./recoveryCodesAuthenticator"
+import type { SensitiveRecoveryCodesAuthenticatorAllOf } from "./sensitiveRecoveryCodesAuthenticatorAllOf"
 
-export type SensitiveRecoveryCodesAuthenticator = RecoveryCodesAuthenticator & SensitiveRecoveryCodesAuthenticatorAllOf;
+export type SensitiveRecoveryCodesAuthenticator = RecoveryCodesAuthenticator & SensitiveRecoveryCodesAuthenticatorAllOf

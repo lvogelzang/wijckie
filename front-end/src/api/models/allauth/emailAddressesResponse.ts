@@ -224,10 +224,10 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { EmailAddress } from './emailAddress';
-import type { StatusOK } from './statusOK';
+import type { EmailAddress } from "./emailAddress"
+import type { StatusOK } from "./statusOK"
 
 export type EmailAddressesResponse = {
-  data: EmailAddress[];
-  status: StatusOK;
-};
+    data: EmailAddress[]
+    status: StatusOK
+}

@@ -224,6 +224,6 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { ResetPassword } from './resetPassword';
+import type { ResetPassword } from "./resetPassword"
 
-export type ResetPasswordBody = ResetPassword;
+export type ResetPasswordBody = ResetPassword

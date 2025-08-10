@@ -224,10 +224,10 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { AuthenticatorID } from './authenticatorID';
+import type { AuthenticatorID } from "./authenticatorID"
 
 export type DeleteWebAuthnBody = {
-  /** The IDs of the authenticator that are to be deleted.
- */
-  authenticators: AuthenticatorID[];
-};
+    /** The IDs of the authenticator that are to be deleted.
+     */
+    authenticators: AuthenticatorID[]
+}

@@ -224,11 +224,12 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { Timestamp } from './timestamp';
-import type { AuthenticationMethodOneOfThreeMethod } from './authenticationMethodOneOfThreeMethod';
+import type { Timestamp } from "./timestamp"
+import type { Email } from "./email"
+import type { AuthenticationMethodOneOfThreeMethod } from "./authenticationMethodOneOfThreeMethod"
 
 export type AuthenticationMethodOneOfThree = {
-  at: Timestamp;
-  method: AuthenticationMethodOneOfThreeMethod;
-  reauthenticated: boolean;
-};
+    at: Timestamp
+    email: Email
+    method: AuthenticationMethodOneOfThreeMethod
+}

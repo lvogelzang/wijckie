@@ -224,9 +224,9 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { EmailVerificationInfo } from './emailVerificationInfo';
+import type { EmailVerificationInfo } from "./emailVerificationInfo"
 
 /**
  * Email verification information.
  */
-export type EmailVerificationInfoResponse = EmailVerificationInfo;
+export type EmailVerificationInfoResponse = EmailVerificationInfo

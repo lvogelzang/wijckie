@@ -224,9 +224,9 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { Timestamp } from './timestamp';
+import type { Timestamp } from "./timestamp"
 
 /**
  * @nullable
  */
-export type OptionalTimestamp = Timestamp;
+export type OptionalTimestamp = Timestamp

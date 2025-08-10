@@ -224,8 +224,8 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { Phone } from './phone';
+import type { Phone } from "./phone"
 
 export type LoginAllOfTwoAnyOfThree = {
-  phone: Phone;
-};
+    phone: Phone
+}

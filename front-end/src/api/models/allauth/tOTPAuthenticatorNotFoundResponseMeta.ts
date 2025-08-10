@@ -226,10 +226,10 @@ return authenticator names as follows:
  */
 
 export type TOTPAuthenticatorNotFoundResponseMeta = {
-  /** A TOTP secret that can be used to setup a new authenticator.
- */
-  secret: string;
-  /** otpauth URI from which a QR code can be generated and scanned by OTP clients.
- */
-  totp_url: string;
-};
+    /** A TOTP secret that can be used to setup a new authenticator.
+     */
+    secret: string
+    /** otpauth URI from which a QR code can be generated and scanned by OTP clients.
+     */
+    totp_url: string
+}

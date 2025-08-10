@@ -224,9 +224,9 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { Reauthenticate } from './reauthenticate';
+import type { Reauthenticate } from "./reauthenticate"
 
 /**
  * Reauthenticate.
  */
-export type ReauthenticateBody = Reauthenticate;
+export type ReauthenticateBody = Reauthenticate

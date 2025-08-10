@@ -230,5 +230,5 @@ return authenticator names as follows:
 
  */
 export type AuthenticationMetaAllOf = {
-  is_authenticated: boolean;
-};
+    is_authenticated: boolean
+}

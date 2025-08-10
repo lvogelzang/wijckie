@@ -224,8 +224,8 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { Code } from './code';
+import type { Code } from "./code"
 
 export interface ConfirmLoginCode {
-  code: Code;
+    code: Code
 }

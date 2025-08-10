@@ -224,10 +224,10 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { SensitiveRecoveryCodesAuthenticator } from './sensitiveRecoveryCodesAuthenticator';
-import type { StatusOK } from './statusOK';
+import type { SensitiveRecoveryCodesAuthenticator } from "./sensitiveRecoveryCodesAuthenticator"
+import type { StatusOK } from "./statusOK"
 
 export type RecoveryCodesResponse = {
-  data: SensitiveRecoveryCodesAuthenticator;
-  status: StatusOK;
-};
+    data: SensitiveRecoveryCodesAuthenticator
+    status: StatusOK
+}

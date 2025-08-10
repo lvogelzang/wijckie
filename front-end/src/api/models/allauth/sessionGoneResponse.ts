@@ -224,16 +224,16 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { SessionGoneResponseData } from './sessionGoneResponseData';
-import type { AuthenticationMeta } from './authenticationMeta';
-import type { SessionGoneResponseStatus } from './sessionGoneResponseStatus';
+import type { SessionGoneResponseData } from "./sessionGoneResponseData"
+import type { AuthenticationMeta } from "./authenticationMeta"
+import type { SessionGoneResponseStatus } from "./sessionGoneResponseStatus"
 
 /**
  * The session is expired or invalid.
 
  */
 export interface SessionGoneResponse {
-  data: SessionGoneResponseData;
-  meta: AuthenticationMeta;
-  status: SessionGoneResponseStatus;
+    data: SessionGoneResponseData
+    meta: AuthenticationMeta
+    status: SessionGoneResponseStatus
 }

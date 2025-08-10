@@ -224,10 +224,10 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { TOTPAuthenticatorNotFoundResponseMeta } from './tOTPAuthenticatorNotFoundResponseMeta';
-import type { TOTPAuthenticatorNotFoundResponseStatus } from './tOTPAuthenticatorNotFoundResponseStatus';
+import type { TOTPAuthenticatorNotFoundResponseMeta } from "./tOTPAuthenticatorNotFoundResponseMeta"
+import type { TOTPAuthenticatorNotFoundResponseStatus } from "./tOTPAuthenticatorNotFoundResponseStatus"
 
 export type TOTPAuthenticatorNotFoundResponse = {
-  meta: TOTPAuthenticatorNotFoundResponseMeta;
-  status: TOTPAuthenticatorNotFoundResponseStatus;
-};
+    meta: TOTPAuthenticatorNotFoundResponseMeta
+    status: TOTPAuthenticatorNotFoundResponseStatus
+}

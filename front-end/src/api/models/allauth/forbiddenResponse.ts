@@ -224,8 +224,8 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { ForbiddenResponseStatus } from './forbiddenResponseStatus';
+import type { ForbiddenResponseStatus } from "./forbiddenResponseStatus"
 
 export interface ForbiddenResponse {
-  status: ForbiddenResponseStatus;
+    status: ForbiddenResponseStatus
 }

@@ -224,10 +224,10 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { AuthenticatedResponse } from './authenticatedResponse';
+import type { AuthenticatedResponse } from "./authenticatedResponse"
 
 /**
  * Authenticated by password.
 
  */
-export type AuthenticatedByPasswordResponse = AuthenticatedResponse;
+export type AuthenticatedByPasswordResponse = AuthenticatedResponse

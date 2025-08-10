@@ -224,6 +224,6 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { VerifyPhone } from './verifyPhone';
+import type { VerifyPhone } from "./verifyPhone"
 
-export type VerifyPhoneBody = VerifyPhone;
+export type VerifyPhoneBody = VerifyPhone

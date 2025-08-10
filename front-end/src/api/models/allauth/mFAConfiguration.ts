@@ -224,14 +224,14 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { AuthenticatorType } from './authenticatorType';
+import type { AuthenticatorType } from "./authenticatorType"
 
 /**
  * Configuration of the Django `allauth.mfa` app.
 
  */
 export interface MFAConfiguration {
-  /** Matches `settings.MFA_SUPPORTED_TYPES`.
- */
-  supported_types: AuthenticatorType[];
+    /** Matches `settings.MFA_SUPPORTED_TYPES`.
+     */
+    supported_types: AuthenticatorType[]
 }

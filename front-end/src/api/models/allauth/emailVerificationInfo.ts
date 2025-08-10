@@ -224,12 +224,12 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { EmailVerificationInfoData } from './emailVerificationInfoData';
-import type { EmailVerificationInfoMeta } from './emailVerificationInfoMeta';
-import type { StatusOK } from './statusOK';
+import type { EmailVerificationInfoData } from "./emailVerificationInfoData"
+import type { EmailVerificationInfoMeta } from "./emailVerificationInfoMeta"
+import type { StatusOK } from "./statusOK"
 
 export interface EmailVerificationInfo {
-  data: EmailVerificationInfoData;
-  meta: EmailVerificationInfoMeta;
-  status: StatusOK;
+    data: EmailVerificationInfoData
+    meta: EmailVerificationInfoMeta
+    status: StatusOK
 }

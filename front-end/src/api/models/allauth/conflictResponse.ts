@@ -224,8 +224,8 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { ConflictResponseStatus } from './conflictResponseStatus';
+import type { ConflictResponseStatus } from "./conflictResponseStatus"
 
 export interface ConflictResponse {
-  status: ConflictResponseStatus;
+    status: ConflictResponseStatus
 }

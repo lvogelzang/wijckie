@@ -225,10 +225,9 @@ return authenticator names as follows:
  * OpenAPI spec version: 1
  */
 
-export type TOTPAuthenticatorAllOfType = typeof TOTPAuthenticatorAllOfType[keyof typeof TOTPAuthenticatorAllOfType];
-
+export type TOTPAuthenticatorAllOfType = (typeof TOTPAuthenticatorAllOfType)[keyof typeof TOTPAuthenticatorAllOfType]
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const TOTPAuthenticatorAllOfType = {
-  totp: 'totp',
-} as const;
+    totp: "totp",
+} as const

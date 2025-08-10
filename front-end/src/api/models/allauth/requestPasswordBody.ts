@@ -224,9 +224,9 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { RequestPassword } from './requestPassword';
+import type { RequestPassword } from "./requestPassword"
 
 /**
  * Request password.
  */
-export type RequestPasswordBody = RequestPassword;
+export type RequestPasswordBody = RequestPassword

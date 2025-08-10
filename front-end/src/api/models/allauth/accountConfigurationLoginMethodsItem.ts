@@ -225,11 +225,10 @@ return authenticator names as follows:
  * OpenAPI spec version: 1
  */
 
-export type AccountConfigurationLoginMethodsItem = typeof AccountConfigurationLoginMethodsItem[keyof typeof AccountConfigurationLoginMethodsItem];
-
+export type AccountConfigurationLoginMethodsItem = (typeof AccountConfigurationLoginMethodsItem)[keyof typeof AccountConfigurationLoginMethodsItem]
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const AccountConfigurationLoginMethodsItem = {
-  email: 'email',
-  username: 'username',
-} as const;
+    email: "email",
+    username: "username",
+} as const

@@ -224,6 +224,6 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { MFAAuthenticate } from './mFAAuthenticate';
+import type { MFAAuthenticate } from "./mFAAuthenticate"
 
-export type MFAAuthenticateBody = MFAAuthenticate;
+export type MFAAuthenticateBody = MFAAuthenticate

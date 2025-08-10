@@ -225,10 +225,9 @@ return authenticator names as follows:
  * OpenAPI spec version: 1
  */
 
-export type StatusAccepted = typeof StatusAccepted[keyof typeof StatusAccepted];
-
+export type StatusAccepted = (typeof StatusAccepted)[keyof typeof StatusAccepted]
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const StatusAccepted = {
-  NUMBER_202: 202,
-} as const;
+    NUMBER_202: 202,
+} as const

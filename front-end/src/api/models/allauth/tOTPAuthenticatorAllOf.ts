@@ -224,8 +224,8 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { TOTPAuthenticatorAllOfType } from './tOTPAuthenticatorAllOfType';
+import type { TOTPAuthenticatorAllOfType } from "./tOTPAuthenticatorAllOfType"
 
 export type TOTPAuthenticatorAllOf = {
-  type: TOTPAuthenticatorAllOfType;
-};
+    type: TOTPAuthenticatorAllOfType
+}

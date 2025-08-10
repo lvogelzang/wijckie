@@ -224,8 +224,8 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { StatusOK } from './statusOK';
+import type { StatusOK } from "./statusOK"
 
 export type StatusOKResponse = {
-  status: StatusOK;
-};
+    status: StatusOK
+}

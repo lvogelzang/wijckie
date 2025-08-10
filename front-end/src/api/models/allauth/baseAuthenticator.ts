@@ -224,9 +224,9 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { Timestamp } from './timestamp';
+import type { Timestamp } from "./timestamp"
 
 export interface BaseAuthenticator {
-  created_at: Timestamp;
-  last_used_at: Timestamp;
+    created_at: Timestamp
+    last_used_at: Timestamp
 }

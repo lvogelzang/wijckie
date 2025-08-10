@@ -224,8 +224,8 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { WebAuthnCredentialCreationOptionsCreationOptions } from './webAuthnCredentialCreationOptionsCreationOptions';
+import type { WebAuthnCredentialCreationOptionsCreationOptions } from "./webAuthnCredentialCreationOptionsCreationOptions"
 
 export interface WebAuthnCredentialCreationOptions {
-  creation_options: WebAuthnCredentialCreationOptionsCreationOptions;
+    creation_options: WebAuthnCredentialCreationOptionsCreationOptions
 }

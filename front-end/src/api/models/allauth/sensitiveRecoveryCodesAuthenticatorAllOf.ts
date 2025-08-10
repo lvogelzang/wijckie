@@ -224,10 +224,10 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { AuthenticatorCode } from './authenticatorCode';
+import type { AuthenticatorCode } from "./authenticatorCode"
 
 export type SensitiveRecoveryCodesAuthenticatorAllOf = {
-  /** The list of unused codes.
- */
-  unused_codes: AuthenticatorCode[];
-};
+    /** The list of unused codes.
+     */
+    unused_codes: AuthenticatorCode[]
+}

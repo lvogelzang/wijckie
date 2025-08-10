@@ -229,4 +229,4 @@ return authenticator names as follows:
  * An one-time code.
 
  */
-export type Code = string;
+export type Code = string

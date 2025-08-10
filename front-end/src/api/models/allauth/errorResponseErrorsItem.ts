@@ -226,13 +226,13 @@ return authenticator names as follows:
  */
 
 export type ErrorResponseErrorsItem = {
-  /** An error code.
- */
-  code: string;
-  /** A human readable error message.
- */
-  message: string;
-  /** The name of the input parameter that was incorrect.
- */
-  param?: string;
-};
+    /** An error code.
+     */
+    code: string
+    /** A human readable error message.
+     */
+    message: string
+    /** The name of the input parameter that was incorrect.
+     */
+    param?: string
+}

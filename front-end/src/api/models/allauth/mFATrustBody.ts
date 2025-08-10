@@ -224,6 +224,6 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { MFATrust } from './mFATrust';
+import type { MFATrust } from "./mFATrust"
 
-export type MFATrustBody = MFATrust;
+export type MFATrustBody = MFATrust

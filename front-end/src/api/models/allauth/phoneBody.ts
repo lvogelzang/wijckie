@@ -226,5 +226,5 @@ return authenticator names as follows:
  */
 
 export type PhoneBody = {
-  phone: string;
-};
+    phone: string
+}

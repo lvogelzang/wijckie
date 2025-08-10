@@ -224,10 +224,10 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { ProviderRedirect } from './providerRedirect';
+import type { ProviderRedirect } from "./providerRedirect"
 
 /**
  * Initiate the provider redirect flow.
 
  */
-export type ProviderRedirectBody = ProviderRedirect;
+export type ProviderRedirectBody = ProviderRedirect

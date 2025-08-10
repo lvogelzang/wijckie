@@ -224,11 +224,11 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { FlowId } from './flowId';
-import type { Provider } from './provider';
+import type { FlowId } from "./flowId"
+import type { Provider } from "./provider"
 
 export interface Flow {
-  id: FlowId;
-  is_pending?: boolean;
-  provider?: Provider;
+    id: FlowId
+    is_pending?: boolean
+    provider?: Provider
 }

@@ -224,14 +224,14 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { Process } from './process';
-import type { ProviderID } from './providerID';
-import type { ProviderTokenToken } from './providerTokenToken';
+import type { Process } from "./process"
+import type { ProviderID } from "./providerID"
+import type { ProviderTokenToken } from "./providerTokenToken"
 
 export interface ProviderToken {
-  process: Process;
-  provider: ProviderID;
-  /** The token.
- */
-  token: ProviderTokenToken;
+    process: Process
+    provider: ProviderID
+    /** The token.
+     */
+    token: ProviderTokenToken
 }

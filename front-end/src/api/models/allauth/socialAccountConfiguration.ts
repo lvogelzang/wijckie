@@ -224,12 +224,12 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { ProviderList } from './providerList';
+import type { ProviderList } from "./providerList"
 
 /**
  * Configuration of the Django `allauth.socialaccount` app.
 
  */
 export interface SocialAccountConfiguration {
-  providers: ProviderList;
+    providers: ProviderList
 }

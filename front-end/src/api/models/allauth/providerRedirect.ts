@@ -224,11 +224,11 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { Process } from './process';
-import type { ProviderID } from './providerID';
+import type { Process } from "./process"
+import type { ProviderID } from "./providerID"
 
 export interface ProviderRedirect {
-  /** The URL to return to after the redirect flow is complete.
+    /** The URL to return to after the redirect flow is complete.
 
 Note that this is not to be mistaken with the callback URL that you
 configure over at the OAuth provider during the OAuth app/client
@@ -257,7 +257,7 @@ setup. The flow is as follows:
      (e.g. email verification, or, provider signup). In case of
      errors a `?error=` is passed to the frontend callback URL.
  */
-  callback_url: string;
-  process: Process;
-  provider: ProviderID;
+    callback_url: string
+    process: Process
+    provider: ProviderID
 }

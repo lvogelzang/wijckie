@@ -228,4 +228,4 @@ return authenticator names as follows:
 /**
  * The password reset key
  */
-export type PasswordResetKeyParameter = string;
+export type PasswordResetKeyParameter = string

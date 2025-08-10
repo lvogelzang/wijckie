@@ -229,4 +229,4 @@ return authenticator names as follows:
  * An epoch based timestamp (trivial to parse using: `new Date(value)*1000`)
 
  */
-export type Timestamp = number;
+export type Timestamp = number

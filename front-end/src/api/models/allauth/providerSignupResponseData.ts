@@ -224,12 +224,12 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { ProviderAccount } from './providerAccount';
-import type { EmailAddress } from './emailAddress';
-import type { User } from './user';
+import type { ProviderAccount } from "./providerAccount"
+import type { EmailAddress } from "./emailAddress"
+import type { User } from "./user"
 
 export type ProviderSignupResponseData = {
-  account: ProviderAccount;
-  email: EmailAddress[];
-  user: User;
-};
+    account: ProviderAccount
+    email: EmailAddress[]
+    user: User
+}

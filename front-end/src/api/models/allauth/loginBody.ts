@@ -224,9 +224,9 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { Login } from './login';
+import type { Login } from "./login"
 
 /**
  * Login.
  */
-export type LoginBody = Login;
+export type LoginBody = Login

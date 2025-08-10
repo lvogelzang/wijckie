@@ -224,16 +224,16 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { AuthenticationResponseData } from './authenticationResponseData';
-import type { AuthenticationMeta } from './authenticationMeta';
-import type { AuthenticationResponseStatus } from './authenticationResponseStatus';
+import type { AuthenticationResponseData } from "./authenticationResponseData"
+import type { AuthenticationMeta } from "./authenticationMeta"
+import type { AuthenticationResponseStatus } from "./authenticationResponseStatus"
 
 /**
  * An authentication related response.
 
  */
 export interface AuthenticationResponse {
-  data: AuthenticationResponseData;
-  meta: AuthenticationMeta;
-  status: AuthenticationResponseStatus;
+    data: AuthenticationResponseData
+    meta: AuthenticationMeta
+    status: AuthenticationResponseStatus
 }

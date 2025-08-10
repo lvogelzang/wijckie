@@ -229,4 +229,4 @@ return authenticator names as follows:
  * Session token. Only needed when `client` is equal to `app`.
 
  */
-export type SessionTokenParameter = string;
+export type SessionTokenParameter = string

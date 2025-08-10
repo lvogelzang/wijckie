@@ -224,8 +224,8 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { AuthenticatorCode } from './authenticatorCode';
+import type { AuthenticatorCode } from "./authenticatorCode"
 
 export type SetupTOTPBody = {
-  code: AuthenticatorCode;
-};
+    code: AuthenticatorCode
+}

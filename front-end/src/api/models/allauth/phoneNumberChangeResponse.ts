@@ -224,10 +224,10 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { PhoneNumber } from './phoneNumber';
-import type { StatusAccepted } from './statusAccepted';
+import type { PhoneNumber } from "./phoneNumber"
+import type { StatusAccepted } from "./statusAccepted"
 
 export interface PhoneNumberChangeResponse {
-  data: PhoneNumber[];
-  status: StatusAccepted;
+    data: PhoneNumber[]
+    status: StatusAccepted
 }

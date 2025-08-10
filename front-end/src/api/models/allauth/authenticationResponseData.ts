@@ -224,8 +224,8 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { Flow } from './flow';
+import type { Flow } from "./flow"
 
 export type AuthenticationResponseData = {
-  flows: Flow[];
-};
+    flows: Flow[]
+}

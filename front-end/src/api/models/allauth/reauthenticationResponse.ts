@@ -224,16 +224,16 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { Authenticated } from './authenticated';
-import type { AuthenticatedMeta } from './authenticatedMeta';
-import type { ReauthenticationResponseStatus } from './reauthenticationResponseStatus';
+import type { Authenticated } from "./authenticated"
+import type { AuthenticatedMeta } from "./authenticatedMeta"
+import type { ReauthenticationResponseStatus } from "./reauthenticationResponseStatus"
 
 /**
  * A response indicating reauthentication is required.
 
  */
 export interface ReauthenticationResponse {
-  data: Authenticated;
-  meta: AuthenticatedMeta;
-  status: ReauthenticationResponseStatus;
+    data: Authenticated
+    meta: AuthenticatedMeta
+    status: ReauthenticationResponseStatus
 }

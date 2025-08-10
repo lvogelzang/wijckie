@@ -226,5 +226,5 @@ return authenticator names as follows:
  */
 
 export type EmailVerificationInfoMeta = {
-  is_authenticating: boolean;
-};
+    is_authenticating: boolean
+}

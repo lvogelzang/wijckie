@@ -224,8 +224,8 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { LoginAllOfTwoAnyOf } from './loginAllOfTwoAnyOf';
-import type { LoginAllOfTwoAnyOfTwo } from './loginAllOfTwoAnyOfTwo';
-import type { LoginAllOfTwoAnyOfThree } from './loginAllOfTwoAnyOfThree';
+import type { LoginAllOfTwoAnyOf } from "./loginAllOfTwoAnyOf"
+import type { LoginAllOfTwoAnyOfTwo } from "./loginAllOfTwoAnyOfTwo"
+import type { LoginAllOfTwoAnyOfThree } from "./loginAllOfTwoAnyOfThree"
 
-export type LoginAllOfTwo = LoginAllOfTwoAnyOf | LoginAllOfTwoAnyOfTwo | LoginAllOfTwoAnyOfThree;
+export type LoginAllOfTwo = LoginAllOfTwoAnyOf | LoginAllOfTwoAnyOfTwo | LoginAllOfTwoAnyOfThree

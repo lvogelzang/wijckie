@@ -225,10 +225,9 @@ return authenticator names as follows:
  * OpenAPI spec version: 1
  */
 
-export type TooManyRequestsResponseStatus = typeof TooManyRequestsResponseStatus[keyof typeof TooManyRequestsResponseStatus];
-
+export type TooManyRequestsResponseStatus = (typeof TooManyRequestsResponseStatus)[keyof typeof TooManyRequestsResponseStatus]
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const TooManyRequestsResponseStatus = {
-  NUMBER_429: 429,
-} as const;
+    NUMBER_429: 429,
+} as const

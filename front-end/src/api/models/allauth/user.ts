@@ -224,20 +224,18 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { Email } from './email';
-import type { UserId } from './userId';
-import type { Username } from './username';
 
 export interface User {
-  /** The display name for the user.
- */
-  display?: string;
-  email?: Email;
-  /** Whether or not the account has a password set.
- */
-  has_usable_password?: boolean;
-  /** The user ID.
- */
-  id?: UserId;
-  username?: Username;
+    /** The display name for the user. */
+    display?: string
+    /** The email address. */
+    email?: string
+    /** The user ID. */
+    id?: string
+    /** The preferred language. */
+    language?: string
+    /** The preferred time zone. */
+    timeZone?: string
+    /** The username. */
+    username?: string
 }

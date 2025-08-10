@@ -224,10 +224,10 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { ProviderSignupResponseData } from './providerSignupResponseData';
-import type { StatusOK } from './statusOK';
+import type { ProviderSignupResponseData } from "./providerSignupResponseData"
+import type { StatusOK } from "./statusOK"
 
 export type ProviderSignupResponse = {
-  data: ProviderSignupResponseData;
-  status: StatusOK;
-};
+    data: ProviderSignupResponseData
+    status: StatusOK
+}

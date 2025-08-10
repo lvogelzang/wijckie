@@ -7,15 +7,15 @@
  */
 
 export interface UserCreation {
-  readonly url: string;
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   * @maxLength 150
-   * @pattern ^[\w.@+-]+$
-   */
-  username: string;
-  /** @maxLength 254 */
-  email?: string;
-  /** Designates whether the user can log into this admin site. */
-  is_staff?: boolean;
+    readonly url: string
+    /**
+     * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+     * @maxLength 150
+     * @pattern ^[\w.@+-]+$
+     */
+    username: string
+    /** @maxLength 254 */
+    email?: string
+    /** Designates whether the user can log into this admin site. */
+    is_staff?: boolean
 }

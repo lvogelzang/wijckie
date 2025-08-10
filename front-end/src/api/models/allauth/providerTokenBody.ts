@@ -224,6 +224,6 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { ProviderToken } from './providerToken';
+import type { ProviderToken } from "./providerToken"
 
-export type ProviderTokenBody = ProviderToken;
+export type ProviderTokenBody = ProviderToken

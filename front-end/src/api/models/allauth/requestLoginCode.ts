@@ -224,7 +224,7 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { RequestLoginCodeAnyOf } from './requestLoginCodeAnyOf';
-import type { RequestLoginCodeAnyOfTwo } from './requestLoginCodeAnyOfTwo';
+import type { RequestLoginCodeAnyOf } from "./requestLoginCodeAnyOf"
+import type { RequestLoginCodeAnyOfTwo } from "./requestLoginCodeAnyOfTwo"
 
-export type RequestLoginCode = RequestLoginCodeAnyOf | RequestLoginCodeAnyOfTwo;
+export type RequestLoginCode = RequestLoginCodeAnyOf | RequestLoginCodeAnyOfTwo

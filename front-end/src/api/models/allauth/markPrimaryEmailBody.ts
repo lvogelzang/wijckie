@@ -226,10 +226,10 @@ return authenticator names as follows:
  */
 
 export type MarkPrimaryEmailBody = {
-  /** An email address.
- */
-  email: string;
-  /** Primary flag.
- */
-  primary: boolean;
-};
+    /** An email address.
+     */
+    email: string
+    /** Primary flag.
+     */
+    primary: boolean
+}

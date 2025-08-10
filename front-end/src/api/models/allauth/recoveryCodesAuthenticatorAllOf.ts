@@ -224,16 +224,16 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { RecoveryCodesAuthenticatorAllOfType } from './recoveryCodesAuthenticatorAllOfType';
+import type { RecoveryCodesAuthenticatorAllOfType } from "./recoveryCodesAuthenticatorAllOfType"
 
 export type RecoveryCodesAuthenticatorAllOf = {
-  /** The total number of recovery codes that initially were available.
- */
-  total_code_count: number;
-  /** The authenticator type.
- */
-  type: RecoveryCodesAuthenticatorAllOfType;
-  /** The number of recovery codes that are unused.
- */
-  unused_code_count: number;
-};
+    /** The total number of recovery codes that initially were available.
+     */
+    total_code_count: number
+    /** The authenticator type.
+     */
+    type: RecoveryCodesAuthenticatorAllOfType
+    /** The number of recovery codes that are unused.
+     */
+    unused_code_count: number
+}

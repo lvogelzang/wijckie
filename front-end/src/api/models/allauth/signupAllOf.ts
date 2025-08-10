@@ -224,8 +224,8 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { Password } from './password';
+import type { Password } from "./password"
 
 export type SignupAllOf = {
-  password: Password;
-};
+    password: Password
+}

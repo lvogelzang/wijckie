@@ -224,10 +224,10 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { ConfigurationResponseData } from './configurationResponseData';
-import type { StatusOK } from './statusOK';
+import type { ConfigurationResponseData } from "./configurationResponseData"
+import type { StatusOK } from "./statusOK"
 
 export interface ConfigurationResponse {
-  data: ConfigurationResponseData;
-  status: StatusOK;
+    data: ConfigurationResponseData
+    status: StatusOK
 }

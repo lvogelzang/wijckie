@@ -224,9 +224,19 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { AuthenticationMethodOneOf } from './authenticationMethodOneOf';
-import type { AuthenticationMethodOneOfThree } from './authenticationMethodOneOfThree';
-import type { AuthenticationMethodOneOfFive } from './authenticationMethodOneOfFive';
-import type { AuthenticationMethodOneOfSeven } from './authenticationMethodOneOfSeven';
+import type { AuthenticationMethodOneOf } from "./authenticationMethodOneOf"
+import type { AuthenticationMethodOneOfThree } from "./authenticationMethodOneOfThree"
+import type { AuthenticationMethodOneOfFive } from "./authenticationMethodOneOfFive"
+import type { AuthenticationMethodOneOfSeven } from "./authenticationMethodOneOfSeven"
+import type { AuthenticationMethodOneOfNine } from "./authenticationMethodOneOfNine"
+import type { AuthenticationMethodOneOfOneone } from "./authenticationMethodOneOfOneone"
+import type { AuthenticationMethodOneOfOnethree } from "./authenticationMethodOneOfOnethree"
 
-export type AuthenticationMethod = AuthenticationMethodOneOf | AuthenticationMethodOneOfThree | AuthenticationMethodOneOfFive | AuthenticationMethodOneOfSeven;
+export type AuthenticationMethod =
+    | AuthenticationMethodOneOf
+    | AuthenticationMethodOneOfThree
+    | AuthenticationMethodOneOfFive
+    | AuthenticationMethodOneOfSeven
+    | AuthenticationMethodOneOfNine
+    | AuthenticationMethodOneOfOneone
+    | AuthenticationMethodOneOfOnethree

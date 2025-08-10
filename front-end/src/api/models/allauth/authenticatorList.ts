@@ -224,6 +224,6 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { AuthenticatorListItem } from './authenticatorListItem';
+import type { AuthenticatorListItem } from "./authenticatorListItem"
 
-export type AuthenticatorList = AuthenticatorListItem[];
+export type AuthenticatorList = AuthenticatorListItem[]

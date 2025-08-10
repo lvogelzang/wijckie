@@ -224,9 +224,9 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { AuthenticatorID } from './authenticatorID';
+import type { AuthenticatorID } from "./authenticatorID"
 
 export type UpdateWebAuthnBody = {
-  id?: AuthenticatorID;
-  name?: string;
-};
+    id?: AuthenticatorID
+    name?: string
+}

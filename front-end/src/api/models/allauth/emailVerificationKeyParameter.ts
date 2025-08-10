@@ -228,4 +228,4 @@ return authenticator names as follows:
 /**
  * The email verification key
  */
-export type EmailVerificationKeyParameter = string;
+export type EmailVerificationKeyParameter = string

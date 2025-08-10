@@ -224,10 +224,10 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { ProviderAccountID } from './providerAccountID';
-import type { ProviderID } from './providerID';
+import type { ProviderAccountID } from "./providerAccountID"
+import type { ProviderID } from "./providerID"
 
 export type ProviderAccountBody = {
-  account: ProviderAccountID;
-  provider: ProviderID;
-};
+    account: ProviderAccountID
+    provider: ProviderID
+}

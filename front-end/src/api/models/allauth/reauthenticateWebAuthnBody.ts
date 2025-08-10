@@ -224,8 +224,8 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { WebAuthnCredential } from './webAuthnCredential';
+import type { WebAuthnCredential } from "./webAuthnCredential"
 
 export type ReauthenticateWebAuthnBody = {
-  credential: WebAuthnCredential;
-};
+    credential: WebAuthnCredential
+}

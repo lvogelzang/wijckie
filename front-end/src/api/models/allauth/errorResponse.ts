@@ -224,10 +224,10 @@ return authenticator names as follows:
     }
  * OpenAPI spec version: 1
  */
-import type { ErrorResponseErrorsItem } from './errorResponseErrorsItem';
-import type { ErrorResponseStatus } from './errorResponseStatus';
+import type { ErrorResponseErrorsItem } from "./errorResponseErrorsItem"
+import type { ErrorResponseStatus } from "./errorResponseStatus"
 
 export interface ErrorResponse {
-  errors?: ErrorResponseErrorsItem[];
-  status?: ErrorResponseStatus;
+    errors?: ErrorResponseErrorsItem[]
+    status?: ErrorResponseStatus
 }
