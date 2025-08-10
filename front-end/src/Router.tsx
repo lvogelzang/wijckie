@@ -12,6 +12,8 @@ import CreatePasskey from "./pages/CreatePasskey"
 import CreateSignupPasskey from "./pages/CreateSignupPasskey"
 import Dashboard from "./pages/Dashboard"
 import Logout from "./pages/Logout"
+import Modules from "./pages/Modules"
+import InspirationModulePage from "./pages/modules/inspiration/InspirationModulePage"
 import MyAccount from "./pages/MyAccount"
 import ReauthenticateWebAuthn from "./pages/ReauthenticateWebAuthn"
 import RequestLoginCode from "./pages/RequestLoginCode"
@@ -126,6 +128,30 @@ const createRouter = () => {
                     element: (
                         <AuthenticatedRoute>
                             <Dashboard />
+                        </AuthenticatedRoute>
+                    ),
+                },
+                {
+                    path: "/modules",
+                    element: (
+                        <AuthenticatedRoute>
+                            <Modules />
+                        </AuthenticatedRoute>
+                    ),
+                },
+                {
+                    path: "/modules/inspiration/new",
+                    element: (
+                        <AuthenticatedRoute>
+                            <InspirationModulePage mode="Create" />
+                        </AuthenticatedRoute>
+                    ),
+                },
+                {
+                    path: "/modules/inspiration/:id",
+                    element: (
+                        <AuthenticatedRoute>
+                            <InspirationModulePage mode="Update" />
                         </AuthenticatedRoute>
                     ),
                 },

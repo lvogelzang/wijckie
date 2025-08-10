@@ -2,8 +2,21 @@
   "ErrorModal": {
     "title": "Fout"
   },
+  "Main": {
+    "something_went_wrong": "Er is iets misgegaan",
+    "deletion_confirmation_title": "Verwijderen {{object}}",
+    "deletion_confirmation": "Weet je zeker dat je {{object}} wilt verwijderen?",
+    "delete": "Verwijder",
+    "save": "Opslaan",
+    "name": "Naam",
+    "new": "Nieuw"
+  },
   "NavBar": {
     "language": "Taal"
+  },
+  "Table": {
+    "no_items_in_table": "Geen {{subject}}",
+    "show_amount": "Toon"
   },
   "ErrorMessage": {
     "invalid": "Vul een geldige waarde in",
@@ -51,6 +64,9 @@
   "Dashboard": {
     "title": "Dashboard"
   },
+  "Modules": {
+    "title": "Modules"
+  },
   "MyAccount": {
     "title": "Mijn account",
     "email_addresses": "E-mailadressen",
@@ -92,5 +108,8 @@
   },
   "VerifyEmailByCode": {
     "already_an_account": "Heb je al een account? Ga naar <1>Inloggen</1>."
+  },
+  "InspirationModule": {
+    "plural_name": "inspiratiemodules"
   }
 }

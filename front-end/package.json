@@ -13,6 +13,7 @@
     "@github/webauthn-json": "^2.1.1",
     "@popperjs/core": "^2.11.8",
     "@tanstack/react-query": "^5.81.2",
+    "@tanstack/react-table": "^8.21.3",
     "axios": "^1.9.0",
     "bootstrap": "^5.3.7",
     "i18next": "^25.2.1",

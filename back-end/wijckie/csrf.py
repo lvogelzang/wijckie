@@ -10,7 +10,7 @@ from rest_framework.permissions import AllowAny
     description="Get CSRF token as a cookie.",
     responses={
         200: inline_serializer(
-            name="Default OK response",
+            name="DefaultOKResponse",
             fields={"status": serializers.CharField(default="OK")},
         ),
     },

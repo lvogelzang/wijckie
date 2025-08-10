@@ -2,8 +2,21 @@
   "ErrorModal": {
     "title": "Error"
   },
+  "Main": {
+    "something_went_wrong": "Something went wrong...",
+    "deletion_confirmation_title": "Delete {{object}}",
+    "deletion_confirmation": "Are you sure you want to delete {{object}}?",
+    "delete": "Delete",
+    "save": "Save",
+    "name": "Name",
+    "new": "New"
+  },
   "NavBar": {
     "language": "Language"
+  },
+  "Table": {
+    "no_items_in_table": "No {{subject}}",
+    "show_amount": "Show"
   },
   "ErrorMessage": {
     "invalid": "Invalid value",
@@ -51,6 +64,9 @@
   "Dashboard": {
     "title": "Dashboard"
   },
+  "Modules": {
+    "title": "Modules"
+  },
   "MyAccount": {
     "title": "My account",
     "email_addresses": "E-mail addresses",
@@ -92,5 +108,8 @@
   },
   "VerifyEmailByCode": {
     "already_an_account": "Already have an account? Go to <1>Login</1>."
+  },
+  "InspirationModule": {
+    "plural_name": "inspiration modules"
   }
 }

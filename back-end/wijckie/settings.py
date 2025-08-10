@@ -156,8 +156,10 @@ class Base(Configuration):
     PASSKEY_LOGIN_ENABLED = True
 
     REST_FRAMEWORK = {
-        "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.IsAdminUser"],
+        "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.AllowAny"],
         "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+        "DEFAULT_PAGINATION_CLASS": "wijckie.pagination.DefaultPagination",
+        "PAGE_SIZE": 10,
     }
 
     SPECTACULAR_SETTINGS = {
