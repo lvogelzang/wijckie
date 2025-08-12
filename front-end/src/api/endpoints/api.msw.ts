@@ -9,7 +9,17 @@ import { faker } from "@faker-js/faker"
 
 import { HttpResponse, delay, http } from "msw"
 
-import type { DefaultOKResponse, InspirationModule, PaginatedInspirationModuleList, PaginatedUserList, User } from "../models/api"
+import { TypeEnum } from "../models/api"
+import type {
+    CreateInspirationOption,
+    DefaultOKResponse,
+    InspirationModule,
+    InspirationOption,
+    PaginatedInspirationModuleList,
+    PaginatedInspirationOptionList,
+    PaginatedUserList,
+    User,
+} from "../models/api"
 
 export const getCsrfRetrieveResponseMock = (overrideResponse: Partial<DefaultOKResponse> = {}): DefaultOKResponse => ({
     status: faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), undefined]),
@@ -56,6 +66,54 @@ export const getInspirationModulesPartialUpdateResponseMock = (overrideResponse:
     user: faker.number.int({ min: undefined, max: undefined, multipleOf: undefined }),
     createdAt: faker.string.alpha({ length: { min: 10, max: 20 } }),
     name: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    ...overrideResponse,
+})
+
+export const getInspirationOptionsListResponseMock = (overrideResponse: Partial<PaginatedInspirationOptionList> = {}): PaginatedInspirationOptionList => ({
+    pageCount: faker.number.int({ min: undefined, max: undefined, multipleOf: undefined }),
+    results: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({
+        id: faker.number.int({ min: undefined, max: undefined, multipleOf: undefined }),
+        module: faker.number.int({ min: undefined, max: undefined, multipleOf: undefined }),
+        name: faker.string.alpha({ length: { min: 10, max: 20 } }),
+        type: faker.helpers.arrayElement(Object.values(TypeEnum)),
+        text: faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), undefined]),
+    })),
+    ...overrideResponse,
+})
+
+export const getInspirationOptionsCreateResponseMock = (overrideResponse: Partial<CreateInspirationOption> = {}): CreateInspirationOption => ({
+    id: faker.number.int({ min: undefined, max: undefined, multipleOf: undefined }),
+    module: faker.number.int({ min: undefined, max: undefined, multipleOf: undefined }),
+    name: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    type: faker.helpers.arrayElement(Object.values(TypeEnum)),
+    text: faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), undefined]),
+    ...overrideResponse,
+})
+
+export const getInspirationOptionsRetrieveResponseMock = (overrideResponse: Partial<InspirationOption> = {}): InspirationOption => ({
+    id: faker.number.int({ min: undefined, max: undefined, multipleOf: undefined }),
+    module: faker.number.int({ min: undefined, max: undefined, multipleOf: undefined }),
+    name: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    type: faker.helpers.arrayElement(Object.values(TypeEnum)),
+    text: faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), undefined]),
+    ...overrideResponse,
+})
+
+export const getInspirationOptionsUpdateResponseMock = (overrideResponse: Partial<InspirationOption> = {}): InspirationOption => ({
+    id: faker.number.int({ min: undefined, max: undefined, multipleOf: undefined }),
+    module: faker.number.int({ min: undefined, max: undefined, multipleOf: undefined }),
+    name: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    type: faker.helpers.arrayElement(Object.values(TypeEnum)),
+    text: faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), undefined]),
+    ...overrideResponse,
+})
+
+export const getInspirationOptionsPartialUpdateResponseMock = (overrideResponse: Partial<InspirationOption> = {}): InspirationOption => ({
+    id: faker.number.int({ min: undefined, max: undefined, multipleOf: undefined }),
+    module: faker.number.int({ min: undefined, max: undefined, multipleOf: undefined }),
+    name: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    type: faker.helpers.arrayElement(Object.values(TypeEnum)),
+    text: faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), undefined]),
     ...overrideResponse,
 })
 
@@ -190,6 +248,83 @@ export const getInspirationModulesDestroyMockHandler = (overrideResponse?: void 
     })
 }
 
+export const getInspirationOptionsListMockHandler = (
+    overrideResponse?: PaginatedInspirationOptionList | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PaginatedInspirationOptionList> | PaginatedInspirationOptionList)
+) => {
+    return http.get("*/api/v1/inspiration-options/", async (info) => {
+        await delay(1000)
+
+        return new HttpResponse(
+            JSON.stringify(overrideResponse !== undefined ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) : getInspirationOptionsListResponseMock()),
+            { status: 200, headers: { "Content-Type": "application/json" } }
+        )
+    })
+}
+
+export const getInspirationOptionsCreateMockHandler = (
+    overrideResponse?: CreateInspirationOption | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<CreateInspirationOption> | CreateInspirationOption)
+) => {
+    return http.post("*/api/v1/inspiration-options/", async (info) => {
+        await delay(1000)
+
+        return new HttpResponse(
+            JSON.stringify(overrideResponse !== undefined ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) : getInspirationOptionsCreateResponseMock()),
+            { status: 201, headers: { "Content-Type": "application/json" } }
+        )
+    })
+}
+
+export const getInspirationOptionsRetrieveMockHandler = (
+    overrideResponse?: InspirationOption | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<InspirationOption> | InspirationOption)
+) => {
+    return http.get("*/api/v1/inspiration-options/:id/", async (info) => {
+        await delay(1000)
+
+        return new HttpResponse(
+            JSON.stringify(overrideResponse !== undefined ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) : getInspirationOptionsRetrieveResponseMock()),
+            { status: 200, headers: { "Content-Type": "application/json" } }
+        )
+    })
+}
+
+export const getInspirationOptionsUpdateMockHandler = (
+    overrideResponse?: InspirationOption | ((info: Parameters<Parameters<typeof http.put>[1]>[0]) => Promise<InspirationOption> | InspirationOption)
+) => {
+    return http.put("*/api/v1/inspiration-options/:id/", async (info) => {
+        await delay(1000)
+
+        return new HttpResponse(
+            JSON.stringify(overrideResponse !== undefined ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) : getInspirationOptionsUpdateResponseMock()),
+            { status: 200, headers: { "Content-Type": "application/json" } }
+        )
+    })
+}
+
+export const getInspirationOptionsPartialUpdateMockHandler = (
+    overrideResponse?: InspirationOption | ((info: Parameters<Parameters<typeof http.patch>[1]>[0]) => Promise<InspirationOption> | InspirationOption)
+) => {
+    return http.patch("*/api/v1/inspiration-options/:id/", async (info) => {
+        await delay(1000)
+
+        return new HttpResponse(
+            JSON.stringify(
+                overrideResponse !== undefined ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) : getInspirationOptionsPartialUpdateResponseMock()
+            ),
+            { status: 200, headers: { "Content-Type": "application/json" } }
+        )
+    })
+}
+
+export const getInspirationOptionsDestroyMockHandler = (overrideResponse?: void | ((info: Parameters<Parameters<typeof http.delete>[1]>[0]) => Promise<void> | void)) => {
+    return http.delete("*/api/v1/inspiration-options/:id/", async (info) => {
+        await delay(1000)
+        if (typeof overrideResponse === "function") {
+            await overrideResponse(info)
+        }
+        return new HttpResponse(null, { status: 204 })
+    })
+}
+
 export const getUsersListMockHandler = (overrideResponse?: PaginatedUserList | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PaginatedUserList> | PaginatedUserList)) => {
     return http.get("*/api/v1/users/", async (info) => {
         await delay(1000)
@@ -262,6 +397,12 @@ export const getWijckieAPIMock = () => [
     getInspirationModulesUpdateMockHandler(),
     getInspirationModulesPartialUpdateMockHandler(),
     getInspirationModulesDestroyMockHandler(),
+    getInspirationOptionsListMockHandler(),
+    getInspirationOptionsCreateMockHandler(),
+    getInspirationOptionsRetrieveMockHandler(),
+    getInspirationOptionsUpdateMockHandler(),
+    getInspirationOptionsPartialUpdateMockHandler(),
+    getInspirationOptionsDestroyMockHandler(),
     getUsersListMockHandler(),
     getUsersCreateMockHandler(),
     getUsersRetrieveMockHandler(),

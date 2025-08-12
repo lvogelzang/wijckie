@@ -22,12 +22,17 @@ import type {
 } from "@tanstack/react-query"
 
 import type {
+    CreateInspirationOption,
     DefaultOKResponse,
     InspirationModule,
     InspirationModulesListParams,
+    InspirationOption,
+    InspirationOptionsListParams,
     PaginatedInspirationModuleList,
+    PaginatedInspirationOptionList,
     PaginatedUserList,
     PatchedInspirationModule,
+    PatchedInspirationOption,
     PatchedUser,
     User,
     UsersListParams,
@@ -217,16 +222,16 @@ export const useInspirationModulesCreate = <TError = unknown, TContext = unknown
     return useMutation(mutationOptions, queryClient)
 }
 
-export const inspirationModulesRetrieve = (id: string, options?: SecondParameter<typeof customInstance>, signal?: AbortSignal) => {
+export const inspirationModulesRetrieve = (id: number, options?: SecondParameter<typeof customInstance>, signal?: AbortSignal) => {
     return customInstance<InspirationModule>({ url: `/api/v1/inspiration-modules/${id}/`, method: "GET", signal }, options)
 }
 
-export const getInspirationModulesRetrieveQueryKey = (id: string) => {
+export const getInspirationModulesRetrieveQueryKey = (id: number) => {
     return [`/api/v1/inspiration-modules/${id}/`] as const
 }
 
 export const getInspirationModulesRetrieveQueryOptions = <TData = Awaited<ReturnType<typeof inspirationModulesRetrieve>>, TError = unknown>(
-    id: string,
+    id: number,
     options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof inspirationModulesRetrieve>>, TError, TData>>; request?: SecondParameter<typeof customInstance> }
 ) => {
     const { query: queryOptions, request: requestOptions } = options ?? {}
@@ -244,7 +249,7 @@ export type InspirationModulesRetrieveQueryResult = NonNullable<Awaited<ReturnTy
 export type InspirationModulesRetrieveQueryError = unknown
 
 export function useInspirationModulesRetrieve<TData = Awaited<ReturnType<typeof inspirationModulesRetrieve>>, TError = unknown>(
-    id: string,
+    id: number,
     options: {
         query: Partial<UseQueryOptions<Awaited<ReturnType<typeof inspirationModulesRetrieve>>, TError, TData>> &
             Pick<DefinedInitialDataOptions<Awaited<ReturnType<typeof inspirationModulesRetrieve>>, TError, Awaited<ReturnType<typeof inspirationModulesRetrieve>>>, "initialData">
@@ -253,7 +258,7 @@ export function useInspirationModulesRetrieve<TData = Awaited<ReturnType<typeof 
     queryClient?: QueryClient
 ): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 export function useInspirationModulesRetrieve<TData = Awaited<ReturnType<typeof inspirationModulesRetrieve>>, TError = unknown>(
-    id: string,
+    id: number,
     options?: {
         query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof inspirationModulesRetrieve>>, TError, TData>> &
             Pick<UndefinedInitialDataOptions<Awaited<ReturnType<typeof inspirationModulesRetrieve>>, TError, Awaited<ReturnType<typeof inspirationModulesRetrieve>>>, "initialData">
@@ -262,13 +267,13 @@ export function useInspirationModulesRetrieve<TData = Awaited<ReturnType<typeof 
     queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 export function useInspirationModulesRetrieve<TData = Awaited<ReturnType<typeof inspirationModulesRetrieve>>, TError = unknown>(
-    id: string,
+    id: number,
     options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof inspirationModulesRetrieve>>, TError, TData>>; request?: SecondParameter<typeof customInstance> },
     queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 
 export function useInspirationModulesRetrieve<TData = Awaited<ReturnType<typeof inspirationModulesRetrieve>>, TError = unknown>(
-    id: string,
+    id: number,
     options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof inspirationModulesRetrieve>>, TError, TData>>; request?: SecondParameter<typeof customInstance> },
     queryClient?: QueryClient
 ): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
@@ -281,14 +286,14 @@ export function useInspirationModulesRetrieve<TData = Awaited<ReturnType<typeof 
     return query
 }
 
-export const inspirationModulesUpdate = (id: string, inspirationModule: NonReadonly<InspirationModule>, options?: SecondParameter<typeof customInstance>) => {
+export const inspirationModulesUpdate = (id: number, inspirationModule: NonReadonly<InspirationModule>, options?: SecondParameter<typeof customInstance>) => {
     return customInstance<InspirationModule>({ url: `/api/v1/inspiration-modules/${id}/`, method: "PUT", headers: { "Content-Type": "application/json" }, data: inspirationModule }, options)
 }
 
 export const getInspirationModulesUpdateMutationOptions = <TError = unknown, TContext = unknown>(options?: {
-    mutation?: UseMutationOptions<Awaited<ReturnType<typeof inspirationModulesUpdate>>, TError, { id: string; data: NonReadonly<InspirationModule> }, TContext>
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof inspirationModulesUpdate>>, TError, { id: number; data: NonReadonly<InspirationModule> }, TContext>
     request?: SecondParameter<typeof customInstance>
-}): UseMutationOptions<Awaited<ReturnType<typeof inspirationModulesUpdate>>, TError, { id: string; data: NonReadonly<InspirationModule> }, TContext> => {
+}): UseMutationOptions<Awaited<ReturnType<typeof inspirationModulesUpdate>>, TError, { id: number; data: NonReadonly<InspirationModule> }, TContext> => {
     const mutationKey = ["inspirationModulesUpdate"]
     const { mutation: mutationOptions, request: requestOptions } = options
         ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
@@ -296,7 +301,7 @@ export const getInspirationModulesUpdateMutationOptions = <TError = unknown, TCo
             : { ...options, mutation: { ...options.mutation, mutationKey } }
         : { mutation: { mutationKey }, request: undefined }
 
-    const mutationFn: MutationFunction<Awaited<ReturnType<typeof inspirationModulesUpdate>>, { id: string; data: NonReadonly<InspirationModule> }> = (props) => {
+    const mutationFn: MutationFunction<Awaited<ReturnType<typeof inspirationModulesUpdate>>, { id: number; data: NonReadonly<InspirationModule> }> = (props) => {
         const { id, data } = props ?? {}
 
         return inspirationModulesUpdate(id, data, requestOptions)
@@ -311,24 +316,24 @@ export type InspirationModulesUpdateMutationError = unknown
 
 export const useInspirationModulesUpdate = <TError = unknown, TContext = unknown>(
     options?: {
-        mutation?: UseMutationOptions<Awaited<ReturnType<typeof inspirationModulesUpdate>>, TError, { id: string; data: NonReadonly<InspirationModule> }, TContext>
+        mutation?: UseMutationOptions<Awaited<ReturnType<typeof inspirationModulesUpdate>>, TError, { id: number; data: NonReadonly<InspirationModule> }, TContext>
         request?: SecondParameter<typeof customInstance>
     },
     queryClient?: QueryClient
-): UseMutationResult<Awaited<ReturnType<typeof inspirationModulesUpdate>>, TError, { id: string; data: NonReadonly<InspirationModule> }, TContext> => {
+): UseMutationResult<Awaited<ReturnType<typeof inspirationModulesUpdate>>, TError, { id: number; data: NonReadonly<InspirationModule> }, TContext> => {
     const mutationOptions = getInspirationModulesUpdateMutationOptions(options)
 
     return useMutation(mutationOptions, queryClient)
 }
 
-export const inspirationModulesPartialUpdate = (id: string, patchedInspirationModule: NonReadonly<PatchedInspirationModule>, options?: SecondParameter<typeof customInstance>) => {
+export const inspirationModulesPartialUpdate = (id: number, patchedInspirationModule: NonReadonly<PatchedInspirationModule>, options?: SecondParameter<typeof customInstance>) => {
     return customInstance<InspirationModule>({ url: `/api/v1/inspiration-modules/${id}/`, method: "PATCH", headers: { "Content-Type": "application/json" }, data: patchedInspirationModule }, options)
 }
 
 export const getInspirationModulesPartialUpdateMutationOptions = <TError = unknown, TContext = unknown>(options?: {
-    mutation?: UseMutationOptions<Awaited<ReturnType<typeof inspirationModulesPartialUpdate>>, TError, { id: string; data: NonReadonly<PatchedInspirationModule> }, TContext>
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof inspirationModulesPartialUpdate>>, TError, { id: number; data: NonReadonly<PatchedInspirationModule> }, TContext>
     request?: SecondParameter<typeof customInstance>
-}): UseMutationOptions<Awaited<ReturnType<typeof inspirationModulesPartialUpdate>>, TError, { id: string; data: NonReadonly<PatchedInspirationModule> }, TContext> => {
+}): UseMutationOptions<Awaited<ReturnType<typeof inspirationModulesPartialUpdate>>, TError, { id: number; data: NonReadonly<PatchedInspirationModule> }, TContext> => {
     const mutationKey = ["inspirationModulesPartialUpdate"]
     const { mutation: mutationOptions, request: requestOptions } = options
         ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
@@ -336,7 +341,7 @@ export const getInspirationModulesPartialUpdateMutationOptions = <TError = unkno
             : { ...options, mutation: { ...options.mutation, mutationKey } }
         : { mutation: { mutationKey }, request: undefined }
 
-    const mutationFn: MutationFunction<Awaited<ReturnType<typeof inspirationModulesPartialUpdate>>, { id: string; data: NonReadonly<PatchedInspirationModule> }> = (props) => {
+    const mutationFn: MutationFunction<Awaited<ReturnType<typeof inspirationModulesPartialUpdate>>, { id: number; data: NonReadonly<PatchedInspirationModule> }> = (props) => {
         const { id, data } = props ?? {}
 
         return inspirationModulesPartialUpdate(id, data, requestOptions)
@@ -351,24 +356,24 @@ export type InspirationModulesPartialUpdateMutationError = unknown
 
 export const useInspirationModulesPartialUpdate = <TError = unknown, TContext = unknown>(
     options?: {
-        mutation?: UseMutationOptions<Awaited<ReturnType<typeof inspirationModulesPartialUpdate>>, TError, { id: string; data: NonReadonly<PatchedInspirationModule> }, TContext>
+        mutation?: UseMutationOptions<Awaited<ReturnType<typeof inspirationModulesPartialUpdate>>, TError, { id: number; data: NonReadonly<PatchedInspirationModule> }, TContext>
         request?: SecondParameter<typeof customInstance>
     },
     queryClient?: QueryClient
-): UseMutationResult<Awaited<ReturnType<typeof inspirationModulesPartialUpdate>>, TError, { id: string; data: NonReadonly<PatchedInspirationModule> }, TContext> => {
+): UseMutationResult<Awaited<ReturnType<typeof inspirationModulesPartialUpdate>>, TError, { id: number; data: NonReadonly<PatchedInspirationModule> }, TContext> => {
     const mutationOptions = getInspirationModulesPartialUpdateMutationOptions(options)
 
     return useMutation(mutationOptions, queryClient)
 }
 
-export const inspirationModulesDestroy = (id: string, options?: SecondParameter<typeof customInstance>) => {
+export const inspirationModulesDestroy = (id: number, options?: SecondParameter<typeof customInstance>) => {
     return customInstance<void>({ url: `/api/v1/inspiration-modules/${id}/`, method: "DELETE" }, options)
 }
 
 export const getInspirationModulesDestroyMutationOptions = <TError = unknown, TContext = unknown>(options?: {
-    mutation?: UseMutationOptions<Awaited<ReturnType<typeof inspirationModulesDestroy>>, TError, { id: string }, TContext>
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof inspirationModulesDestroy>>, TError, { id: number }, TContext>
     request?: SecondParameter<typeof customInstance>
-}): UseMutationOptions<Awaited<ReturnType<typeof inspirationModulesDestroy>>, TError, { id: string }, TContext> => {
+}): UseMutationOptions<Awaited<ReturnType<typeof inspirationModulesDestroy>>, TError, { id: number }, TContext> => {
     const mutationKey = ["inspirationModulesDestroy"]
     const { mutation: mutationOptions, request: requestOptions } = options
         ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
@@ -376,7 +381,7 @@ export const getInspirationModulesDestroyMutationOptions = <TError = unknown, TC
             : { ...options, mutation: { ...options.mutation, mutationKey } }
         : { mutation: { mutationKey }, request: undefined }
 
-    const mutationFn: MutationFunction<Awaited<ReturnType<typeof inspirationModulesDestroy>>, { id: string }> = (props) => {
+    const mutationFn: MutationFunction<Awaited<ReturnType<typeof inspirationModulesDestroy>>, { id: number }> = (props) => {
         const { id } = props ?? {}
 
         return inspirationModulesDestroy(id, requestOptions)
@@ -390,10 +395,296 @@ export type InspirationModulesDestroyMutationResult = NonNullable<Awaited<Return
 export type InspirationModulesDestroyMutationError = unknown
 
 export const useInspirationModulesDestroy = <TError = unknown, TContext = unknown>(
-    options?: { mutation?: UseMutationOptions<Awaited<ReturnType<typeof inspirationModulesDestroy>>, TError, { id: string }, TContext>; request?: SecondParameter<typeof customInstance> },
+    options?: { mutation?: UseMutationOptions<Awaited<ReturnType<typeof inspirationModulesDestroy>>, TError, { id: number }, TContext>; request?: SecondParameter<typeof customInstance> },
     queryClient?: QueryClient
-): UseMutationResult<Awaited<ReturnType<typeof inspirationModulesDestroy>>, TError, { id: string }, TContext> => {
+): UseMutationResult<Awaited<ReturnType<typeof inspirationModulesDestroy>>, TError, { id: number }, TContext> => {
     const mutationOptions = getInspirationModulesDestroyMutationOptions(options)
+
+    return useMutation(mutationOptions, queryClient)
+}
+
+export const inspirationOptionsList = (params?: InspirationOptionsListParams, options?: SecondParameter<typeof customInstance>, signal?: AbortSignal) => {
+    return customInstance<PaginatedInspirationOptionList>({ url: `/api/v1/inspiration-options/`, method: "GET", params, signal }, options)
+}
+
+export const getInspirationOptionsListQueryKey = (params?: InspirationOptionsListParams) => {
+    return [`/api/v1/inspiration-options/`, ...(params ? [params] : [])] as const
+}
+
+export const getInspirationOptionsListQueryOptions = <TData = Awaited<ReturnType<typeof inspirationOptionsList>>, TError = unknown>(
+    params?: InspirationOptionsListParams,
+    options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof inspirationOptionsList>>, TError, TData>>; request?: SecondParameter<typeof customInstance> }
+) => {
+    const { query: queryOptions, request: requestOptions } = options ?? {}
+
+    const queryKey = queryOptions?.queryKey ?? getInspirationOptionsListQueryKey(params)
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof inspirationOptionsList>>> = ({ signal }) => inspirationOptionsList(params, requestOptions, signal)
+
+    return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<Awaited<ReturnType<typeof inspirationOptionsList>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type InspirationOptionsListQueryResult = NonNullable<Awaited<ReturnType<typeof inspirationOptionsList>>>
+export type InspirationOptionsListQueryError = unknown
+
+export function useInspirationOptionsList<TData = Awaited<ReturnType<typeof inspirationOptionsList>>, TError = unknown>(
+    params: undefined | InspirationOptionsListParams,
+    options: {
+        query: Partial<UseQueryOptions<Awaited<ReturnType<typeof inspirationOptionsList>>, TError, TData>> &
+            Pick<DefinedInitialDataOptions<Awaited<ReturnType<typeof inspirationOptionsList>>, TError, Awaited<ReturnType<typeof inspirationOptionsList>>>, "initialData">
+        request?: SecondParameter<typeof customInstance>
+    },
+    queryClient?: QueryClient
+): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useInspirationOptionsList<TData = Awaited<ReturnType<typeof inspirationOptionsList>>, TError = unknown>(
+    params?: InspirationOptionsListParams,
+    options?: {
+        query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof inspirationOptionsList>>, TError, TData>> &
+            Pick<UndefinedInitialDataOptions<Awaited<ReturnType<typeof inspirationOptionsList>>, TError, Awaited<ReturnType<typeof inspirationOptionsList>>>, "initialData">
+        request?: SecondParameter<typeof customInstance>
+    },
+    queryClient?: QueryClient
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useInspirationOptionsList<TData = Awaited<ReturnType<typeof inspirationOptionsList>>, TError = unknown>(
+    params?: InspirationOptionsListParams,
+    options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof inspirationOptionsList>>, TError, TData>>; request?: SecondParameter<typeof customInstance> },
+    queryClient?: QueryClient
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useInspirationOptionsList<TData = Awaited<ReturnType<typeof inspirationOptionsList>>, TError = unknown>(
+    params?: InspirationOptionsListParams,
+    options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof inspirationOptionsList>>, TError, TData>>; request?: SecondParameter<typeof customInstance> },
+    queryClient?: QueryClient
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+    const queryOptions = getInspirationOptionsListQueryOptions(params, options)
+
+    const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+    query.queryKey = queryOptions.queryKey
+
+    return query
+}
+
+export const inspirationOptionsCreate = (createInspirationOption: NonReadonly<CreateInspirationOption>, options?: SecondParameter<typeof customInstance>, signal?: AbortSignal) => {
+    return customInstance<CreateInspirationOption>(
+        { url: `/api/v1/inspiration-options/`, method: "POST", headers: { "Content-Type": "application/json" }, data: createInspirationOption, signal },
+        options
+    )
+}
+
+export const getInspirationOptionsCreateMutationOptions = <TError = unknown, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof inspirationOptionsCreate>>, TError, { data: NonReadonly<CreateInspirationOption> }, TContext>
+    request?: SecondParameter<typeof customInstance>
+}): UseMutationOptions<Awaited<ReturnType<typeof inspirationOptionsCreate>>, TError, { data: NonReadonly<CreateInspirationOption> }, TContext> => {
+    const mutationKey = ["inspirationOptionsCreate"]
+    const { mutation: mutationOptions, request: requestOptions } = options
+        ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+            ? options
+            : { ...options, mutation: { ...options.mutation, mutationKey } }
+        : { mutation: { mutationKey }, request: undefined }
+
+    const mutationFn: MutationFunction<Awaited<ReturnType<typeof inspirationOptionsCreate>>, { data: NonReadonly<CreateInspirationOption> }> = (props) => {
+        const { data } = props ?? {}
+
+        return inspirationOptionsCreate(data, requestOptions)
+    }
+
+    return { mutationFn, ...mutationOptions }
+}
+
+export type InspirationOptionsCreateMutationResult = NonNullable<Awaited<ReturnType<typeof inspirationOptionsCreate>>>
+export type InspirationOptionsCreateMutationBody = NonReadonly<CreateInspirationOption>
+export type InspirationOptionsCreateMutationError = unknown
+
+export const useInspirationOptionsCreate = <TError = unknown, TContext = unknown>(
+    options?: {
+        mutation?: UseMutationOptions<Awaited<ReturnType<typeof inspirationOptionsCreate>>, TError, { data: NonReadonly<CreateInspirationOption> }, TContext>
+        request?: SecondParameter<typeof customInstance>
+    },
+    queryClient?: QueryClient
+): UseMutationResult<Awaited<ReturnType<typeof inspirationOptionsCreate>>, TError, { data: NonReadonly<CreateInspirationOption> }, TContext> => {
+    const mutationOptions = getInspirationOptionsCreateMutationOptions(options)
+
+    return useMutation(mutationOptions, queryClient)
+}
+
+export const inspirationOptionsRetrieve = (id: number, options?: SecondParameter<typeof customInstance>, signal?: AbortSignal) => {
+    return customInstance<InspirationOption>({ url: `/api/v1/inspiration-options/${id}/`, method: "GET", signal }, options)
+}
+
+export const getInspirationOptionsRetrieveQueryKey = (id: number) => {
+    return [`/api/v1/inspiration-options/${id}/`] as const
+}
+
+export const getInspirationOptionsRetrieveQueryOptions = <TData = Awaited<ReturnType<typeof inspirationOptionsRetrieve>>, TError = unknown>(
+    id: number,
+    options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof inspirationOptionsRetrieve>>, TError, TData>>; request?: SecondParameter<typeof customInstance> }
+) => {
+    const { query: queryOptions, request: requestOptions } = options ?? {}
+
+    const queryKey = queryOptions?.queryKey ?? getInspirationOptionsRetrieveQueryKey(id)
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof inspirationOptionsRetrieve>>> = ({ signal }) => inspirationOptionsRetrieve(id, requestOptions, signal)
+
+    return { queryKey, queryFn, enabled: !!id, ...queryOptions } as UseQueryOptions<Awaited<ReturnType<typeof inspirationOptionsRetrieve>>, TError, TData> & {
+        queryKey: DataTag<QueryKey, TData, TError>
+    }
+}
+
+export type InspirationOptionsRetrieveQueryResult = NonNullable<Awaited<ReturnType<typeof inspirationOptionsRetrieve>>>
+export type InspirationOptionsRetrieveQueryError = unknown
+
+export function useInspirationOptionsRetrieve<TData = Awaited<ReturnType<typeof inspirationOptionsRetrieve>>, TError = unknown>(
+    id: number,
+    options: {
+        query: Partial<UseQueryOptions<Awaited<ReturnType<typeof inspirationOptionsRetrieve>>, TError, TData>> &
+            Pick<DefinedInitialDataOptions<Awaited<ReturnType<typeof inspirationOptionsRetrieve>>, TError, Awaited<ReturnType<typeof inspirationOptionsRetrieve>>>, "initialData">
+        request?: SecondParameter<typeof customInstance>
+    },
+    queryClient?: QueryClient
+): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useInspirationOptionsRetrieve<TData = Awaited<ReturnType<typeof inspirationOptionsRetrieve>>, TError = unknown>(
+    id: number,
+    options?: {
+        query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof inspirationOptionsRetrieve>>, TError, TData>> &
+            Pick<UndefinedInitialDataOptions<Awaited<ReturnType<typeof inspirationOptionsRetrieve>>, TError, Awaited<ReturnType<typeof inspirationOptionsRetrieve>>>, "initialData">
+        request?: SecondParameter<typeof customInstance>
+    },
+    queryClient?: QueryClient
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useInspirationOptionsRetrieve<TData = Awaited<ReturnType<typeof inspirationOptionsRetrieve>>, TError = unknown>(
+    id: number,
+    options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof inspirationOptionsRetrieve>>, TError, TData>>; request?: SecondParameter<typeof customInstance> },
+    queryClient?: QueryClient
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useInspirationOptionsRetrieve<TData = Awaited<ReturnType<typeof inspirationOptionsRetrieve>>, TError = unknown>(
+    id: number,
+    options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof inspirationOptionsRetrieve>>, TError, TData>>; request?: SecondParameter<typeof customInstance> },
+    queryClient?: QueryClient
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+    const queryOptions = getInspirationOptionsRetrieveQueryOptions(id, options)
+
+    const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+    query.queryKey = queryOptions.queryKey
+
+    return query
+}
+
+export const inspirationOptionsUpdate = (id: number, inspirationOption: NonReadonly<InspirationOption>, options?: SecondParameter<typeof customInstance>) => {
+    return customInstance<InspirationOption>({ url: `/api/v1/inspiration-options/${id}/`, method: "PUT", headers: { "Content-Type": "application/json" }, data: inspirationOption }, options)
+}
+
+export const getInspirationOptionsUpdateMutationOptions = <TError = unknown, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof inspirationOptionsUpdate>>, TError, { id: number; data: NonReadonly<InspirationOption> }, TContext>
+    request?: SecondParameter<typeof customInstance>
+}): UseMutationOptions<Awaited<ReturnType<typeof inspirationOptionsUpdate>>, TError, { id: number; data: NonReadonly<InspirationOption> }, TContext> => {
+    const mutationKey = ["inspirationOptionsUpdate"]
+    const { mutation: mutationOptions, request: requestOptions } = options
+        ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+            ? options
+            : { ...options, mutation: { ...options.mutation, mutationKey } }
+        : { mutation: { mutationKey }, request: undefined }
+
+    const mutationFn: MutationFunction<Awaited<ReturnType<typeof inspirationOptionsUpdate>>, { id: number; data: NonReadonly<InspirationOption> }> = (props) => {
+        const { id, data } = props ?? {}
+
+        return inspirationOptionsUpdate(id, data, requestOptions)
+    }
+
+    return { mutationFn, ...mutationOptions }
+}
+
+export type InspirationOptionsUpdateMutationResult = NonNullable<Awaited<ReturnType<typeof inspirationOptionsUpdate>>>
+export type InspirationOptionsUpdateMutationBody = NonReadonly<InspirationOption>
+export type InspirationOptionsUpdateMutationError = unknown
+
+export const useInspirationOptionsUpdate = <TError = unknown, TContext = unknown>(
+    options?: {
+        mutation?: UseMutationOptions<Awaited<ReturnType<typeof inspirationOptionsUpdate>>, TError, { id: number; data: NonReadonly<InspirationOption> }, TContext>
+        request?: SecondParameter<typeof customInstance>
+    },
+    queryClient?: QueryClient
+): UseMutationResult<Awaited<ReturnType<typeof inspirationOptionsUpdate>>, TError, { id: number; data: NonReadonly<InspirationOption> }, TContext> => {
+    const mutationOptions = getInspirationOptionsUpdateMutationOptions(options)
+
+    return useMutation(mutationOptions, queryClient)
+}
+
+export const inspirationOptionsPartialUpdate = (id: number, patchedInspirationOption: NonReadonly<PatchedInspirationOption>, options?: SecondParameter<typeof customInstance>) => {
+    return customInstance<InspirationOption>({ url: `/api/v1/inspiration-options/${id}/`, method: "PATCH", headers: { "Content-Type": "application/json" }, data: patchedInspirationOption }, options)
+}
+
+export const getInspirationOptionsPartialUpdateMutationOptions = <TError = unknown, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof inspirationOptionsPartialUpdate>>, TError, { id: number; data: NonReadonly<PatchedInspirationOption> }, TContext>
+    request?: SecondParameter<typeof customInstance>
+}): UseMutationOptions<Awaited<ReturnType<typeof inspirationOptionsPartialUpdate>>, TError, { id: number; data: NonReadonly<PatchedInspirationOption> }, TContext> => {
+    const mutationKey = ["inspirationOptionsPartialUpdate"]
+    const { mutation: mutationOptions, request: requestOptions } = options
+        ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+            ? options
+            : { ...options, mutation: { ...options.mutation, mutationKey } }
+        : { mutation: { mutationKey }, request: undefined }
+
+    const mutationFn: MutationFunction<Awaited<ReturnType<typeof inspirationOptionsPartialUpdate>>, { id: number; data: NonReadonly<PatchedInspirationOption> }> = (props) => {
+        const { id, data } = props ?? {}
+
+        return inspirationOptionsPartialUpdate(id, data, requestOptions)
+    }
+
+    return { mutationFn, ...mutationOptions }
+}
+
+export type InspirationOptionsPartialUpdateMutationResult = NonNullable<Awaited<ReturnType<typeof inspirationOptionsPartialUpdate>>>
+export type InspirationOptionsPartialUpdateMutationBody = NonReadonly<PatchedInspirationOption>
+export type InspirationOptionsPartialUpdateMutationError = unknown
+
+export const useInspirationOptionsPartialUpdate = <TError = unknown, TContext = unknown>(
+    options?: {
+        mutation?: UseMutationOptions<Awaited<ReturnType<typeof inspirationOptionsPartialUpdate>>, TError, { id: number; data: NonReadonly<PatchedInspirationOption> }, TContext>
+        request?: SecondParameter<typeof customInstance>
+    },
+    queryClient?: QueryClient
+): UseMutationResult<Awaited<ReturnType<typeof inspirationOptionsPartialUpdate>>, TError, { id: number; data: NonReadonly<PatchedInspirationOption> }, TContext> => {
+    const mutationOptions = getInspirationOptionsPartialUpdateMutationOptions(options)
+
+    return useMutation(mutationOptions, queryClient)
+}
+
+export const inspirationOptionsDestroy = (id: number, options?: SecondParameter<typeof customInstance>) => {
+    return customInstance<void>({ url: `/api/v1/inspiration-options/${id}/`, method: "DELETE" }, options)
+}
+
+export const getInspirationOptionsDestroyMutationOptions = <TError = unknown, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof inspirationOptionsDestroy>>, TError, { id: number }, TContext>
+    request?: SecondParameter<typeof customInstance>
+}): UseMutationOptions<Awaited<ReturnType<typeof inspirationOptionsDestroy>>, TError, { id: number }, TContext> => {
+    const mutationKey = ["inspirationOptionsDestroy"]
+    const { mutation: mutationOptions, request: requestOptions } = options
+        ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+            ? options
+            : { ...options, mutation: { ...options.mutation, mutationKey } }
+        : { mutation: { mutationKey }, request: undefined }
+
+    const mutationFn: MutationFunction<Awaited<ReturnType<typeof inspirationOptionsDestroy>>, { id: number }> = (props) => {
+        const { id } = props ?? {}
+
+        return inspirationOptionsDestroy(id, requestOptions)
+    }
+
+    return { mutationFn, ...mutationOptions }
+}
+
+export type InspirationOptionsDestroyMutationResult = NonNullable<Awaited<ReturnType<typeof inspirationOptionsDestroy>>>
+
+export type InspirationOptionsDestroyMutationError = unknown
+
+export const useInspirationOptionsDestroy = <TError = unknown, TContext = unknown>(
+    options?: { mutation?: UseMutationOptions<Awaited<ReturnType<typeof inspirationOptionsDestroy>>, TError, { id: number }, TContext>; request?: SecondParameter<typeof customInstance> },
+    queryClient?: QueryClient
+): UseMutationResult<Awaited<ReturnType<typeof inspirationOptionsDestroy>>, TError, { id: number }, TContext> => {
+    const mutationOptions = getInspirationOptionsDestroyMutationOptions(options)
 
     return useMutation(mutationOptions, queryClient)
 }
