@@ -11,14 +11,14 @@ import { useErrorHandler } from "../helpers/useErrorHandler"
 
 interface Props {
     mode: "Create" | "Update"
-    inspirationModule?: InspirationModule
+    module?: InspirationModule
 }
 
 interface Inputs {
     name: string
 }
 
-const InspirationModuleForm: FC<Props> = ({ mode, inspirationModule }) => {
+const InspirationModuleForm: FC<Props> = ({ mode, module }) => {
     const { t } = useTranslation()
     const navigate = useNavigate()
     const { handleFormErrors } = useErrorHandler()
@@ -31,7 +31,7 @@ const InspirationModuleForm: FC<Props> = ({ mode, inspirationModule }) => {
         setError,
         formState: { errors },
         handleSubmit,
-    } = useForm<Inputs>({ defaultValues: { name: mode === "Update" ? inspirationModule!.name : "" } })
+    } = useForm<Inputs>({ defaultValues: { name: mode === "Update" ? module!.name : "" } })
 
     const navigateToObject = useCallback(
         (object: InspirationModule) => {
@@ -55,16 +55,19 @@ const InspirationModuleForm: FC<Props> = ({ mode, inspirationModule }) => {
         [navigateToParent]
     )
 
-    const onError = useCallback((error: unknown) => {
-        handleFormErrors(setError, error, ["name"])
-    }, [])
+    const onError = useCallback(
+        (error: unknown) => {
+            handleFormErrors(setError, error, ["name"])
+        },
+        [handleFormErrors, setError]
+    )
 
     const onSubmit: SubmitHandler<Inputs> = useCallback(
         ({ name }) => {
             if (mode === "Create") {
                 create.mutate({ data: { name } }, { onSuccess, onError })
             } else if (mode === "Update") {
-                update.mutate({ id: inspirationModule!.id.toString(), data: { name } }, { onSuccess, onError })
+                update.mutate({ id: module!.id, data: { name } }, { onSuccess, onError })
             }
         },
         [mode, update]
@@ -72,19 +75,19 @@ const InspirationModuleForm: FC<Props> = ({ mode, inspirationModule }) => {
 
     const onDelete = useCallback(() => {
         return new Promise((onSuccess, onError) => {
-            destroy.mutate({ id: inspirationModule!.id.toString() }, { onSuccess, onError })
+            destroy.mutate({ id: module!.id }, { onSuccess, onError })
         })
-    }, [destroy, inspirationModule])
+    }, [destroy, module])
 
     return (
         <Form noValidate onSubmit={handleSubmit(onSubmit)}>
-            <h2>{mode === "Create" ? "NEW" : inspirationModule!.name}</h2>
+            <h2>{mode === "Create" ? t("Main.title_new") : module!.name}</h2>
             <Form.Group>
                 <Form.Label>{t("Main.name")}</Form.Label>
                 <Form.Control type="text" {...register("name")} isInvalid={!!errors.name} />
                 <Form.Control.Feedback type="invalid">{errors.name?.message}</Form.Control.Feedback>
             </Form.Group>
-            <SaveAndDelete mode={mode} name={`${inspirationModule?.name}`} onDelete={onDelete} onDeleted={navigateToParent} />
+            <SaveAndDelete mode={mode} name={`${module?.name}`} onDelete={onDelete} onDeleted={navigateToParent} />
             <RootFeedback errors={errors} />
         </Form>
     )

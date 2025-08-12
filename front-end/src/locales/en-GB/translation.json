@@ -8,7 +8,10 @@
     "deletion_confirmation": "Are you sure you want to delete {{object}}?",
     "delete": "Delete",
     "save": "Save",
+    "title_new": "New",
     "name": "Name",
+    "type": "Type",
+    "text": "Text",
     "new": "New"
   },
   "NavBar": {
@@ -24,6 +27,12 @@
     "incorrect_code": "Incorrect code",
     "required": "This field is required",
     "email": "Enter a valid e-mail address"
+  },
+  "InspirationOption": {
+    "type_text": "Text",
+    "type_image": "Image",
+    "plural_title": "Options",
+    "plural_name": "options"
   },
   "AddEmailAddress": {
     "title": "Add e-mail address",

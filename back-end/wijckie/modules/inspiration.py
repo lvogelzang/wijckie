@@ -1,7 +1,10 @@
-from drf_spectacular.utils import extend_schema
 from rest_framework import mixins, serializers, viewsets
 
-from wijckie_models.modules.inspiration import InspirationModule
+from wijckie_models.modules.inspiration import (
+    InspirationModule,
+    InspirationOption,
+    InspirationOptionType,
+)
 
 
 class InspirationModuleSerializer(serializers.ModelSerializer):
@@ -10,19 +13,39 @@ class InspirationModuleSerializer(serializers.ModelSerializer):
     name = serializers.CharField()
 
     def create(self, validated_data):
-        print(self.context)
         return InspirationModule.objects.create(
             **validated_data, user=self.context["request"].user
         )
 
-    def update(self, instance, validated_data):
-        instance.name = validated_data.get("name", instance.name)
-        instance.save()
-        return instance
-
     class Meta:
         model = InspirationModule
         fields = ["id", "user", "createdAt", "name"]
+
+
+class CreateInspirationOptionSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(read_only=True)
+    module = serializers.PrimaryKeyRelatedField(
+        queryset=InspirationModule.objects.all()
+    )
+    name = serializers.CharField()
+    type = serializers.ChoiceField(InspirationOptionType.choices)
+    text = serializers.CharField(required=False)
+
+    class Meta:
+        model = InspirationOption
+        fields = ["id", "module", "name", "type", "text"]
+
+
+class InspirationOptionSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(read_only=True)
+    module = serializers.PrimaryKeyRelatedField(read_only=True)
+    name = serializers.CharField()
+    type = serializers.ChoiceField(InspirationOptionType.choices)
+    text = serializers.CharField(required=False)
+
+    class Meta:
+        model = InspirationOption
+        fields = ["id", "module", "name", "type", "text"]
 
 
 class InspirationModuleViewSet(
@@ -36,4 +59,40 @@ class InspirationModuleViewSet(
     serializer_class = InspirationModuleSerializer
 
     def get_queryset(self):
-        return InspirationModule.objects.filter(user=self.request.user)
+        user = self.request.user
+        if user.is_anonymous:
+            return InspirationModule.objects.none()
+
+        queryset = InspirationModule.objects.filter(user=user)
+
+        return queryset
+
+
+class InspirationOptionViewSet(
+    mixins.CreateModelMixin,
+    mixins.RetrieveModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin,
+    mixins.ListModelMixin,
+    viewsets.GenericViewSet,
+):
+    filterset_fields = ["module"]
+
+    def get_serializer_class(self):
+        if self.request.method == "POST":
+            return CreateInspirationOptionSerializer
+        else:
+            return InspirationOptionSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_anonymous:
+            return InspirationOption.objects.none()
+
+        queryset = InspirationOption.objects.filter(module__user=user)
+
+        module = self.request.query_params.get("module")
+        if module is not None:
+            queryset = queryset.filter(module_id=module)
+
+        return queryset

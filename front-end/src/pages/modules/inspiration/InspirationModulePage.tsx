@@ -3,23 +3,25 @@ import { useParams } from "react-router-dom"
 import { useInspirationModulesRetrieve } from "../../../api/endpoints/api"
 import Loader from "../../../components/Loader"
 import InspirationModuleForm from "../../../forms/InspirationModuleForm"
+import InspirationOptionTable from "../../../tables/InspirationOptionTable"
 
 interface Props {
     mode: "Create" | "Update"
 }
 
 const InspirationModulePage: FC<Props> = ({ mode }) => {
-    const { id } = useParams()
+    const { moduleId } = useParams()
 
-    const { data: inspirationModule, isRefetching } = useInspirationModulesRetrieve(id!, { query: { enabled: mode === "Update" } })
+    const { data: module, isRefetching } = useInspirationModulesRetrieve(parseInt(moduleId!), { query: { enabled: mode === "Update" } })
 
-    if (mode === "Update" && (!inspirationModule || isRefetching)) {
+    if (mode === "Update" && (!module || isRefetching)) {
         return <Loader />
     }
 
     return (
         <div>
-            <InspirationModuleForm mode={mode} inspirationModule={inspirationModule} />
+            <InspirationModuleForm mode={mode} module={module} />
+            {mode === "Update" ? <InspirationOptionTable module={module!} /> : null}
         </div>
     )
 }

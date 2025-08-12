@@ -17,9 +17,13 @@ class InspirationModule(models.Model):
     type = ModuleType.INSPIRATION
     name = models.CharField(max_length=30, validators=[MinLengthValidator(1)])
 
+    class Meta:
+        ordering = ["user", "name", "id"]
+
 
 class InspirationOption(models.Model):
     module = models.ForeignKey(InspirationModule, on_delete=models.CASCADE)
+    name = models.CharField(max_length=30, validators=[MinLengthValidator(1)])
     type = models.TextField(choices=InspirationOptionType.choices)
     text = models.TextField(null=True)
     image = models.FileField(upload_to="inspiration", null=True)
@@ -35,6 +39,7 @@ class InspirationOption(models.Model):
                 name="inspiration_option__image",
             ),
         ]
+        ordering = ["module", "type", "name", "id"]
 
 
 class InspirationItem(models.Model):
@@ -44,8 +49,12 @@ class InspirationItem(models.Model):
 
     class Meta:
         unique_together = ("module", "date")
+        ordering = ["module", "date", "option", "id"]
 
 
 class InspirationWidget(models.Model):
     module = models.ForeignKey(InspirationModule, on_delete=models.CASCADE)
     name = models.CharField(max_length=30, validators=[MinLengthValidator(1)])
+
+    class Meta:
+        ordering = ["module", "name", "id"]

@@ -8,7 +8,10 @@
     "deletion_confirmation": "Weet je zeker dat je {{object}} wilt verwijderen?",
     "delete": "Verwijder",
     "save": "Opslaan",
+    "title_new": "Nieuw",
     "name": "Naam",
+    "type": "Type",
+    "text": "Tekst",
     "new": "Nieuw"
   },
   "NavBar": {
@@ -24,6 +27,12 @@
     "incorrect_code": "Incorrecte code",
     "required": "Dit veld is verplicht",
     "email": "Vul een geldig e-mailadres in"
+  },
+  "InspirationOption": {
+    "type_text": "Tekst",
+    "type_image": "Afbeelding",
+    "plural_title": "Opties",
+    "plural_name": "opties"
   },
   "AddEmailAddress": {
     "title": "E-mailadres toevoegen",

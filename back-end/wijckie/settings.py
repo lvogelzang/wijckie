@@ -46,6 +46,7 @@ class Base(Configuration):
         "allauth.mfa",
         "allauth.headless",
         "rest_framework",
+        "django_filters",
         "drf_spectacular",
     ]
 
@@ -156,9 +157,12 @@ class Base(Configuration):
     PASSKEY_LOGIN_ENABLED = True
 
     REST_FRAMEWORK = {
+        "DEFAULT_FILTER_BACKENDS": [
+            "django_filters.rest_framework.DjangoFilterBackend"
+        ],
+        "DEFAULT_PAGINATION_CLASS": "wijckie.pagination.DefaultPagination",
         "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.AllowAny"],
         "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
-        "DEFAULT_PAGINATION_CLASS": "wijckie.pagination.DefaultPagination",
         "PAGE_SIZE": 10,
     }
 

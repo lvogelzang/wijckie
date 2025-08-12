@@ -14,6 +14,7 @@ import Dashboard from "./pages/Dashboard"
 import Logout from "./pages/Logout"
 import Modules from "./pages/Modules"
 import InspirationModulePage from "./pages/modules/inspiration/InspirationModulePage"
+import InspirationOptionPage from "./pages/modules/inspiration/InspirationOptionPage"
 import MyAccount from "./pages/MyAccount"
 import ReauthenticateWebAuthn from "./pages/ReauthenticateWebAuthn"
 import RequestLoginCode from "./pages/RequestLoginCode"
@@ -148,10 +149,26 @@ const createRouter = () => {
                     ),
                 },
                 {
-                    path: "/modules/inspiration/:id",
+                    path: "/modules/inspiration/:moduleId",
                     element: (
                         <AuthenticatedRoute>
                             <InspirationModulePage mode="Update" />
+                        </AuthenticatedRoute>
+                    ),
+                },
+                {
+                    path: "/modules/inspiration/:moduleId/options/new",
+                    element: (
+                        <AuthenticatedRoute>
+                            <InspirationOptionPage mode="Create" />
+                        </AuthenticatedRoute>
+                    ),
+                },
+                {
+                    path: "/modules/inspiration/:moduleId/options/:optionId",
+                    element: (
+                        <AuthenticatedRoute>
+                            <InspirationOptionPage mode="Update" />
                         </AuthenticatedRoute>
                     ),
                 },

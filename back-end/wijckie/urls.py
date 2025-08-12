@@ -4,7 +4,10 @@ from django.urls import include, path
 from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView
 from rest_framework import routers, serializers, viewsets
 from wijckie.csrf import csrf
-from wijckie.modules.inspiration import InspirationModuleViewSet
+from wijckie.modules.inspiration import (
+    InspirationModuleViewSet,
+    InspirationOptionViewSet,
+)
 from wijckie_models.models import User
 
 
@@ -23,6 +26,9 @@ router = routers.DefaultRouter()
 router.register(r"users", UserViewSet)
 router.register(
     r"inspiration-modules", InspirationModuleViewSet, basename="inspiration-modules"
+)
+router.register(
+    r"inspiration-options", InspirationOptionViewSet, basename="inspiration-options"
 )
 
 urlpatterns = (

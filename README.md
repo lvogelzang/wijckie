@@ -43,3 +43,12 @@ Personal start page
 - `python manage.py migrate`
 - `python manage.py createsuperuser`
 - `DJANGO_RUNSERVER_HIDE_WARNING=true python manage.py runserver`
+
+### Refactor todos:
+
+- File uploads
+- Object based permissions
+- Remove magic code login: https://news.ycombinator.com/item?id=44819917
+- Put everything in private subnets, 2 options:
+  - Back-end in AWS App Runner with a VPC endpoints (costly) to reach smtp/rds/..
+  - Back-end in ECS service in private subnet, with load balancer (costly) to reach back-end
