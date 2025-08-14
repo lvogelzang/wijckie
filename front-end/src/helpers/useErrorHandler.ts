@@ -5,9 +5,49 @@ import { useTranslation } from "react-i18next"
 // Invalid: shows message that a value is invalid, like an e-mail address without @.
 // None: shows no message, useful when input components make the error clear without text.
 // General: show a general error message, useful if no field-related errors could be found.
-export type ErrorMessageType = "invalid" | "none" | "general" | "incorrect_code" | "required" | "email"
 
-const errorMessageTypes: ErrorMessageType[] = ["invalid", "none", "general", "incorrect_code", "required", "email"]
+// Sources:
+// - allauth docs
+// - rest_framework.exceptions
+// - rest_framework.validators
+// - rest_framework.authtoken.serializers
+// - https://docs.djangoproject.com/en/3.1/ref/forms/fields/#built-in-field-classes
+export type ErrorMessageType =
+    | "invalid"
+    | "none"
+    | "general"
+    | "incorrect_code"
+    | "required" // rest_framework.validators
+    | "email"
+    | "blank"
+    | "error"
+    | "parse_error"
+    | "authentication_failed"
+    | "not_authenticated"
+    | "permission_denied"
+    | "not_found"
+    | "method_not_allowed"
+    | "not_acceptable"
+    | "unsupported_media_type"
+    | "throttled"
+    | "unique" // rest_framework.validators
+    | "authorization" // rest_framework.authtoken.serializers
+    | "max_length"
+    | "min_length"
+    | "invalid_choice"
+    | "max_digits"
+    | "max_decimal_places"
+    | "max_whole_digits"
+    | "overflow"
+    | "missing" // missing file
+    | "empty" // empty file
+    | "invalid_list"
+    | "incomplete"
+    | "invalid_date"
+    | "invalid_time"
+    | "invalid_pk_value"
+
+const errorMessageTypes: ErrorMessageType[] = ["invalid", "none", "general", "incorrect_code", "required", "email", "blank"]
 
 export const useErrorHandler = () => {
     const { t } = useTranslation()
@@ -20,6 +60,7 @@ export const useErrorHandler = () => {
         translations.set("incorrect_code", t("ErrorMessage.incorrect_code"))
         translations.set("required", t("ErrorMessage.required"))
         translations.set("email", t("ErrorMessage.email"))
+        translations.set("blank", t("ErrorMessage.required"))
         return translations
     }, [t])
 
@@ -33,11 +74,20 @@ export const useErrorHandler = () => {
                     const errors = data.errors
                     if (Array.isArray(errors)) {
                         for (const e of errors) {
+                            // Allauth error response handling:
                             if ("code" in e && typeof e.code === "string" && "param" in e && typeof e.param === "string") {
                                 if (errorMessageTypes.includes(e.code)) {
                                     map.set(e.param, e.code)
                                 } else {
                                     map.set(e.param, "none")
+                                }
+                            }
+                            // Django Rest Framework error response handling:
+                            else if ("code" in e && typeof e.code === "string" && "attr" in e && typeof e.attr === "string") {
+                                if (errorMessageTypes.includes(e.code)) {
+                                    map.set(e.attr, e.code)
+                                } else {
+                                    map.set(e.attr, "none")
                                 }
                             }
                         }

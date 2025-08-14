@@ -48,6 +48,7 @@ class Base(Configuration):
         "rest_framework",
         "django_filters",
         "drf_spectacular",
+        "drf_standardized_errors",
     ]
 
     MIDDLEWARE = [
@@ -163,6 +164,7 @@ class Base(Configuration):
         "DEFAULT_PAGINATION_CLASS": "wijckie.pagination.DefaultPagination",
         "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.AllowAny"],
         "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+        "EXCEPTION_HANDLER": "drf_standardized_errors.handler.exception_handler",
         "PAGE_SIZE": 10,
     }
 
