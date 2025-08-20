@@ -81,7 +81,7 @@ const VerifyEmailByCode: FC = () => {
             <p>
                 <Trans i18nKey="VerifyEmailByCode.already_an_account">
                     Already have an account? Go to
-                    <Link to="/account/authenticate/webauthn">Login</Link>.
+                    <Link to="/account/logout">Login</Link>.
                 </Trans>
             </p>
         </div>
