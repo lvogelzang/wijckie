@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next"
 import { useNavigate } from "react-router-dom"
 import { useInspirationOptionsCreate, useInspirationOptionsDestroy, useInspirationOptionsUpdate } from "../api/endpoints/api"
 import { type InspirationModule, type InspirationOption, type TypeEnum } from "../api/models/api"
+import ErrorMessage from "../components/ErrorMessage"
 import RootFeedback from "../components/form/RootFeedback"
 import SaveAndDelete from "../components/form/SaveAndDelete"
 import { useErrorHandler } from "../helpers/useErrorHandler"
@@ -96,7 +97,9 @@ const InspirationOptionForm: FC<Props> = ({ mode, module, option }) => {
             <Form.Group hidden={selectedType !== "text"}>
                 <Form.Label>{t("Main.text")}</Form.Label>
                 <Form.Control type="text" {...register("text")} isInvalid={!!errors.text} />
-                <Form.Control.Feedback type="invalid">{errors.text?.message}</Form.Control.Feedback>
+                <Form.Control.Feedback type="invalid">
+                    <ErrorMessage error={errors.text} />
+                </Form.Control.Feedback>
             </Form.Group>
             <SaveAndDelete mode={mode} name={`${option?.name}`} onDelete={onDelete} onDeleted={navigateToParent} />
             <RootFeedback errors={errors} />
