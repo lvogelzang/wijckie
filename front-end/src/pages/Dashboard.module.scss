@@ -1,0 +1,21 @@
+.container {
+    background-color: yellow;
+    column-gap: 1rem;
+    column-count: 1;
+}
+
+@media (min-width: 767px) {
+    .container {
+        column-count: 2;
+    }
+}
+
+@media (min-width: 1140px) {
+    .container {
+        column-count: 3;
+    }
+}
+
+.block {
+    break-inside: avoid;
+}
