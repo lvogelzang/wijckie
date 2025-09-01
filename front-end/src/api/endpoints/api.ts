@@ -24,6 +24,7 @@ import type {
 import type {
     CreateInspirationOption,
     DefaultOKResponse,
+    FileUpload,
     InspirationModule,
     InspirationModulesListParams,
     InspirationOption,
@@ -118,6 +119,43 @@ export function useCsrfRetrieve<TData = Awaited<ReturnType<typeof csrfRetrieve>>
     query.queryKey = queryOptions.queryKey
 
     return query
+}
+
+export const fileUploadsCreate = (fileUpload: NonReadonly<FileUpload>, options?: SecondParameter<typeof customInstance>, signal?: AbortSignal) => {
+    return customInstance<FileUpload>({ url: `/api/v1/file-uploads/`, method: "POST", headers: { "Content-Type": "application/json" }, data: fileUpload, signal }, options)
+}
+
+export const getFileUploadsCreateMutationOptions = <TError = unknown, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof fileUploadsCreate>>, TError, { data: NonReadonly<FileUpload> }, TContext>
+    request?: SecondParameter<typeof customInstance>
+}): UseMutationOptions<Awaited<ReturnType<typeof fileUploadsCreate>>, TError, { data: NonReadonly<FileUpload> }, TContext> => {
+    const mutationKey = ["fileUploadsCreate"]
+    const { mutation: mutationOptions, request: requestOptions } = options
+        ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+            ? options
+            : { ...options, mutation: { ...options.mutation, mutationKey } }
+        : { mutation: { mutationKey }, request: undefined }
+
+    const mutationFn: MutationFunction<Awaited<ReturnType<typeof fileUploadsCreate>>, { data: NonReadonly<FileUpload> }> = (props) => {
+        const { data } = props ?? {}
+
+        return fileUploadsCreate(data, requestOptions)
+    }
+
+    return { mutationFn, ...mutationOptions }
+}
+
+export type FileUploadsCreateMutationResult = NonNullable<Awaited<ReturnType<typeof fileUploadsCreate>>>
+export type FileUploadsCreateMutationBody = NonReadonly<FileUpload>
+export type FileUploadsCreateMutationError = unknown
+
+export const useFileUploadsCreate = <TError = unknown, TContext = unknown>(
+    options?: { mutation?: UseMutationOptions<Awaited<ReturnType<typeof fileUploadsCreate>>, TError, { data: NonReadonly<FileUpload> }, TContext>; request?: SecondParameter<typeof customInstance> },
+    queryClient?: QueryClient
+): UseMutationResult<Awaited<ReturnType<typeof fileUploadsCreate>>, TError, { data: NonReadonly<FileUpload> }, TContext> => {
+    const mutationOptions = getFileUploadsCreateMutationOptions(options)
+
+    return useMutation(mutationOptions, queryClient)
 }
 
 export const inspirationModulesList = (params?: InspirationModulesListParams, options?: SecondParameter<typeof customInstance>, signal?: AbortSignal) => {

@@ -13,6 +13,7 @@ import { TypeEnum } from "../models/api"
 import type {
     CreateInspirationOption,
     DefaultOKResponse,
+    FileUpload,
     InspirationModule,
     InspirationOption,
     PaginatedInspirationModuleList,
@@ -23,6 +24,16 @@ import type {
 
 export const getCsrfRetrieveResponseMock = (overrideResponse: Partial<DefaultOKResponse> = {}): DefaultOKResponse => ({
     status: faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), undefined]),
+    ...overrideResponse,
+})
+
+export const getFileUploadsCreateResponseMock = (overrideResponse: Partial<FileUpload> = {}): FileUpload => ({
+    id: faker.number.int({ min: undefined, max: undefined, multipleOf: undefined }),
+    user: faker.number.int({ min: undefined, max: undefined, multipleOf: undefined }),
+    createdAt: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    fileUUID: faker.string.uuid(),
+    fileName: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    fileUploadURL: faker.string.alpha({ length: { min: 10, max: 20 } }),
     ...overrideResponse,
 })
 
@@ -77,6 +88,8 @@ export const getInspirationOptionsListResponseMock = (overrideResponse: Partial<
         name: faker.string.alpha({ length: { min: 10, max: 20 } }),
         type: faker.helpers.arrayElement(Object.values(TypeEnum)),
         text: faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), undefined]),
+        image: faker.helpers.arrayElement([faker.number.int({ min: undefined, max: undefined, multipleOf: undefined }), undefined]),
+        imageURL: faker.string.alpha({ length: { min: 10, max: 20 } }),
     })),
     ...overrideResponse,
 })
@@ -87,6 +100,8 @@ export const getInspirationOptionsCreateResponseMock = (overrideResponse: Partia
     name: faker.string.alpha({ length: { min: 10, max: 20 } }),
     type: faker.helpers.arrayElement(Object.values(TypeEnum)),
     text: faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), undefined]),
+    image: faker.helpers.arrayElement([faker.number.int({ min: undefined, max: undefined, multipleOf: undefined }), undefined]),
+    imageURL: faker.string.alpha({ length: { min: 10, max: 20 } }),
     ...overrideResponse,
 })
 
@@ -96,6 +111,8 @@ export const getInspirationOptionsRetrieveResponseMock = (overrideResponse: Part
     name: faker.string.alpha({ length: { min: 10, max: 20 } }),
     type: faker.helpers.arrayElement(Object.values(TypeEnum)),
     text: faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), undefined]),
+    image: faker.helpers.arrayElement([faker.number.int({ min: undefined, max: undefined, multipleOf: undefined }), undefined]),
+    imageURL: faker.string.alpha({ length: { min: 10, max: 20 } }),
     ...overrideResponse,
 })
 
@@ -105,6 +122,8 @@ export const getInspirationOptionsUpdateResponseMock = (overrideResponse: Partia
     name: faker.string.alpha({ length: { min: 10, max: 20 } }),
     type: faker.helpers.arrayElement(Object.values(TypeEnum)),
     text: faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), undefined]),
+    image: faker.helpers.arrayElement([faker.number.int({ min: undefined, max: undefined, multipleOf: undefined }), undefined]),
+    imageURL: faker.string.alpha({ length: { min: 10, max: 20 } }),
     ...overrideResponse,
 })
 
@@ -114,6 +133,8 @@ export const getInspirationOptionsPartialUpdateResponseMock = (overrideResponse:
     name: faker.string.alpha({ length: { min: 10, max: 20 } }),
     type: faker.helpers.arrayElement(Object.values(TypeEnum)),
     text: faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), undefined]),
+    image: faker.helpers.arrayElement([faker.number.int({ min: undefined, max: undefined, multipleOf: undefined }), undefined]),
+    imageURL: faker.string.alpha({ length: { min: 10, max: 20 } }),
     ...overrideResponse,
 })
 
@@ -167,6 +188,17 @@ export const getCsrfRetrieveMockHandler = (overrideResponse?: DefaultOKResponse 
         return new HttpResponse(
             JSON.stringify(overrideResponse !== undefined ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) : getCsrfRetrieveResponseMock()),
             { status: 200, headers: { "Content-Type": "application/json" } }
+        )
+    })
+}
+
+export const getFileUploadsCreateMockHandler = (overrideResponse?: FileUpload | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<FileUpload> | FileUpload)) => {
+    return http.post("*/api/v1/file-uploads/", async (info) => {
+        await delay(1000)
+
+        return new HttpResponse(
+            JSON.stringify(overrideResponse !== undefined ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) : getFileUploadsCreateResponseMock()),
+            { status: 201, headers: { "Content-Type": "application/json" } }
         )
     })
 }
@@ -391,6 +423,7 @@ export const getUsersDestroyMockHandler = (overrideResponse?: void | ((info: Par
 }
 export const getWijckieAPIMock = () => [
     getCsrfRetrieveMockHandler(),
+    getFileUploadsCreateMockHandler(),
     getInspirationModulesListMockHandler(),
     getInspirationModulesCreateMockHandler(),
     getInspirationModulesRetrieveMockHandler(),

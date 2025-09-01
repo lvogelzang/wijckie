@@ -6,10 +6,15 @@
  * OpenAPI spec version: 1.0.0
  */
 
+export * from "./createInspirationOption"
 export * from "./defaultOKResponse"
+export * from "./fileUpload"
+export * from "./imageUploadRequest"
+export * from "./imageUploadResponse"
 export * from "./inspirationModule"
 export * from "./inspirationModulesListParams"
 export * from "./inspirationOption"
+export * from "./inspirationOptionUpload"
 export * from "./inspirationOptionsListParams"
 export * from "./paginatedInspirationModuleList"
 export * from "./paginatedInspirationOptionList"
@@ -21,4 +26,3 @@ export * from "./typeEnum"
 export * from "./user"
 export * from "./userCreation"
 export * from "./usersListParams"
-export * from "./createInspirationOption"

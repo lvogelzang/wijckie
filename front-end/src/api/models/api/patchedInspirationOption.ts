@@ -13,4 +13,6 @@ export interface PatchedInspirationOption {
     name?: string
     type?: TypeEnum
     text?: string
+    image?: number
+    readonly imageURL?: string
 }
