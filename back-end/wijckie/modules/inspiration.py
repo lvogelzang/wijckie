@@ -1,6 +1,11 @@
+from django.conf import settings
+from django.core.files.storage import default_storage
+from drf_spectacular.utils import extend_schema_field
+from drf_spectacular.types import OpenApiTypes
 from rest_framework import mixins, serializers, viewsets
 
-from wijckie_models.modules.inspiration import (
+from wijckie_models.models import (
+    FileUpload,
     InspirationModule,
     InspirationOption,
     InspirationOptionType,
@@ -30,10 +35,24 @@ class CreateInspirationOptionSerializer(serializers.ModelSerializer):
     name = serializers.CharField()
     type = serializers.ChoiceField(InspirationOptionType.choices)
     text = serializers.CharField(required=False)
+    image = serializers.PrimaryKeyRelatedField(
+        queryset=FileUpload.objects.all(), required=False
+    )
+    imageURL = serializers.SerializerMethodField(
+        "get_image_url", read_only=True, required=False
+    )
+
+    @extend_schema_field(OpenApiTypes.STR)
+    def get_image_url(self, object):
+        return (
+            default_storage.url(f"{object.image.file_uuid}/{object.image.file_name}")
+            if object.image is not None
+            else None
+        )
 
     class Meta:
         model = InspirationOption
-        fields = ["id", "module", "name", "type", "text"]
+        fields = ["id", "module", "name", "type", "text", "image", "imageURL"]
 
 
 class InspirationOptionSerializer(serializers.ModelSerializer):
@@ -42,10 +61,24 @@ class InspirationOptionSerializer(serializers.ModelSerializer):
     name = serializers.CharField()
     type = serializers.ChoiceField(InspirationOptionType.choices)
     text = serializers.CharField(required=False)
+    image = serializers.PrimaryKeyRelatedField(
+        queryset=FileUpload.objects.all(), required=False
+    )
+    imageURL = serializers.SerializerMethodField(
+        "get_image_url", read_only=True, required=False
+    )
+
+    @extend_schema_field(OpenApiTypes.STR)
+    def get_image_url(self, object):
+        return (
+            default_storage.url(f"{object.image.file_uuid}/{object.image.file_name}")
+            if object.image is not None
+            else None
+        )
 
     class Meta:
         model = InspirationOption
-        fields = ["id", "module", "name", "type", "text"]
+        fields = ["id", "module", "name", "type", "text", "image", "imageURL"]
 
 
 class InspirationModuleViewSet(

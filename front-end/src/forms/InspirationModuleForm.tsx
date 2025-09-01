@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom"
 import { useInspirationModulesCreate, useInspirationModulesDestroy, useInspirationModulesUpdate } from "../api/endpoints/api"
 import type { InspirationModule } from "../api/models/api"
 import ErrorMessage from "../components/ErrorMessage"
-import RootFeedback from "../components/form/RootFeedback"
 import SaveAndDelete from "../components/form/SaveAndDelete"
 import { useErrorHandler } from "../helpers/useErrorHandler"
 
@@ -91,7 +90,7 @@ const InspirationModuleForm: FC<Props> = ({ mode, module }) => {
                 </Form.Control.Feedback>
             </Form.Group>
             <SaveAndDelete mode={mode} name={`${module?.name}`} onDelete={onDelete} onDeleted={navigateToParent} />
-            <RootFeedback errors={errors} />
+            <ErrorMessage error={errors.root} />
         </Form>
     )
 }

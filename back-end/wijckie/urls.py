@@ -3,7 +3,9 @@ from django.conf.urls.static import static
 from django.urls import include, path
 from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView
 from rest_framework import routers, serializers, viewsets
+
 from wijckie.csrf import csrf
+from wijckie.fileUpload import FileUploadViewSet, dev_file_upload
 from wijckie.modules.inspiration import (
     InspirationModuleViewSet,
     InspirationOptionViewSet,
@@ -23,6 +25,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
 
 router = routers.DefaultRouter()
+router.register(r"file-uploads", FileUploadViewSet, basename="file-uploads")
 router.register(r"users", UserViewSet)
 router.register(
     r"inspiration-modules", InspirationModuleViewSet, basename="inspiration-modules"
@@ -59,4 +62,6 @@ urlpatterns = (
         if settings.DEBUG
         else []
     )
+    # Makes media files upload endpoint available in debug mode.
+    + ([path(settings.MEDIA_UPLOAD_URL, dev_file_upload)] if settings.DEBUG else [])
 )

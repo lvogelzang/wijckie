@@ -174,3 +174,5 @@ cython_debug/
 .pypirc
 
 latest_version.txt
+
+back-end/media/

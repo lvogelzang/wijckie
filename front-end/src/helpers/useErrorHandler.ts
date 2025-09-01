@@ -46,8 +46,9 @@ export type ErrorMessageType =
     | "invalid_date"
     | "invalid_time"
     | "invalid_pk_value"
+    | "file_too_big"
 
-const errorMessageTypes: ErrorMessageType[] = ["invalid", "none", "general", "incorrect_code", "required", "email", "blank"]
+const errorMessageTypes: ErrorMessageType[] = ["invalid", "none", "general", "incorrect_code", "required", "email", "blank", "file_too_big"]
 
 export const useErrorHandler = () => {
     const { t } = useTranslation()
@@ -61,6 +62,7 @@ export const useErrorHandler = () => {
         translations.set("required", t("ErrorMessage.required"))
         translations.set("email", t("ErrorMessage.email"))
         translations.set("blank", t("ErrorMessage.required"))
+        translations.set("file_too_big", t("ErrorMessage.file_too_big"))
         return translations
     }, [t])
 
@@ -90,6 +92,20 @@ export const useErrorHandler = () => {
                                     map.set(e.attr, "none")
                                 }
                             }
+                        }
+                    }
+                }
+            }
+        } else if (error && typeof error === "object" && "manualErrors" in error) {
+            const manualErrors = error.manualErrors
+            if (Array.isArray(manualErrors)) {
+                for (const e of manualErrors) {
+                    // Allauth error response handling:
+                    if ("code" in e && typeof e.code === "string" && "field" in e && typeof e.param === "string") {
+                        if (errorMessageTypes.includes(e.code)) {
+                            map.set(e.field, e.code)
+                        } else {
+                            map.set(e.field, "none")
                         }
                     }
                 }

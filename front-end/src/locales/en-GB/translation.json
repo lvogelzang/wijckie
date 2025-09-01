@@ -12,6 +12,7 @@
     "name": "Name",
     "type": "Type",
     "text": "Text",
+    "image": "Image",
     "new": "New"
   },
   "NavBar": {
@@ -26,7 +27,8 @@
     "general": "Something went wrong...",
     "incorrect_code": "Incorrect code",
     "required": "This field is required",
-    "email": "Enter a valid e-mail address"
+    "email": "Enter a valid e-mail address",
+    "file_too_big": "File too large"
   },
   "InspirationOption": {
     "type_text": "Text",

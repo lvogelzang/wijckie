@@ -2,6 +2,7 @@ from django.core.validators import MinLengthValidator
 from django.db import models
 from django.db.models import Q
 from django.utils import timezone
+from ..fileUpload import FileUpload
 from ..user import User
 from ..module import ModuleType
 
@@ -26,17 +27,13 @@ class InspirationOption(models.Model):
     name = models.CharField(max_length=30, validators=[MinLengthValidator(1)])
     type = models.TextField(choices=InspirationOptionType.choices)
     text = models.TextField(null=True)
-    image = models.FileField(upload_to="inspiration", null=True)
+    image = models.ForeignKey(FileUpload, null=True, on_delete=models.CASCADE)
 
     class Meta:
         constraints = [
             models.CheckConstraint(
                 check=(~Q(type="text") | Q(text__isnull=False)),
                 name="inspiration_option__text",
-            ),
-            models.CheckConstraint(
-                check=(~Q(type="image") | Q(image__isnull=False)),
-                name="inspiration_option__image",
             ),
         ]
         ordering = ["module", "type", "name", "id"]

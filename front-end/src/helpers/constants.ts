@@ -1,0 +1,1 @@
+export const UPLOAD_SIZE_LIMIT = 10485760 // 10MB

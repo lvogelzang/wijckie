@@ -201,6 +201,7 @@ class Dev(Base):
     STATIC_URL = "static/"
     STATIC_ROOT = "static/"
     MEDIA_URL = "media/"
+    MEDIA_UPLOAD_URL = "upload/"
     MEDIA_ROOT = BASE_DIR / "media"
     STORAGES = {
         "default": {"BACKEND": "wijckie.mediaStorage.DevMediaStorage"},
@@ -241,6 +242,6 @@ class Prod(Base):
     AWS_DEFAULT_ACL = None
     AWS_QUERYSTRING_EXPIRE = 3600
     STORAGES = {
-        "default": {"BACKEND": "storages.backends.s3.S3Storage"},
+        "default": {"BACKEND": "wijckie.mediaStorage.S3MediaStorage"},
         "staticfiles": {"BACKEND": "wijckie.staticStorage.StaticStorage"},
     }

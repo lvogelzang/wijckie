@@ -12,6 +12,7 @@
     "name": "Naam",
     "type": "Type",
     "text": "Tekst",
+    "image": "Afbeelding",
     "new": "Nieuw"
   },
   "NavBar": {
@@ -26,7 +27,8 @@
     "general": "Er is iets misgegaan...",
     "incorrect_code": "Incorrecte code",
     "required": "Dit veld is verplicht",
-    "email": "Vul een geldig e-mailadres in"
+    "email": "Vul een geldig e-mailadres in",
+    "file_too_big": "Bestand te groot"
   },
   "InspirationOption": {
     "type_text": "Tekst",
