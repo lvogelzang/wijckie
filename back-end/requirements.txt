@@ -15,6 +15,7 @@ django-storages==1.14.6
 djangorestframework==3.16.0
 drf-spectacular==0.28.0
 drf-spectacular-sidecar==2025.6.1
+drf-standardized-errors==0.15.0
 fido2==2.0.0
 gunicorn==23.0.0
 inflection==0.5.1
