@@ -1,4 +1,4 @@
-import { useCallback, type FC } from "react"
+import { useCallback } from "react"
 import { Button, Modal } from "react-bootstrap"
 import { useTranslation } from "react-i18next"
 
@@ -7,7 +7,7 @@ interface Props {
     setError: (error: string | null) => void
 }
 
-const ErrorModal: FC<Props> = ({ error, setError }) => {
+const ErrorModal = ({ error, setError }: Props) => {
     const { t } = useTranslation()
 
     const onClose = useCallback(() => setError(null), [setError])

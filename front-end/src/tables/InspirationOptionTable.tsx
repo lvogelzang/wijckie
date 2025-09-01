@@ -1,5 +1,5 @@
 import type { ColumnDef } from "@tanstack/react-table"
-import { useMemo, type FC } from "react"
+import { useMemo } from "react"
 import { useTranslation } from "react-i18next"
 import { Link } from "react-router-dom"
 import { useInspirationOptionsList } from "../api/endpoints/api"
@@ -11,7 +11,7 @@ interface Props {
     module: InspirationModule
 }
 
-const InspirationOptionTable: FC<Props> = ({ module }) => {
+const InspirationOptionTable = ({ module }: Props) => {
     const { t } = useTranslation()
     const dataQuery = useInspirationOptionsList({ module: module.id })
 

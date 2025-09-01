@@ -1,4 +1,3 @@
-import type { FC } from "react"
 import { useParams } from "react-router-dom"
 import { useInspirationModulesRetrieve } from "../../../api/endpoints/api"
 import Loader from "../../../components/Loader"
@@ -9,7 +8,7 @@ interface Props {
     mode: "Create" | "Update"
 }
 
-const InspirationModulePage: FC<Props> = ({ mode }) => {
+const InspirationModulePage = ({ mode }: Props) => {
     const { moduleId } = useParams()
 
     const { data: module, isRefetching } = useInspirationModulesRetrieve(parseInt(moduleId!), { query: { enabled: mode === "Update" } })

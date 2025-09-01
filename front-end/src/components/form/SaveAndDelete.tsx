@@ -1,4 +1,4 @@
-import { useCallback, useState, type FC } from "react"
+import { useCallback, useState } from "react"
 import { Button, Form } from "react-bootstrap"
 import { useTranslation } from "react-i18next"
 import DeleteConfirmationModal from "./DeleteConfirmationModal"
@@ -10,7 +10,7 @@ interface Props {
     onDeleted?: () => void
 }
 
-const SaveAndDelete: FC<Props> = ({ mode, name, onDelete, onDeleted }) => {
+const SaveAndDelete = ({ mode, name, onDelete, onDeleted }: Props) => {
     const { t } = useTranslation()
     const [showConfirmationModal, setShowConfirmationModal] = useState(false)
 

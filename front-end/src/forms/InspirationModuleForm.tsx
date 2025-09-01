@@ -1,4 +1,4 @@
-import { useCallback, type FC } from "react"
+import { useCallback } from "react"
 import { Form } from "react-bootstrap"
 import { useForm, type SubmitHandler } from "react-hook-form"
 import { useTranslation } from "react-i18next"
@@ -18,7 +18,7 @@ interface Inputs {
     name: string
 }
 
-const InspirationModuleForm: FC<Props> = ({ mode, module }) => {
+const InspirationModuleForm = ({ mode, module }: Props) => {
     const { t } = useTranslation()
     const navigate = useNavigate()
     const { handleFormErrors } = useErrorHandler()
@@ -52,7 +52,7 @@ const InspirationModuleForm: FC<Props> = ({ mode, module }) => {
                 navigateToParent()
             }
         },
-        [navigateToParent]
+        [mode, navigateToObject, navigateToParent]
     )
 
     const onError = useCallback(
@@ -70,7 +70,7 @@ const InspirationModuleForm: FC<Props> = ({ mode, module }) => {
                 update.mutate({ id: module!.id, data: { name } }, { onSuccess, onError })
             }
         },
-        [mode, update]
+        [mode, create, update, module, onSuccess, onError]
     )
 
     const onDelete = useCallback(() => {

@@ -1,4 +1,4 @@
-import type { ColumnDef } from "@tanstack/react-table"
+import { createColumnHelper, type ColumnDef } from "@tanstack/react-table"
 import { useMemo, type FC } from "react"
 import { useTranslation } from "react-i18next"
 import { Link } from "react-router-dom"
@@ -7,19 +7,18 @@ import type { InspirationModule } from "../api/models/api"
 import Table from "../components/table/Table"
 import type { TableButtonDef } from "../components/table/TableButtonDef"
 
-interface Props {}
-
-const InspirationModuleTable: FC<Props> = () => {
+const InspirationModuleTable: FC = () => {
     const { t } = useTranslation()
     const dataQuery = useInspirationModulesList()
 
-    const columns = useMemo((): ColumnDef<InspirationModule>[] => {
+    const columns = useMemo((): ColumnDef<InspirationModule, unknown>[] => {
+        const columnHelper = createColumnHelper<InspirationModule>()
         return [
-            {
+            columnHelper.display({
                 id: "name",
                 header: t("Main.name"),
                 cell: ({ row }) => <Link to={`/modules/inspiration/${row.original.id}`}>{row.original.name}</Link>,
-            },
+            }),
         ]
     }, [t])
 

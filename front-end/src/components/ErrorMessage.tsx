@@ -1,4 +1,4 @@
-import { useMemo, type FC } from "react"
+import { useMemo } from "react"
 import type { Message } from "react-hook-form"
 import { useErrorHandler, type ErrorMessageType } from "../helpers/useErrorHandler"
 
@@ -18,7 +18,7 @@ interface Props {
         | undefined
 }
 
-const ErrorMessage: FC<Props> = ({ error }) => {
+const ErrorMessage = ({ error }: Props) => {
     const { translatedErrorMessages } = useErrorHandler()
 
     const message = useMemo(() => {

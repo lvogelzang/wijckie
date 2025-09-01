@@ -1,4 +1,3 @@
-import type { FC } from "react"
 import TableButton from "./TableButton"
 import type { TableButtonDef } from "./TableButtonDef"
 
@@ -6,7 +5,7 @@ interface Props {
     buttons?: TableButtonDef[]
 }
 
-const TableButtons: FC<Props> = ({ buttons }) => {
+const TableButtons = ({ buttons }: Props) => {
     if (!buttons) {
         return null
     }

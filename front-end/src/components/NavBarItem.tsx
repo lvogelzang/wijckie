@@ -1,4 +1,4 @@
-import { useMemo, type FC } from "react"
+import { useMemo } from "react"
 import { Link, useLocation } from "react-router-dom"
 
 interface Props {
@@ -7,7 +7,7 @@ interface Props {
     to?: string
 }
 
-const NavBarItem: FC<Props> = ({ name, href, to }) => {
+const NavBarItem = ({ name, href, to }: Props) => {
     const location = useLocation()
 
     const isActive = useMemo(() => {

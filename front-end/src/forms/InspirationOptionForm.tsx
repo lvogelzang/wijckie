@@ -1,4 +1,4 @@
-import { useCallback, useState, type FC } from "react"
+import { useCallback, useState } from "react"
 import { Form } from "react-bootstrap"
 import { useForm, type SubmitHandler } from "react-hook-form"
 import { useTranslation } from "react-i18next"
@@ -33,7 +33,7 @@ interface Inputs {
     image: FileList
 }
 
-const InspirationOptionForm: FC<Props> = ({ mode, module, option }) => {
+const InspirationOptionForm = ({ mode, module, option }: Props) => {
     const { t } = useTranslation()
     const navigate = useNavigate()
     const typeOptions = useInspirationOptionTypeOptions()
@@ -106,7 +106,7 @@ const InspirationOptionForm: FC<Props> = ({ mode, module, option }) => {
                 update.mutate({ id: option!.id, data: { name, type, text } }, { onSuccess: image.length > 0 ? startUpload : navigateToParent, onError })
             }
         },
-        [mode, option, create, update, startUpload, navigateToParent]
+        [mode, option, create, update, module, startUpload, navigateToParent, onError]
     )
 
     const onDelete = useCallback(() => {
@@ -119,7 +119,7 @@ const InspirationOptionForm: FC<Props> = ({ mode, module, option }) => {
         (uploadJob: UploadJob<InspirationOption>) => {
             partialUpdate.mutate({ id: uploadJob.target.id, data: { image: uploadJob.fileUpload.id } }, { onSuccess: navigateToParent, onError })
         },
-        [partialUpdate, option, navigateToParent, onError]
+        [partialUpdate, navigateToParent, onError]
     )
 
     return (

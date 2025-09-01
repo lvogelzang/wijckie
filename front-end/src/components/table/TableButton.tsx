@@ -1,4 +1,4 @@
-import { useCallback, type FC } from "react"
+import { useCallback } from "react"
 import { Button } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
 
@@ -11,7 +11,7 @@ interface Props {
     variant?: string
 }
 
-const TableButton: FC<Props> = ({ label, href, target, link, onClick, variant }) => {
+const TableButton = ({ label, href, target, link, onClick, variant }: Props) => {
     const navigate = useNavigate()
 
     const handleClick = useCallback(() => {

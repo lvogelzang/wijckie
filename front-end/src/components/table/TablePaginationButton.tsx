@@ -1,4 +1,4 @@
-import { useCallback, type FC } from "react"
+import { useCallback } from "react"
 import { Button } from "react-bootstrap"
 
 interface Props {
@@ -10,7 +10,7 @@ interface Props {
     show: boolean
 }
 
-const TablePaginationButton: FC<Props> = ({ pageIndex, goToPage, isCurrent, isFirst, isLast, show }) => {
+const TablePaginationButton = ({ pageIndex, goToPage, isCurrent, isFirst, isLast, show }: Props) => {
     const onClick = useCallback(() => {
         goToPage(pageIndex)
     }, [pageIndex, goToPage])

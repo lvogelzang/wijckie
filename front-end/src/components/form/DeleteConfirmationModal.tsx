@@ -1,4 +1,4 @@
-import { useCallback, useState, type FC } from "react"
+import { useCallback, useState } from "react"
 import { Button, Modal } from "react-bootstrap"
 import { useTranslation } from "react-i18next"
 import Feedback from "./Feedback"
@@ -11,7 +11,7 @@ interface Props {
     onClose: () => void
 }
 
-const DeleteConfirmationModal: FC<Props> = ({ show, name, onDelete, onDeleted, onClose }) => {
+const DeleteConfirmationModal = ({ show, name, onDelete, onDeleted, onClose }: Props) => {
     const { t } = useTranslation()
     const [error, setError] = useState<string>()
 

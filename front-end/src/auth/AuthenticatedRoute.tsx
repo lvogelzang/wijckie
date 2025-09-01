@@ -1,4 +1,4 @@
-import type { FC, ReactNode } from "react"
+import type { ReactNode } from "react"
 import { Navigate, useLocation } from "react-router-dom"
 import { useAuth } from "./useAuth"
 
@@ -6,7 +6,7 @@ interface Props {
     children: ReactNode
 }
 
-const AuthenticatedRoute: FC<Props> = ({ children }) => {
+const AuthenticatedRoute = ({ children }: Props) => {
     const location = useLocation()
     const { isAuthenticated } = useAuth()
     const next = `next=${encodeURIComponent(location.pathname + location.search)}`

@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
-import { useCallback, useEffect, type FC } from "react"
+import { useCallback } from "react"
 import type { UploadJob } from "../../types/UploadJob"
 
 interface Props<Type> {
@@ -9,7 +9,7 @@ interface Props<Type> {
     onSuccess: (uploadJob: UploadJob<Type>) => void
 }
 
-const UploadHandler: FC<Props<any>> = ({ uploadJob, file, onSuccess }) => {
+const UploadHandler = <Type,>({ uploadJob, file, onSuccess }: Props<Type>) => {
     const upload = useCallback(() => {
         return new Promise((resolve, reject) => {
             const url = uploadJob!.fileUpload.fileUploadURL
@@ -40,11 +40,9 @@ const UploadHandler: FC<Props<any>> = ({ uploadJob, file, onSuccess }) => {
         enabled: !!uploadJob && !!file,
     })
 
-    useEffect(() => {
-        if (isSuccess) {
-            onSuccess(uploadJob!)
-        }
-    }, [isSuccess])
+    if (isSuccess) {
+        onSuccess(uploadJob!)
+    }
 
     return !!uploadJob && !!file ? (
         <div>

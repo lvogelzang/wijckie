@@ -1,4 +1,4 @@
-import { useMemo, type FC, type ReactNode } from "react"
+import { useMemo, type ReactNode } from "react"
 import { Navigate } from "react-router-dom"
 import type { AuthenticatorType, FlowId } from "./allauth"
 import { useAuth } from "./useAuth"
@@ -11,7 +11,7 @@ interface Props {
     children: ReactNode
 }
 
-const AnonymousRoute: FC<Props> = ({ flowId, authenticatorType, children }) => {
+const AnonymousRoute = ({ flowId, authenticatorType, children }: Props) => {
     const { isAuthenticated, pendingFlow } = useAuth()
 
     const getPathForFlow = useGetPathForFlow()

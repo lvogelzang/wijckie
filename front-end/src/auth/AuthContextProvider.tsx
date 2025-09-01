@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState, type FC, type ReactNode } from "react"
+import { useCallback, useEffect, useMemo, useState, type ReactNode } from "react"
 import { getAllauthClientV1AuthSession } from "../api/endpoints/allauth"
 import type { AuthenticationMeta, AuthenticationMethod, Flow, User } from "../api/models/allauth"
 import Loader from "../components/Loader"
@@ -41,7 +41,7 @@ const authInfo: (auth: AllauthResponse) => AuthInfo = (auth) => {
     return { isAuthenticated, requiresReauthentication, user, pendingFlow }
 }
 
-const AuthContextProvider: FC<Props> = ({ children }) => {
+const AuthContextProvider = ({ children }: Props) => {
     const [auth, setAuth] = useState<AuthInfo | undefined>(undefined)
 
     const handleAuthUpdate = useCallback(

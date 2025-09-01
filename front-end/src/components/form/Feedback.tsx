@@ -1,11 +1,10 @@
-import type { FC } from "react"
 import { Form } from "react-bootstrap"
 
 interface Props {
     error?: string
 }
 
-const Feedback: FC<Props> = ({ error }) => {
+const Feedback = ({ error }: Props) => {
     return (
         <Form.Group hidden={!error}>
             <Form.Control type="hidden" isInvalid={!!error} />

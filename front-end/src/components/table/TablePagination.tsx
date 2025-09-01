@@ -1,4 +1,4 @@
-import { useCallback, useMemo, type ChangeEvent, type FC } from "react"
+import { useCallback, useMemo, type ChangeEvent } from "react"
 import { ButtonGroup } from "react-bootstrap"
 import { useTranslation } from "react-i18next"
 import TablePaginationButton from "./TablePaginationButton"
@@ -13,7 +13,7 @@ interface Props {
     setPageSize: (pageSize: number) => void
 }
 
-const TablePagination: FC<Props> = ({ pagination, pageCount, goToPage, setPageSize }) => {
+const TablePagination = ({ pagination, pageCount, goToPage, setPageSize }: Props) => {
     const { t } = useTranslation()
     const pageIndex = useMemo(() => pagination.pageIndex, [pagination])
     const pageSize = useMemo(() => pagination.pageSize, [pagination])

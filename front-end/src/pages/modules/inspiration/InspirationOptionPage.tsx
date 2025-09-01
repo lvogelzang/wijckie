@@ -1,4 +1,3 @@
-import type { FC } from "react"
 import { useParams } from "react-router-dom"
 import { useInspirationModulesRetrieve, useInspirationOptionsRetrieve } from "../../../api/endpoints/api"
 import Loader from "../../../components/Loader"
@@ -8,7 +7,7 @@ interface Props {
     mode: "Create" | "Update"
 }
 
-const InspirationOptionPage: FC<Props> = ({ mode }) => {
+const InspirationOptionPage = ({ mode }: Props) => {
     const { moduleId, optionId } = useParams()
 
     const { data: module } = useInspirationModulesRetrieve(parseInt(moduleId!))

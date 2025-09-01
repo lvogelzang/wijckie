@@ -1,6 +1,6 @@
 import type { UseQueryResult } from "@tanstack/react-query"
 import { flexRender, getCoreRowModel, useReactTable, type ColumnDef, type PaginationState } from "@tanstack/react-table"
-import { useEffect, useState, type FC } from "react"
+import { useEffect, useState } from "react"
 import { Table as BootstrapTable } from "react-bootstrap"
 import { useTranslation } from "react-i18next"
 import { useGetPaginationCacheKey, useGetPaginationValue } from "../../helpers/useCache"
@@ -16,14 +16,14 @@ interface PageResponseType<Type> {
 interface Props<Type> {
     id: string
     title: string
-    columns: ColumnDef<Type, any>[]
+    columns: ColumnDef<Type, unknown>[]
     buttons?: TableButtonDef[]
     dataQuery: UseQueryResult<PageResponseType<Type>, unknown>
     subject: string // Used to show when no "items" are in table, e.g: "users" or "notes".
     defaultPageSize?: number
 }
 
-const Table: FC<Props<any>> = ({ id, title, columns, buttons, dataQuery, subject, defaultPageSize }) => {
+const Table = <Type,>({ id, title, columns, buttons, dataQuery, subject, defaultPageSize }: Props<Type>) => {
     const { t } = useTranslation()
     const getPaginationValue = useGetPaginationValue()
     const getPaginationCacheKey = useGetPaginationCacheKey()
