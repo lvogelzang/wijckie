@@ -148,7 +148,7 @@ const InspirationOptionForm = ({ mode, module, option }: Props) => {
                 <Form.Label>{t("Main.image")}</Form.Label>
                 <Form.Control type="file" hidden={true} />
                 <div hidden={!option?.imageURL}>
-                    <img src={option?.imageURL} style={{ width: "10rem", height: "10rem" }} />
+                    <img src={option?.imageURL} style={{ height: "20rem", maxWidth: "100rem" }} />
                 </div>
                 <Form.Control type="file" {...register("image")} isInvalid={!!errors.image} />
             </Form.Group>
