@@ -13,6 +13,8 @@ import CreateSignupPasskey from "./pages/CreateSignupPasskey"
 import Dashboard from "./pages/Dashboard"
 import Logout from "./pages/Logout"
 import Modules from "./pages/Modules"
+import DailyTodoOptionPage from "./pages/modules/dailyTodos/DailyTodoOptionPage"
+import DailyTodosModulePage from "./pages/modules/dailyTodos/DailyTodosModulePage"
 import InspirationModulePage from "./pages/modules/inspiration/InspirationModulePage"
 import InspirationOptionPage from "./pages/modules/inspiration/InspirationOptionPage"
 import MyAccount from "./pages/MyAccount"
@@ -137,6 +139,38 @@ const createRouter = () => {
                     element: (
                         <AuthenticatedRoute>
                             <Modules />
+                        </AuthenticatedRoute>
+                    ),
+                },
+                {
+                    path: "/modules/daily-todos/new",
+                    element: (
+                        <AuthenticatedRoute>
+                            <DailyTodosModulePage mode="Create" />
+                        </AuthenticatedRoute>
+                    ),
+                },
+                {
+                    path: "/modules/daily-todos/:moduleId",
+                    element: (
+                        <AuthenticatedRoute>
+                            <DailyTodosModulePage mode="Update" />
+                        </AuthenticatedRoute>
+                    ),
+                },
+                {
+                    path: "/modules/daily-todos/:moduleId/options/new",
+                    element: (
+                        <AuthenticatedRoute>
+                            <DailyTodoOptionPage mode="Create" />
+                        </AuthenticatedRoute>
+                    ),
+                },
+                {
+                    path: "/modules/daily-todos/:moduleId/options/:optionId",
+                    element: (
+                        <AuthenticatedRoute>
+                            <DailyTodoOptionPage mode="Update" />
                         </AuthenticatedRoute>
                     ),
                 },
