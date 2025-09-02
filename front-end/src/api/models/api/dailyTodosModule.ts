@@ -6,12 +6,9 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export interface FileUpload {
+export interface DailyTodosModule {
     readonly id: number
     readonly user: number
     readonly createdAt: string
-    readonly fileUUID: string
-    /** @pattern ^[^<>:;,?"*|/]+$ */
-    fileName: string
-    readonly fileUploadURL: string
+    name: string
 }

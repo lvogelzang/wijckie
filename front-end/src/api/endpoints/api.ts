@@ -22,16 +22,25 @@ import type {
 } from "@tanstack/react-query"
 
 import type {
+    CreateDailyTodoOption,
     CreateInspirationOption,
+    DailyTodoOption,
+    DailyTodoOptionsListParams,
+    DailyTodosModule,
+    DailyTodosModulesListParams,
     DefaultOKResponse,
     FileUpload,
     InspirationModule,
     InspirationModulesListParams,
     InspirationOption,
     InspirationOptionsListParams,
+    PaginatedDailyTodoOptionList,
+    PaginatedDailyTodosModuleList,
     PaginatedInspirationModuleList,
     PaginatedInspirationOptionList,
     PaginatedUserList,
+    PatchedDailyTodoOption,
+    PatchedDailyTodosModule,
     PatchedInspirationModule,
     PatchedInspirationOption,
     PatchedUser,
@@ -119,6 +128,572 @@ export function useCsrfRetrieve<TData = Awaited<ReturnType<typeof csrfRetrieve>>
     query.queryKey = queryOptions.queryKey
 
     return query
+}
+
+export const dailyTodoOptionsList = (params?: DailyTodoOptionsListParams, options?: SecondParameter<typeof customInstance>, signal?: AbortSignal) => {
+    return customInstance<PaginatedDailyTodoOptionList>({ url: `/api/v1/daily-todo-options/`, method: "GET", params, signal }, options)
+}
+
+export const getDailyTodoOptionsListQueryKey = (params?: DailyTodoOptionsListParams) => {
+    return [`/api/v1/daily-todo-options/`, ...(params ? [params] : [])] as const
+}
+
+export const getDailyTodoOptionsListQueryOptions = <TData = Awaited<ReturnType<typeof dailyTodoOptionsList>>, TError = unknown>(
+    params?: DailyTodoOptionsListParams,
+    options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof dailyTodoOptionsList>>, TError, TData>>; request?: SecondParameter<typeof customInstance> }
+) => {
+    const { query: queryOptions, request: requestOptions } = options ?? {}
+
+    const queryKey = queryOptions?.queryKey ?? getDailyTodoOptionsListQueryKey(params)
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof dailyTodoOptionsList>>> = ({ signal }) => dailyTodoOptionsList(params, requestOptions, signal)
+
+    return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<Awaited<ReturnType<typeof dailyTodoOptionsList>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type DailyTodoOptionsListQueryResult = NonNullable<Awaited<ReturnType<typeof dailyTodoOptionsList>>>
+export type DailyTodoOptionsListQueryError = unknown
+
+export function useDailyTodoOptionsList<TData = Awaited<ReturnType<typeof dailyTodoOptionsList>>, TError = unknown>(
+    params: undefined | DailyTodoOptionsListParams,
+    options: {
+        query: Partial<UseQueryOptions<Awaited<ReturnType<typeof dailyTodoOptionsList>>, TError, TData>> &
+            Pick<DefinedInitialDataOptions<Awaited<ReturnType<typeof dailyTodoOptionsList>>, TError, Awaited<ReturnType<typeof dailyTodoOptionsList>>>, "initialData">
+        request?: SecondParameter<typeof customInstance>
+    },
+    queryClient?: QueryClient
+): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useDailyTodoOptionsList<TData = Awaited<ReturnType<typeof dailyTodoOptionsList>>, TError = unknown>(
+    params?: DailyTodoOptionsListParams,
+    options?: {
+        query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof dailyTodoOptionsList>>, TError, TData>> &
+            Pick<UndefinedInitialDataOptions<Awaited<ReturnType<typeof dailyTodoOptionsList>>, TError, Awaited<ReturnType<typeof dailyTodoOptionsList>>>, "initialData">
+        request?: SecondParameter<typeof customInstance>
+    },
+    queryClient?: QueryClient
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useDailyTodoOptionsList<TData = Awaited<ReturnType<typeof dailyTodoOptionsList>>, TError = unknown>(
+    params?: DailyTodoOptionsListParams,
+    options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof dailyTodoOptionsList>>, TError, TData>>; request?: SecondParameter<typeof customInstance> },
+    queryClient?: QueryClient
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useDailyTodoOptionsList<TData = Awaited<ReturnType<typeof dailyTodoOptionsList>>, TError = unknown>(
+    params?: DailyTodoOptionsListParams,
+    options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof dailyTodoOptionsList>>, TError, TData>>; request?: SecondParameter<typeof customInstance> },
+    queryClient?: QueryClient
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+    const queryOptions = getDailyTodoOptionsListQueryOptions(params, options)
+
+    const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+    query.queryKey = queryOptions.queryKey
+
+    return query
+}
+
+export const dailyTodoOptionsCreate = (createDailyTodoOption: NonReadonly<CreateDailyTodoOption>, options?: SecondParameter<typeof customInstance>, signal?: AbortSignal) => {
+    return customInstance<CreateDailyTodoOption>({ url: `/api/v1/daily-todo-options/`, method: "POST", headers: { "Content-Type": "application/json" }, data: createDailyTodoOption, signal }, options)
+}
+
+export const getDailyTodoOptionsCreateMutationOptions = <TError = unknown, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof dailyTodoOptionsCreate>>, TError, { data: NonReadonly<CreateDailyTodoOption> }, TContext>
+    request?: SecondParameter<typeof customInstance>
+}): UseMutationOptions<Awaited<ReturnType<typeof dailyTodoOptionsCreate>>, TError, { data: NonReadonly<CreateDailyTodoOption> }, TContext> => {
+    const mutationKey = ["dailyTodoOptionsCreate"]
+    const { mutation: mutationOptions, request: requestOptions } = options
+        ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+            ? options
+            : { ...options, mutation: { ...options.mutation, mutationKey } }
+        : { mutation: { mutationKey }, request: undefined }
+
+    const mutationFn: MutationFunction<Awaited<ReturnType<typeof dailyTodoOptionsCreate>>, { data: NonReadonly<CreateDailyTodoOption> }> = (props) => {
+        const { data } = props ?? {}
+
+        return dailyTodoOptionsCreate(data, requestOptions)
+    }
+
+    return { mutationFn, ...mutationOptions }
+}
+
+export type DailyTodoOptionsCreateMutationResult = NonNullable<Awaited<ReturnType<typeof dailyTodoOptionsCreate>>>
+export type DailyTodoOptionsCreateMutationBody = NonReadonly<CreateDailyTodoOption>
+export type DailyTodoOptionsCreateMutationError = unknown
+
+export const useDailyTodoOptionsCreate = <TError = unknown, TContext = unknown>(
+    options?: {
+        mutation?: UseMutationOptions<Awaited<ReturnType<typeof dailyTodoOptionsCreate>>, TError, { data: NonReadonly<CreateDailyTodoOption> }, TContext>
+        request?: SecondParameter<typeof customInstance>
+    },
+    queryClient?: QueryClient
+): UseMutationResult<Awaited<ReturnType<typeof dailyTodoOptionsCreate>>, TError, { data: NonReadonly<CreateDailyTodoOption> }, TContext> => {
+    const mutationOptions = getDailyTodoOptionsCreateMutationOptions(options)
+
+    return useMutation(mutationOptions, queryClient)
+}
+
+export const dailyTodoOptionsRetrieve = (id: number, options?: SecondParameter<typeof customInstance>, signal?: AbortSignal) => {
+    return customInstance<DailyTodoOption>({ url: `/api/v1/daily-todo-options/${id}/`, method: "GET", signal }, options)
+}
+
+export const getDailyTodoOptionsRetrieveQueryKey = (id: number) => {
+    return [`/api/v1/daily-todo-options/${id}/`] as const
+}
+
+export const getDailyTodoOptionsRetrieveQueryOptions = <TData = Awaited<ReturnType<typeof dailyTodoOptionsRetrieve>>, TError = unknown>(
+    id: number,
+    options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof dailyTodoOptionsRetrieve>>, TError, TData>>; request?: SecondParameter<typeof customInstance> }
+) => {
+    const { query: queryOptions, request: requestOptions } = options ?? {}
+
+    const queryKey = queryOptions?.queryKey ?? getDailyTodoOptionsRetrieveQueryKey(id)
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof dailyTodoOptionsRetrieve>>> = ({ signal }) => dailyTodoOptionsRetrieve(id, requestOptions, signal)
+
+    return { queryKey, queryFn, enabled: !!id, ...queryOptions } as UseQueryOptions<Awaited<ReturnType<typeof dailyTodoOptionsRetrieve>>, TError, TData> & {
+        queryKey: DataTag<QueryKey, TData, TError>
+    }
+}
+
+export type DailyTodoOptionsRetrieveQueryResult = NonNullable<Awaited<ReturnType<typeof dailyTodoOptionsRetrieve>>>
+export type DailyTodoOptionsRetrieveQueryError = unknown
+
+export function useDailyTodoOptionsRetrieve<TData = Awaited<ReturnType<typeof dailyTodoOptionsRetrieve>>, TError = unknown>(
+    id: number,
+    options: {
+        query: Partial<UseQueryOptions<Awaited<ReturnType<typeof dailyTodoOptionsRetrieve>>, TError, TData>> &
+            Pick<DefinedInitialDataOptions<Awaited<ReturnType<typeof dailyTodoOptionsRetrieve>>, TError, Awaited<ReturnType<typeof dailyTodoOptionsRetrieve>>>, "initialData">
+        request?: SecondParameter<typeof customInstance>
+    },
+    queryClient?: QueryClient
+): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useDailyTodoOptionsRetrieve<TData = Awaited<ReturnType<typeof dailyTodoOptionsRetrieve>>, TError = unknown>(
+    id: number,
+    options?: {
+        query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof dailyTodoOptionsRetrieve>>, TError, TData>> &
+            Pick<UndefinedInitialDataOptions<Awaited<ReturnType<typeof dailyTodoOptionsRetrieve>>, TError, Awaited<ReturnType<typeof dailyTodoOptionsRetrieve>>>, "initialData">
+        request?: SecondParameter<typeof customInstance>
+    },
+    queryClient?: QueryClient
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useDailyTodoOptionsRetrieve<TData = Awaited<ReturnType<typeof dailyTodoOptionsRetrieve>>, TError = unknown>(
+    id: number,
+    options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof dailyTodoOptionsRetrieve>>, TError, TData>>; request?: SecondParameter<typeof customInstance> },
+    queryClient?: QueryClient
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useDailyTodoOptionsRetrieve<TData = Awaited<ReturnType<typeof dailyTodoOptionsRetrieve>>, TError = unknown>(
+    id: number,
+    options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof dailyTodoOptionsRetrieve>>, TError, TData>>; request?: SecondParameter<typeof customInstance> },
+    queryClient?: QueryClient
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+    const queryOptions = getDailyTodoOptionsRetrieveQueryOptions(id, options)
+
+    const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+    query.queryKey = queryOptions.queryKey
+
+    return query
+}
+
+export const dailyTodoOptionsUpdate = (id: number, dailyTodoOption: NonReadonly<DailyTodoOption>, options?: SecondParameter<typeof customInstance>) => {
+    return customInstance<DailyTodoOption>({ url: `/api/v1/daily-todo-options/${id}/`, method: "PUT", headers: { "Content-Type": "application/json" }, data: dailyTodoOption }, options)
+}
+
+export const getDailyTodoOptionsUpdateMutationOptions = <TError = unknown, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof dailyTodoOptionsUpdate>>, TError, { id: number; data: NonReadonly<DailyTodoOption> }, TContext>
+    request?: SecondParameter<typeof customInstance>
+}): UseMutationOptions<Awaited<ReturnType<typeof dailyTodoOptionsUpdate>>, TError, { id: number; data: NonReadonly<DailyTodoOption> }, TContext> => {
+    const mutationKey = ["dailyTodoOptionsUpdate"]
+    const { mutation: mutationOptions, request: requestOptions } = options
+        ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+            ? options
+            : { ...options, mutation: { ...options.mutation, mutationKey } }
+        : { mutation: { mutationKey }, request: undefined }
+
+    const mutationFn: MutationFunction<Awaited<ReturnType<typeof dailyTodoOptionsUpdate>>, { id: number; data: NonReadonly<DailyTodoOption> }> = (props) => {
+        const { id, data } = props ?? {}
+
+        return dailyTodoOptionsUpdate(id, data, requestOptions)
+    }
+
+    return { mutationFn, ...mutationOptions }
+}
+
+export type DailyTodoOptionsUpdateMutationResult = NonNullable<Awaited<ReturnType<typeof dailyTodoOptionsUpdate>>>
+export type DailyTodoOptionsUpdateMutationBody = NonReadonly<DailyTodoOption>
+export type DailyTodoOptionsUpdateMutationError = unknown
+
+export const useDailyTodoOptionsUpdate = <TError = unknown, TContext = unknown>(
+    options?: {
+        mutation?: UseMutationOptions<Awaited<ReturnType<typeof dailyTodoOptionsUpdate>>, TError, { id: number; data: NonReadonly<DailyTodoOption> }, TContext>
+        request?: SecondParameter<typeof customInstance>
+    },
+    queryClient?: QueryClient
+): UseMutationResult<Awaited<ReturnType<typeof dailyTodoOptionsUpdate>>, TError, { id: number; data: NonReadonly<DailyTodoOption> }, TContext> => {
+    const mutationOptions = getDailyTodoOptionsUpdateMutationOptions(options)
+
+    return useMutation(mutationOptions, queryClient)
+}
+
+export const dailyTodoOptionsPartialUpdate = (id: number, patchedDailyTodoOption: NonReadonly<PatchedDailyTodoOption>, options?: SecondParameter<typeof customInstance>) => {
+    return customInstance<DailyTodoOption>({ url: `/api/v1/daily-todo-options/${id}/`, method: "PATCH", headers: { "Content-Type": "application/json" }, data: patchedDailyTodoOption }, options)
+}
+
+export const getDailyTodoOptionsPartialUpdateMutationOptions = <TError = unknown, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof dailyTodoOptionsPartialUpdate>>, TError, { id: number; data: NonReadonly<PatchedDailyTodoOption> }, TContext>
+    request?: SecondParameter<typeof customInstance>
+}): UseMutationOptions<Awaited<ReturnType<typeof dailyTodoOptionsPartialUpdate>>, TError, { id: number; data: NonReadonly<PatchedDailyTodoOption> }, TContext> => {
+    const mutationKey = ["dailyTodoOptionsPartialUpdate"]
+    const { mutation: mutationOptions, request: requestOptions } = options
+        ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+            ? options
+            : { ...options, mutation: { ...options.mutation, mutationKey } }
+        : { mutation: { mutationKey }, request: undefined }
+
+    const mutationFn: MutationFunction<Awaited<ReturnType<typeof dailyTodoOptionsPartialUpdate>>, { id: number; data: NonReadonly<PatchedDailyTodoOption> }> = (props) => {
+        const { id, data } = props ?? {}
+
+        return dailyTodoOptionsPartialUpdate(id, data, requestOptions)
+    }
+
+    return { mutationFn, ...mutationOptions }
+}
+
+export type DailyTodoOptionsPartialUpdateMutationResult = NonNullable<Awaited<ReturnType<typeof dailyTodoOptionsPartialUpdate>>>
+export type DailyTodoOptionsPartialUpdateMutationBody = NonReadonly<PatchedDailyTodoOption>
+export type DailyTodoOptionsPartialUpdateMutationError = unknown
+
+export const useDailyTodoOptionsPartialUpdate = <TError = unknown, TContext = unknown>(
+    options?: {
+        mutation?: UseMutationOptions<Awaited<ReturnType<typeof dailyTodoOptionsPartialUpdate>>, TError, { id: number; data: NonReadonly<PatchedDailyTodoOption> }, TContext>
+        request?: SecondParameter<typeof customInstance>
+    },
+    queryClient?: QueryClient
+): UseMutationResult<Awaited<ReturnType<typeof dailyTodoOptionsPartialUpdate>>, TError, { id: number; data: NonReadonly<PatchedDailyTodoOption> }, TContext> => {
+    const mutationOptions = getDailyTodoOptionsPartialUpdateMutationOptions(options)
+
+    return useMutation(mutationOptions, queryClient)
+}
+
+export const dailyTodoOptionsDestroy = (id: number, options?: SecondParameter<typeof customInstance>) => {
+    return customInstance<void>({ url: `/api/v1/daily-todo-options/${id}/`, method: "DELETE" }, options)
+}
+
+export const getDailyTodoOptionsDestroyMutationOptions = <TError = unknown, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof dailyTodoOptionsDestroy>>, TError, { id: number }, TContext>
+    request?: SecondParameter<typeof customInstance>
+}): UseMutationOptions<Awaited<ReturnType<typeof dailyTodoOptionsDestroy>>, TError, { id: number }, TContext> => {
+    const mutationKey = ["dailyTodoOptionsDestroy"]
+    const { mutation: mutationOptions, request: requestOptions } = options
+        ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+            ? options
+            : { ...options, mutation: { ...options.mutation, mutationKey } }
+        : { mutation: { mutationKey }, request: undefined }
+
+    const mutationFn: MutationFunction<Awaited<ReturnType<typeof dailyTodoOptionsDestroy>>, { id: number }> = (props) => {
+        const { id } = props ?? {}
+
+        return dailyTodoOptionsDestroy(id, requestOptions)
+    }
+
+    return { mutationFn, ...mutationOptions }
+}
+
+export type DailyTodoOptionsDestroyMutationResult = NonNullable<Awaited<ReturnType<typeof dailyTodoOptionsDestroy>>>
+
+export type DailyTodoOptionsDestroyMutationError = unknown
+
+export const useDailyTodoOptionsDestroy = <TError = unknown, TContext = unknown>(
+    options?: { mutation?: UseMutationOptions<Awaited<ReturnType<typeof dailyTodoOptionsDestroy>>, TError, { id: number }, TContext>; request?: SecondParameter<typeof customInstance> },
+    queryClient?: QueryClient
+): UseMutationResult<Awaited<ReturnType<typeof dailyTodoOptionsDestroy>>, TError, { id: number }, TContext> => {
+    const mutationOptions = getDailyTodoOptionsDestroyMutationOptions(options)
+
+    return useMutation(mutationOptions, queryClient)
+}
+
+export const dailyTodosModulesList = (params?: DailyTodosModulesListParams, options?: SecondParameter<typeof customInstance>, signal?: AbortSignal) => {
+    return customInstance<PaginatedDailyTodosModuleList>({ url: `/api/v1/daily-todos-modules/`, method: "GET", params, signal }, options)
+}
+
+export const getDailyTodosModulesListQueryKey = (params?: DailyTodosModulesListParams) => {
+    return [`/api/v1/daily-todos-modules/`, ...(params ? [params] : [])] as const
+}
+
+export const getDailyTodosModulesListQueryOptions = <TData = Awaited<ReturnType<typeof dailyTodosModulesList>>, TError = unknown>(
+    params?: DailyTodosModulesListParams,
+    options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof dailyTodosModulesList>>, TError, TData>>; request?: SecondParameter<typeof customInstance> }
+) => {
+    const { query: queryOptions, request: requestOptions } = options ?? {}
+
+    const queryKey = queryOptions?.queryKey ?? getDailyTodosModulesListQueryKey(params)
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof dailyTodosModulesList>>> = ({ signal }) => dailyTodosModulesList(params, requestOptions, signal)
+
+    return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<Awaited<ReturnType<typeof dailyTodosModulesList>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type DailyTodosModulesListQueryResult = NonNullable<Awaited<ReturnType<typeof dailyTodosModulesList>>>
+export type DailyTodosModulesListQueryError = unknown
+
+export function useDailyTodosModulesList<TData = Awaited<ReturnType<typeof dailyTodosModulesList>>, TError = unknown>(
+    params: undefined | DailyTodosModulesListParams,
+    options: {
+        query: Partial<UseQueryOptions<Awaited<ReturnType<typeof dailyTodosModulesList>>, TError, TData>> &
+            Pick<DefinedInitialDataOptions<Awaited<ReturnType<typeof dailyTodosModulesList>>, TError, Awaited<ReturnType<typeof dailyTodosModulesList>>>, "initialData">
+        request?: SecondParameter<typeof customInstance>
+    },
+    queryClient?: QueryClient
+): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useDailyTodosModulesList<TData = Awaited<ReturnType<typeof dailyTodosModulesList>>, TError = unknown>(
+    params?: DailyTodosModulesListParams,
+    options?: {
+        query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof dailyTodosModulesList>>, TError, TData>> &
+            Pick<UndefinedInitialDataOptions<Awaited<ReturnType<typeof dailyTodosModulesList>>, TError, Awaited<ReturnType<typeof dailyTodosModulesList>>>, "initialData">
+        request?: SecondParameter<typeof customInstance>
+    },
+    queryClient?: QueryClient
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useDailyTodosModulesList<TData = Awaited<ReturnType<typeof dailyTodosModulesList>>, TError = unknown>(
+    params?: DailyTodosModulesListParams,
+    options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof dailyTodosModulesList>>, TError, TData>>; request?: SecondParameter<typeof customInstance> },
+    queryClient?: QueryClient
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useDailyTodosModulesList<TData = Awaited<ReturnType<typeof dailyTodosModulesList>>, TError = unknown>(
+    params?: DailyTodosModulesListParams,
+    options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof dailyTodosModulesList>>, TError, TData>>; request?: SecondParameter<typeof customInstance> },
+    queryClient?: QueryClient
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+    const queryOptions = getDailyTodosModulesListQueryOptions(params, options)
+
+    const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+    query.queryKey = queryOptions.queryKey
+
+    return query
+}
+
+export const dailyTodosModulesCreate = (dailyTodosModule: NonReadonly<DailyTodosModule>, options?: SecondParameter<typeof customInstance>, signal?: AbortSignal) => {
+    return customInstance<DailyTodosModule>({ url: `/api/v1/daily-todos-modules/`, method: "POST", headers: { "Content-Type": "application/json" }, data: dailyTodosModule, signal }, options)
+}
+
+export const getDailyTodosModulesCreateMutationOptions = <TError = unknown, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof dailyTodosModulesCreate>>, TError, { data: NonReadonly<DailyTodosModule> }, TContext>
+    request?: SecondParameter<typeof customInstance>
+}): UseMutationOptions<Awaited<ReturnType<typeof dailyTodosModulesCreate>>, TError, { data: NonReadonly<DailyTodosModule> }, TContext> => {
+    const mutationKey = ["dailyTodosModulesCreate"]
+    const { mutation: mutationOptions, request: requestOptions } = options
+        ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+            ? options
+            : { ...options, mutation: { ...options.mutation, mutationKey } }
+        : { mutation: { mutationKey }, request: undefined }
+
+    const mutationFn: MutationFunction<Awaited<ReturnType<typeof dailyTodosModulesCreate>>, { data: NonReadonly<DailyTodosModule> }> = (props) => {
+        const { data } = props ?? {}
+
+        return dailyTodosModulesCreate(data, requestOptions)
+    }
+
+    return { mutationFn, ...mutationOptions }
+}
+
+export type DailyTodosModulesCreateMutationResult = NonNullable<Awaited<ReturnType<typeof dailyTodosModulesCreate>>>
+export type DailyTodosModulesCreateMutationBody = NonReadonly<DailyTodosModule>
+export type DailyTodosModulesCreateMutationError = unknown
+
+export const useDailyTodosModulesCreate = <TError = unknown, TContext = unknown>(
+    options?: {
+        mutation?: UseMutationOptions<Awaited<ReturnType<typeof dailyTodosModulesCreate>>, TError, { data: NonReadonly<DailyTodosModule> }, TContext>
+        request?: SecondParameter<typeof customInstance>
+    },
+    queryClient?: QueryClient
+): UseMutationResult<Awaited<ReturnType<typeof dailyTodosModulesCreate>>, TError, { data: NonReadonly<DailyTodosModule> }, TContext> => {
+    const mutationOptions = getDailyTodosModulesCreateMutationOptions(options)
+
+    return useMutation(mutationOptions, queryClient)
+}
+
+export const dailyTodosModulesRetrieve = (id: number, options?: SecondParameter<typeof customInstance>, signal?: AbortSignal) => {
+    return customInstance<DailyTodosModule>({ url: `/api/v1/daily-todos-modules/${id}/`, method: "GET", signal }, options)
+}
+
+export const getDailyTodosModulesRetrieveQueryKey = (id: number) => {
+    return [`/api/v1/daily-todos-modules/${id}/`] as const
+}
+
+export const getDailyTodosModulesRetrieveQueryOptions = <TData = Awaited<ReturnType<typeof dailyTodosModulesRetrieve>>, TError = unknown>(
+    id: number,
+    options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof dailyTodosModulesRetrieve>>, TError, TData>>; request?: SecondParameter<typeof customInstance> }
+) => {
+    const { query: queryOptions, request: requestOptions } = options ?? {}
+
+    const queryKey = queryOptions?.queryKey ?? getDailyTodosModulesRetrieveQueryKey(id)
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof dailyTodosModulesRetrieve>>> = ({ signal }) => dailyTodosModulesRetrieve(id, requestOptions, signal)
+
+    return { queryKey, queryFn, enabled: !!id, ...queryOptions } as UseQueryOptions<Awaited<ReturnType<typeof dailyTodosModulesRetrieve>>, TError, TData> & {
+        queryKey: DataTag<QueryKey, TData, TError>
+    }
+}
+
+export type DailyTodosModulesRetrieveQueryResult = NonNullable<Awaited<ReturnType<typeof dailyTodosModulesRetrieve>>>
+export type DailyTodosModulesRetrieveQueryError = unknown
+
+export function useDailyTodosModulesRetrieve<TData = Awaited<ReturnType<typeof dailyTodosModulesRetrieve>>, TError = unknown>(
+    id: number,
+    options: {
+        query: Partial<UseQueryOptions<Awaited<ReturnType<typeof dailyTodosModulesRetrieve>>, TError, TData>> &
+            Pick<DefinedInitialDataOptions<Awaited<ReturnType<typeof dailyTodosModulesRetrieve>>, TError, Awaited<ReturnType<typeof dailyTodosModulesRetrieve>>>, "initialData">
+        request?: SecondParameter<typeof customInstance>
+    },
+    queryClient?: QueryClient
+): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useDailyTodosModulesRetrieve<TData = Awaited<ReturnType<typeof dailyTodosModulesRetrieve>>, TError = unknown>(
+    id: number,
+    options?: {
+        query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof dailyTodosModulesRetrieve>>, TError, TData>> &
+            Pick<UndefinedInitialDataOptions<Awaited<ReturnType<typeof dailyTodosModulesRetrieve>>, TError, Awaited<ReturnType<typeof dailyTodosModulesRetrieve>>>, "initialData">
+        request?: SecondParameter<typeof customInstance>
+    },
+    queryClient?: QueryClient
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useDailyTodosModulesRetrieve<TData = Awaited<ReturnType<typeof dailyTodosModulesRetrieve>>, TError = unknown>(
+    id: number,
+    options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof dailyTodosModulesRetrieve>>, TError, TData>>; request?: SecondParameter<typeof customInstance> },
+    queryClient?: QueryClient
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useDailyTodosModulesRetrieve<TData = Awaited<ReturnType<typeof dailyTodosModulesRetrieve>>, TError = unknown>(
+    id: number,
+    options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof dailyTodosModulesRetrieve>>, TError, TData>>; request?: SecondParameter<typeof customInstance> },
+    queryClient?: QueryClient
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+    const queryOptions = getDailyTodosModulesRetrieveQueryOptions(id, options)
+
+    const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+    query.queryKey = queryOptions.queryKey
+
+    return query
+}
+
+export const dailyTodosModulesUpdate = (id: number, dailyTodosModule: NonReadonly<DailyTodosModule>, options?: SecondParameter<typeof customInstance>) => {
+    return customInstance<DailyTodosModule>({ url: `/api/v1/daily-todos-modules/${id}/`, method: "PUT", headers: { "Content-Type": "application/json" }, data: dailyTodosModule }, options)
+}
+
+export const getDailyTodosModulesUpdateMutationOptions = <TError = unknown, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof dailyTodosModulesUpdate>>, TError, { id: number; data: NonReadonly<DailyTodosModule> }, TContext>
+    request?: SecondParameter<typeof customInstance>
+}): UseMutationOptions<Awaited<ReturnType<typeof dailyTodosModulesUpdate>>, TError, { id: number; data: NonReadonly<DailyTodosModule> }, TContext> => {
+    const mutationKey = ["dailyTodosModulesUpdate"]
+    const { mutation: mutationOptions, request: requestOptions } = options
+        ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+            ? options
+            : { ...options, mutation: { ...options.mutation, mutationKey } }
+        : { mutation: { mutationKey }, request: undefined }
+
+    const mutationFn: MutationFunction<Awaited<ReturnType<typeof dailyTodosModulesUpdate>>, { id: number; data: NonReadonly<DailyTodosModule> }> = (props) => {
+        const { id, data } = props ?? {}
+
+        return dailyTodosModulesUpdate(id, data, requestOptions)
+    }
+
+    return { mutationFn, ...mutationOptions }
+}
+
+export type DailyTodosModulesUpdateMutationResult = NonNullable<Awaited<ReturnType<typeof dailyTodosModulesUpdate>>>
+export type DailyTodosModulesUpdateMutationBody = NonReadonly<DailyTodosModule>
+export type DailyTodosModulesUpdateMutationError = unknown
+
+export const useDailyTodosModulesUpdate = <TError = unknown, TContext = unknown>(
+    options?: {
+        mutation?: UseMutationOptions<Awaited<ReturnType<typeof dailyTodosModulesUpdate>>, TError, { id: number; data: NonReadonly<DailyTodosModule> }, TContext>
+        request?: SecondParameter<typeof customInstance>
+    },
+    queryClient?: QueryClient
+): UseMutationResult<Awaited<ReturnType<typeof dailyTodosModulesUpdate>>, TError, { id: number; data: NonReadonly<DailyTodosModule> }, TContext> => {
+    const mutationOptions = getDailyTodosModulesUpdateMutationOptions(options)
+
+    return useMutation(mutationOptions, queryClient)
+}
+
+export const dailyTodosModulesPartialUpdate = (id: number, patchedDailyTodosModule: NonReadonly<PatchedDailyTodosModule>, options?: SecondParameter<typeof customInstance>) => {
+    return customInstance<DailyTodosModule>({ url: `/api/v1/daily-todos-modules/${id}/`, method: "PATCH", headers: { "Content-Type": "application/json" }, data: patchedDailyTodosModule }, options)
+}
+
+export const getDailyTodosModulesPartialUpdateMutationOptions = <TError = unknown, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof dailyTodosModulesPartialUpdate>>, TError, { id: number; data: NonReadonly<PatchedDailyTodosModule> }, TContext>
+    request?: SecondParameter<typeof customInstance>
+}): UseMutationOptions<Awaited<ReturnType<typeof dailyTodosModulesPartialUpdate>>, TError, { id: number; data: NonReadonly<PatchedDailyTodosModule> }, TContext> => {
+    const mutationKey = ["dailyTodosModulesPartialUpdate"]
+    const { mutation: mutationOptions, request: requestOptions } = options
+        ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+            ? options
+            : { ...options, mutation: { ...options.mutation, mutationKey } }
+        : { mutation: { mutationKey }, request: undefined }
+
+    const mutationFn: MutationFunction<Awaited<ReturnType<typeof dailyTodosModulesPartialUpdate>>, { id: number; data: NonReadonly<PatchedDailyTodosModule> }> = (props) => {
+        const { id, data } = props ?? {}
+
+        return dailyTodosModulesPartialUpdate(id, data, requestOptions)
+    }
+
+    return { mutationFn, ...mutationOptions }
+}
+
+export type DailyTodosModulesPartialUpdateMutationResult = NonNullable<Awaited<ReturnType<typeof dailyTodosModulesPartialUpdate>>>
+export type DailyTodosModulesPartialUpdateMutationBody = NonReadonly<PatchedDailyTodosModule>
+export type DailyTodosModulesPartialUpdateMutationError = unknown
+
+export const useDailyTodosModulesPartialUpdate = <TError = unknown, TContext = unknown>(
+    options?: {
+        mutation?: UseMutationOptions<Awaited<ReturnType<typeof dailyTodosModulesPartialUpdate>>, TError, { id: number; data: NonReadonly<PatchedDailyTodosModule> }, TContext>
+        request?: SecondParameter<typeof customInstance>
+    },
+    queryClient?: QueryClient
+): UseMutationResult<Awaited<ReturnType<typeof dailyTodosModulesPartialUpdate>>, TError, { id: number; data: NonReadonly<PatchedDailyTodosModule> }, TContext> => {
+    const mutationOptions = getDailyTodosModulesPartialUpdateMutationOptions(options)
+
+    return useMutation(mutationOptions, queryClient)
+}
+
+export const dailyTodosModulesDestroy = (id: number, options?: SecondParameter<typeof customInstance>) => {
+    return customInstance<void>({ url: `/api/v1/daily-todos-modules/${id}/`, method: "DELETE" }, options)
+}
+
+export const getDailyTodosModulesDestroyMutationOptions = <TError = unknown, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof dailyTodosModulesDestroy>>, TError, { id: number }, TContext>
+    request?: SecondParameter<typeof customInstance>
+}): UseMutationOptions<Awaited<ReturnType<typeof dailyTodosModulesDestroy>>, TError, { id: number }, TContext> => {
+    const mutationKey = ["dailyTodosModulesDestroy"]
+    const { mutation: mutationOptions, request: requestOptions } = options
+        ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+            ? options
+            : { ...options, mutation: { ...options.mutation, mutationKey } }
+        : { mutation: { mutationKey }, request: undefined }
+
+    const mutationFn: MutationFunction<Awaited<ReturnType<typeof dailyTodosModulesDestroy>>, { id: number }> = (props) => {
+        const { id } = props ?? {}
+
+        return dailyTodosModulesDestroy(id, requestOptions)
+    }
+
+    return { mutationFn, ...mutationOptions }
+}
+
+export type DailyTodosModulesDestroyMutationResult = NonNullable<Awaited<ReturnType<typeof dailyTodosModulesDestroy>>>
+
+export type DailyTodosModulesDestroyMutationError = unknown
+
+export const useDailyTodosModulesDestroy = <TError = unknown, TContext = unknown>(
+    options?: { mutation?: UseMutationOptions<Awaited<ReturnType<typeof dailyTodosModulesDestroy>>, TError, { id: number }, TContext>; request?: SecondParameter<typeof customInstance> },
+    queryClient?: QueryClient
+): UseMutationResult<Awaited<ReturnType<typeof dailyTodosModulesDestroy>>, TError, { id: number }, TContext> => {
+    const mutationOptions = getDailyTodosModulesDestroyMutationOptions(options)
+
+    return useMutation(mutationOptions, queryClient)
 }
 
 export const fileUploadsCreate = (fileUpload: NonReadonly<FileUpload>, options?: SecondParameter<typeof customInstance>, signal?: AbortSignal) => {
