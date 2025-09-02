@@ -23,26 +23,36 @@ import type {
 
 import type {
     CreateDailyTodoOption,
+    CreateDailyTodosWidget,
     CreateInspirationOption,
+    CreateInspirationWidget,
     DailyTodoOption,
     DailyTodoOptionsListParams,
     DailyTodosModule,
     DailyTodosModulesListParams,
+    DailyTodosWidget,
+    DailyTodosWidgetsListParams,
     DefaultOKResponse,
     FileUpload,
     InspirationModule,
     InspirationModulesListParams,
     InspirationOption,
     InspirationOptionsListParams,
+    InspirationWidget,
+    InspirationWidgetsListParams,
     PaginatedDailyTodoOptionList,
     PaginatedDailyTodosModuleList,
+    PaginatedDailyTodosWidgetList,
     PaginatedInspirationModuleList,
     PaginatedInspirationOptionList,
+    PaginatedInspirationWidgetList,
     PaginatedUserList,
     PatchedDailyTodoOption,
     PatchedDailyTodosModule,
+    PatchedDailyTodosWidget,
     PatchedInspirationModule,
     PatchedInspirationOption,
+    PatchedInspirationWidget,
     PatchedUser,
     User,
     UsersListParams,
@@ -696,6 +706,292 @@ export const useDailyTodosModulesDestroy = <TError = unknown, TContext = unknown
     return useMutation(mutationOptions, queryClient)
 }
 
+export const dailyTodosWidgetsList = (params?: DailyTodosWidgetsListParams, options?: SecondParameter<typeof customInstance>, signal?: AbortSignal) => {
+    return customInstance<PaginatedDailyTodosWidgetList>({ url: `/api/v1/daily-todos-widgets/`, method: "GET", params, signal }, options)
+}
+
+export const getDailyTodosWidgetsListQueryKey = (params?: DailyTodosWidgetsListParams) => {
+    return [`/api/v1/daily-todos-widgets/`, ...(params ? [params] : [])] as const
+}
+
+export const getDailyTodosWidgetsListQueryOptions = <TData = Awaited<ReturnType<typeof dailyTodosWidgetsList>>, TError = unknown>(
+    params?: DailyTodosWidgetsListParams,
+    options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof dailyTodosWidgetsList>>, TError, TData>>; request?: SecondParameter<typeof customInstance> }
+) => {
+    const { query: queryOptions, request: requestOptions } = options ?? {}
+
+    const queryKey = queryOptions?.queryKey ?? getDailyTodosWidgetsListQueryKey(params)
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof dailyTodosWidgetsList>>> = ({ signal }) => dailyTodosWidgetsList(params, requestOptions, signal)
+
+    return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<Awaited<ReturnType<typeof dailyTodosWidgetsList>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type DailyTodosWidgetsListQueryResult = NonNullable<Awaited<ReturnType<typeof dailyTodosWidgetsList>>>
+export type DailyTodosWidgetsListQueryError = unknown
+
+export function useDailyTodosWidgetsList<TData = Awaited<ReturnType<typeof dailyTodosWidgetsList>>, TError = unknown>(
+    params: undefined | DailyTodosWidgetsListParams,
+    options: {
+        query: Partial<UseQueryOptions<Awaited<ReturnType<typeof dailyTodosWidgetsList>>, TError, TData>> &
+            Pick<DefinedInitialDataOptions<Awaited<ReturnType<typeof dailyTodosWidgetsList>>, TError, Awaited<ReturnType<typeof dailyTodosWidgetsList>>>, "initialData">
+        request?: SecondParameter<typeof customInstance>
+    },
+    queryClient?: QueryClient
+): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useDailyTodosWidgetsList<TData = Awaited<ReturnType<typeof dailyTodosWidgetsList>>, TError = unknown>(
+    params?: DailyTodosWidgetsListParams,
+    options?: {
+        query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof dailyTodosWidgetsList>>, TError, TData>> &
+            Pick<UndefinedInitialDataOptions<Awaited<ReturnType<typeof dailyTodosWidgetsList>>, TError, Awaited<ReturnType<typeof dailyTodosWidgetsList>>>, "initialData">
+        request?: SecondParameter<typeof customInstance>
+    },
+    queryClient?: QueryClient
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useDailyTodosWidgetsList<TData = Awaited<ReturnType<typeof dailyTodosWidgetsList>>, TError = unknown>(
+    params?: DailyTodosWidgetsListParams,
+    options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof dailyTodosWidgetsList>>, TError, TData>>; request?: SecondParameter<typeof customInstance> },
+    queryClient?: QueryClient
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useDailyTodosWidgetsList<TData = Awaited<ReturnType<typeof dailyTodosWidgetsList>>, TError = unknown>(
+    params?: DailyTodosWidgetsListParams,
+    options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof dailyTodosWidgetsList>>, TError, TData>>; request?: SecondParameter<typeof customInstance> },
+    queryClient?: QueryClient
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+    const queryOptions = getDailyTodosWidgetsListQueryOptions(params, options)
+
+    const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+    query.queryKey = queryOptions.queryKey
+
+    return query
+}
+
+export const dailyTodosWidgetsCreate = (createDailyTodosWidget: NonReadonly<CreateDailyTodosWidget>, options?: SecondParameter<typeof customInstance>, signal?: AbortSignal) => {
+    return customInstance<CreateDailyTodosWidget>(
+        { url: `/api/v1/daily-todos-widgets/`, method: "POST", headers: { "Content-Type": "application/json" }, data: createDailyTodosWidget, signal },
+        options
+    )
+}
+
+export const getDailyTodosWidgetsCreateMutationOptions = <TError = unknown, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof dailyTodosWidgetsCreate>>, TError, { data: NonReadonly<CreateDailyTodosWidget> }, TContext>
+    request?: SecondParameter<typeof customInstance>
+}): UseMutationOptions<Awaited<ReturnType<typeof dailyTodosWidgetsCreate>>, TError, { data: NonReadonly<CreateDailyTodosWidget> }, TContext> => {
+    const mutationKey = ["dailyTodosWidgetsCreate"]
+    const { mutation: mutationOptions, request: requestOptions } = options
+        ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+            ? options
+            : { ...options, mutation: { ...options.mutation, mutationKey } }
+        : { mutation: { mutationKey }, request: undefined }
+
+    const mutationFn: MutationFunction<Awaited<ReturnType<typeof dailyTodosWidgetsCreate>>, { data: NonReadonly<CreateDailyTodosWidget> }> = (props) => {
+        const { data } = props ?? {}
+
+        return dailyTodosWidgetsCreate(data, requestOptions)
+    }
+
+    return { mutationFn, ...mutationOptions }
+}
+
+export type DailyTodosWidgetsCreateMutationResult = NonNullable<Awaited<ReturnType<typeof dailyTodosWidgetsCreate>>>
+export type DailyTodosWidgetsCreateMutationBody = NonReadonly<CreateDailyTodosWidget>
+export type DailyTodosWidgetsCreateMutationError = unknown
+
+export const useDailyTodosWidgetsCreate = <TError = unknown, TContext = unknown>(
+    options?: {
+        mutation?: UseMutationOptions<Awaited<ReturnType<typeof dailyTodosWidgetsCreate>>, TError, { data: NonReadonly<CreateDailyTodosWidget> }, TContext>
+        request?: SecondParameter<typeof customInstance>
+    },
+    queryClient?: QueryClient
+): UseMutationResult<Awaited<ReturnType<typeof dailyTodosWidgetsCreate>>, TError, { data: NonReadonly<CreateDailyTodosWidget> }, TContext> => {
+    const mutationOptions = getDailyTodosWidgetsCreateMutationOptions(options)
+
+    return useMutation(mutationOptions, queryClient)
+}
+
+export const dailyTodosWidgetsRetrieve = (id: number, options?: SecondParameter<typeof customInstance>, signal?: AbortSignal) => {
+    return customInstance<DailyTodosWidget>({ url: `/api/v1/daily-todos-widgets/${id}/`, method: "GET", signal }, options)
+}
+
+export const getDailyTodosWidgetsRetrieveQueryKey = (id: number) => {
+    return [`/api/v1/daily-todos-widgets/${id}/`] as const
+}
+
+export const getDailyTodosWidgetsRetrieveQueryOptions = <TData = Awaited<ReturnType<typeof dailyTodosWidgetsRetrieve>>, TError = unknown>(
+    id: number,
+    options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof dailyTodosWidgetsRetrieve>>, TError, TData>>; request?: SecondParameter<typeof customInstance> }
+) => {
+    const { query: queryOptions, request: requestOptions } = options ?? {}
+
+    const queryKey = queryOptions?.queryKey ?? getDailyTodosWidgetsRetrieveQueryKey(id)
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof dailyTodosWidgetsRetrieve>>> = ({ signal }) => dailyTodosWidgetsRetrieve(id, requestOptions, signal)
+
+    return { queryKey, queryFn, enabled: !!id, ...queryOptions } as UseQueryOptions<Awaited<ReturnType<typeof dailyTodosWidgetsRetrieve>>, TError, TData> & {
+        queryKey: DataTag<QueryKey, TData, TError>
+    }
+}
+
+export type DailyTodosWidgetsRetrieveQueryResult = NonNullable<Awaited<ReturnType<typeof dailyTodosWidgetsRetrieve>>>
+export type DailyTodosWidgetsRetrieveQueryError = unknown
+
+export function useDailyTodosWidgetsRetrieve<TData = Awaited<ReturnType<typeof dailyTodosWidgetsRetrieve>>, TError = unknown>(
+    id: number,
+    options: {
+        query: Partial<UseQueryOptions<Awaited<ReturnType<typeof dailyTodosWidgetsRetrieve>>, TError, TData>> &
+            Pick<DefinedInitialDataOptions<Awaited<ReturnType<typeof dailyTodosWidgetsRetrieve>>, TError, Awaited<ReturnType<typeof dailyTodosWidgetsRetrieve>>>, "initialData">
+        request?: SecondParameter<typeof customInstance>
+    },
+    queryClient?: QueryClient
+): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useDailyTodosWidgetsRetrieve<TData = Awaited<ReturnType<typeof dailyTodosWidgetsRetrieve>>, TError = unknown>(
+    id: number,
+    options?: {
+        query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof dailyTodosWidgetsRetrieve>>, TError, TData>> &
+            Pick<UndefinedInitialDataOptions<Awaited<ReturnType<typeof dailyTodosWidgetsRetrieve>>, TError, Awaited<ReturnType<typeof dailyTodosWidgetsRetrieve>>>, "initialData">
+        request?: SecondParameter<typeof customInstance>
+    },
+    queryClient?: QueryClient
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useDailyTodosWidgetsRetrieve<TData = Awaited<ReturnType<typeof dailyTodosWidgetsRetrieve>>, TError = unknown>(
+    id: number,
+    options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof dailyTodosWidgetsRetrieve>>, TError, TData>>; request?: SecondParameter<typeof customInstance> },
+    queryClient?: QueryClient
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useDailyTodosWidgetsRetrieve<TData = Awaited<ReturnType<typeof dailyTodosWidgetsRetrieve>>, TError = unknown>(
+    id: number,
+    options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof dailyTodosWidgetsRetrieve>>, TError, TData>>; request?: SecondParameter<typeof customInstance> },
+    queryClient?: QueryClient
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+    const queryOptions = getDailyTodosWidgetsRetrieveQueryOptions(id, options)
+
+    const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+    query.queryKey = queryOptions.queryKey
+
+    return query
+}
+
+export const dailyTodosWidgetsUpdate = (id: number, dailyTodosWidget: NonReadonly<DailyTodosWidget>, options?: SecondParameter<typeof customInstance>) => {
+    return customInstance<DailyTodosWidget>({ url: `/api/v1/daily-todos-widgets/${id}/`, method: "PUT", headers: { "Content-Type": "application/json" }, data: dailyTodosWidget }, options)
+}
+
+export const getDailyTodosWidgetsUpdateMutationOptions = <TError = unknown, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof dailyTodosWidgetsUpdate>>, TError, { id: number; data: NonReadonly<DailyTodosWidget> }, TContext>
+    request?: SecondParameter<typeof customInstance>
+}): UseMutationOptions<Awaited<ReturnType<typeof dailyTodosWidgetsUpdate>>, TError, { id: number; data: NonReadonly<DailyTodosWidget> }, TContext> => {
+    const mutationKey = ["dailyTodosWidgetsUpdate"]
+    const { mutation: mutationOptions, request: requestOptions } = options
+        ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+            ? options
+            : { ...options, mutation: { ...options.mutation, mutationKey } }
+        : { mutation: { mutationKey }, request: undefined }
+
+    const mutationFn: MutationFunction<Awaited<ReturnType<typeof dailyTodosWidgetsUpdate>>, { id: number; data: NonReadonly<DailyTodosWidget> }> = (props) => {
+        const { id, data } = props ?? {}
+
+        return dailyTodosWidgetsUpdate(id, data, requestOptions)
+    }
+
+    return { mutationFn, ...mutationOptions }
+}
+
+export type DailyTodosWidgetsUpdateMutationResult = NonNullable<Awaited<ReturnType<typeof dailyTodosWidgetsUpdate>>>
+export type DailyTodosWidgetsUpdateMutationBody = NonReadonly<DailyTodosWidget>
+export type DailyTodosWidgetsUpdateMutationError = unknown
+
+export const useDailyTodosWidgetsUpdate = <TError = unknown, TContext = unknown>(
+    options?: {
+        mutation?: UseMutationOptions<Awaited<ReturnType<typeof dailyTodosWidgetsUpdate>>, TError, { id: number; data: NonReadonly<DailyTodosWidget> }, TContext>
+        request?: SecondParameter<typeof customInstance>
+    },
+    queryClient?: QueryClient
+): UseMutationResult<Awaited<ReturnType<typeof dailyTodosWidgetsUpdate>>, TError, { id: number; data: NonReadonly<DailyTodosWidget> }, TContext> => {
+    const mutationOptions = getDailyTodosWidgetsUpdateMutationOptions(options)
+
+    return useMutation(mutationOptions, queryClient)
+}
+
+export const dailyTodosWidgetsPartialUpdate = (id: number, patchedDailyTodosWidget: NonReadonly<PatchedDailyTodosWidget>, options?: SecondParameter<typeof customInstance>) => {
+    return customInstance<DailyTodosWidget>({ url: `/api/v1/daily-todos-widgets/${id}/`, method: "PATCH", headers: { "Content-Type": "application/json" }, data: patchedDailyTodosWidget }, options)
+}
+
+export const getDailyTodosWidgetsPartialUpdateMutationOptions = <TError = unknown, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof dailyTodosWidgetsPartialUpdate>>, TError, { id: number; data: NonReadonly<PatchedDailyTodosWidget> }, TContext>
+    request?: SecondParameter<typeof customInstance>
+}): UseMutationOptions<Awaited<ReturnType<typeof dailyTodosWidgetsPartialUpdate>>, TError, { id: number; data: NonReadonly<PatchedDailyTodosWidget> }, TContext> => {
+    const mutationKey = ["dailyTodosWidgetsPartialUpdate"]
+    const { mutation: mutationOptions, request: requestOptions } = options
+        ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+            ? options
+            : { ...options, mutation: { ...options.mutation, mutationKey } }
+        : { mutation: { mutationKey }, request: undefined }
+
+    const mutationFn: MutationFunction<Awaited<ReturnType<typeof dailyTodosWidgetsPartialUpdate>>, { id: number; data: NonReadonly<PatchedDailyTodosWidget> }> = (props) => {
+        const { id, data } = props ?? {}
+
+        return dailyTodosWidgetsPartialUpdate(id, data, requestOptions)
+    }
+
+    return { mutationFn, ...mutationOptions }
+}
+
+export type DailyTodosWidgetsPartialUpdateMutationResult = NonNullable<Awaited<ReturnType<typeof dailyTodosWidgetsPartialUpdate>>>
+export type DailyTodosWidgetsPartialUpdateMutationBody = NonReadonly<PatchedDailyTodosWidget>
+export type DailyTodosWidgetsPartialUpdateMutationError = unknown
+
+export const useDailyTodosWidgetsPartialUpdate = <TError = unknown, TContext = unknown>(
+    options?: {
+        mutation?: UseMutationOptions<Awaited<ReturnType<typeof dailyTodosWidgetsPartialUpdate>>, TError, { id: number; data: NonReadonly<PatchedDailyTodosWidget> }, TContext>
+        request?: SecondParameter<typeof customInstance>
+    },
+    queryClient?: QueryClient
+): UseMutationResult<Awaited<ReturnType<typeof dailyTodosWidgetsPartialUpdate>>, TError, { id: number; data: NonReadonly<PatchedDailyTodosWidget> }, TContext> => {
+    const mutationOptions = getDailyTodosWidgetsPartialUpdateMutationOptions(options)
+
+    return useMutation(mutationOptions, queryClient)
+}
+
+export const dailyTodosWidgetsDestroy = (id: number, options?: SecondParameter<typeof customInstance>) => {
+    return customInstance<void>({ url: `/api/v1/daily-todos-widgets/${id}/`, method: "DELETE" }, options)
+}
+
+export const getDailyTodosWidgetsDestroyMutationOptions = <TError = unknown, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof dailyTodosWidgetsDestroy>>, TError, { id: number }, TContext>
+    request?: SecondParameter<typeof customInstance>
+}): UseMutationOptions<Awaited<ReturnType<typeof dailyTodosWidgetsDestroy>>, TError, { id: number }, TContext> => {
+    const mutationKey = ["dailyTodosWidgetsDestroy"]
+    const { mutation: mutationOptions, request: requestOptions } = options
+        ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+            ? options
+            : { ...options, mutation: { ...options.mutation, mutationKey } }
+        : { mutation: { mutationKey }, request: undefined }
+
+    const mutationFn: MutationFunction<Awaited<ReturnType<typeof dailyTodosWidgetsDestroy>>, { id: number }> = (props) => {
+        const { id } = props ?? {}
+
+        return dailyTodosWidgetsDestroy(id, requestOptions)
+    }
+
+    return { mutationFn, ...mutationOptions }
+}
+
+export type DailyTodosWidgetsDestroyMutationResult = NonNullable<Awaited<ReturnType<typeof dailyTodosWidgetsDestroy>>>
+
+export type DailyTodosWidgetsDestroyMutationError = unknown
+
+export const useDailyTodosWidgetsDestroy = <TError = unknown, TContext = unknown>(
+    options?: { mutation?: UseMutationOptions<Awaited<ReturnType<typeof dailyTodosWidgetsDestroy>>, TError, { id: number }, TContext>; request?: SecondParameter<typeof customInstance> },
+    queryClient?: QueryClient
+): UseMutationResult<Awaited<ReturnType<typeof dailyTodosWidgetsDestroy>>, TError, { id: number }, TContext> => {
+    const mutationOptions = getDailyTodosWidgetsDestroyMutationOptions(options)
+
+    return useMutation(mutationOptions, queryClient)
+}
+
 export const fileUploadsCreate = (fileUpload: NonReadonly<FileUpload>, options?: SecondParameter<typeof customInstance>, signal?: AbortSignal) => {
     return customInstance<FileUpload>({ url: `/api/v1/file-uploads/`, method: "POST", headers: { "Content-Type": "application/json" }, data: fileUpload, signal }, options)
 }
@@ -1298,6 +1594,292 @@ export const useInspirationOptionsDestroy = <TError = unknown, TContext = unknow
     queryClient?: QueryClient
 ): UseMutationResult<Awaited<ReturnType<typeof inspirationOptionsDestroy>>, TError, { id: number }, TContext> => {
     const mutationOptions = getInspirationOptionsDestroyMutationOptions(options)
+
+    return useMutation(mutationOptions, queryClient)
+}
+
+export const inspirationWidgetsList = (params?: InspirationWidgetsListParams, options?: SecondParameter<typeof customInstance>, signal?: AbortSignal) => {
+    return customInstance<PaginatedInspirationWidgetList>({ url: `/api/v1/inspiration-widgets/`, method: "GET", params, signal }, options)
+}
+
+export const getInspirationWidgetsListQueryKey = (params?: InspirationWidgetsListParams) => {
+    return [`/api/v1/inspiration-widgets/`, ...(params ? [params] : [])] as const
+}
+
+export const getInspirationWidgetsListQueryOptions = <TData = Awaited<ReturnType<typeof inspirationWidgetsList>>, TError = unknown>(
+    params?: InspirationWidgetsListParams,
+    options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof inspirationWidgetsList>>, TError, TData>>; request?: SecondParameter<typeof customInstance> }
+) => {
+    const { query: queryOptions, request: requestOptions } = options ?? {}
+
+    const queryKey = queryOptions?.queryKey ?? getInspirationWidgetsListQueryKey(params)
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof inspirationWidgetsList>>> = ({ signal }) => inspirationWidgetsList(params, requestOptions, signal)
+
+    return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<Awaited<ReturnType<typeof inspirationWidgetsList>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type InspirationWidgetsListQueryResult = NonNullable<Awaited<ReturnType<typeof inspirationWidgetsList>>>
+export type InspirationWidgetsListQueryError = unknown
+
+export function useInspirationWidgetsList<TData = Awaited<ReturnType<typeof inspirationWidgetsList>>, TError = unknown>(
+    params: undefined | InspirationWidgetsListParams,
+    options: {
+        query: Partial<UseQueryOptions<Awaited<ReturnType<typeof inspirationWidgetsList>>, TError, TData>> &
+            Pick<DefinedInitialDataOptions<Awaited<ReturnType<typeof inspirationWidgetsList>>, TError, Awaited<ReturnType<typeof inspirationWidgetsList>>>, "initialData">
+        request?: SecondParameter<typeof customInstance>
+    },
+    queryClient?: QueryClient
+): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useInspirationWidgetsList<TData = Awaited<ReturnType<typeof inspirationWidgetsList>>, TError = unknown>(
+    params?: InspirationWidgetsListParams,
+    options?: {
+        query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof inspirationWidgetsList>>, TError, TData>> &
+            Pick<UndefinedInitialDataOptions<Awaited<ReturnType<typeof inspirationWidgetsList>>, TError, Awaited<ReturnType<typeof inspirationWidgetsList>>>, "initialData">
+        request?: SecondParameter<typeof customInstance>
+    },
+    queryClient?: QueryClient
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useInspirationWidgetsList<TData = Awaited<ReturnType<typeof inspirationWidgetsList>>, TError = unknown>(
+    params?: InspirationWidgetsListParams,
+    options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof inspirationWidgetsList>>, TError, TData>>; request?: SecondParameter<typeof customInstance> },
+    queryClient?: QueryClient
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useInspirationWidgetsList<TData = Awaited<ReturnType<typeof inspirationWidgetsList>>, TError = unknown>(
+    params?: InspirationWidgetsListParams,
+    options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof inspirationWidgetsList>>, TError, TData>>; request?: SecondParameter<typeof customInstance> },
+    queryClient?: QueryClient
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+    const queryOptions = getInspirationWidgetsListQueryOptions(params, options)
+
+    const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+    query.queryKey = queryOptions.queryKey
+
+    return query
+}
+
+export const inspirationWidgetsCreate = (createInspirationWidget: NonReadonly<CreateInspirationWidget>, options?: SecondParameter<typeof customInstance>, signal?: AbortSignal) => {
+    return customInstance<CreateInspirationWidget>(
+        { url: `/api/v1/inspiration-widgets/`, method: "POST", headers: { "Content-Type": "application/json" }, data: createInspirationWidget, signal },
+        options
+    )
+}
+
+export const getInspirationWidgetsCreateMutationOptions = <TError = unknown, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof inspirationWidgetsCreate>>, TError, { data: NonReadonly<CreateInspirationWidget> }, TContext>
+    request?: SecondParameter<typeof customInstance>
+}): UseMutationOptions<Awaited<ReturnType<typeof inspirationWidgetsCreate>>, TError, { data: NonReadonly<CreateInspirationWidget> }, TContext> => {
+    const mutationKey = ["inspirationWidgetsCreate"]
+    const { mutation: mutationOptions, request: requestOptions } = options
+        ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+            ? options
+            : { ...options, mutation: { ...options.mutation, mutationKey } }
+        : { mutation: { mutationKey }, request: undefined }
+
+    const mutationFn: MutationFunction<Awaited<ReturnType<typeof inspirationWidgetsCreate>>, { data: NonReadonly<CreateInspirationWidget> }> = (props) => {
+        const { data } = props ?? {}
+
+        return inspirationWidgetsCreate(data, requestOptions)
+    }
+
+    return { mutationFn, ...mutationOptions }
+}
+
+export type InspirationWidgetsCreateMutationResult = NonNullable<Awaited<ReturnType<typeof inspirationWidgetsCreate>>>
+export type InspirationWidgetsCreateMutationBody = NonReadonly<CreateInspirationWidget>
+export type InspirationWidgetsCreateMutationError = unknown
+
+export const useInspirationWidgetsCreate = <TError = unknown, TContext = unknown>(
+    options?: {
+        mutation?: UseMutationOptions<Awaited<ReturnType<typeof inspirationWidgetsCreate>>, TError, { data: NonReadonly<CreateInspirationWidget> }, TContext>
+        request?: SecondParameter<typeof customInstance>
+    },
+    queryClient?: QueryClient
+): UseMutationResult<Awaited<ReturnType<typeof inspirationWidgetsCreate>>, TError, { data: NonReadonly<CreateInspirationWidget> }, TContext> => {
+    const mutationOptions = getInspirationWidgetsCreateMutationOptions(options)
+
+    return useMutation(mutationOptions, queryClient)
+}
+
+export const inspirationWidgetsRetrieve = (id: number, options?: SecondParameter<typeof customInstance>, signal?: AbortSignal) => {
+    return customInstance<InspirationWidget>({ url: `/api/v1/inspiration-widgets/${id}/`, method: "GET", signal }, options)
+}
+
+export const getInspirationWidgetsRetrieveQueryKey = (id: number) => {
+    return [`/api/v1/inspiration-widgets/${id}/`] as const
+}
+
+export const getInspirationWidgetsRetrieveQueryOptions = <TData = Awaited<ReturnType<typeof inspirationWidgetsRetrieve>>, TError = unknown>(
+    id: number,
+    options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof inspirationWidgetsRetrieve>>, TError, TData>>; request?: SecondParameter<typeof customInstance> }
+) => {
+    const { query: queryOptions, request: requestOptions } = options ?? {}
+
+    const queryKey = queryOptions?.queryKey ?? getInspirationWidgetsRetrieveQueryKey(id)
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof inspirationWidgetsRetrieve>>> = ({ signal }) => inspirationWidgetsRetrieve(id, requestOptions, signal)
+
+    return { queryKey, queryFn, enabled: !!id, ...queryOptions } as UseQueryOptions<Awaited<ReturnType<typeof inspirationWidgetsRetrieve>>, TError, TData> & {
+        queryKey: DataTag<QueryKey, TData, TError>
+    }
+}
+
+export type InspirationWidgetsRetrieveQueryResult = NonNullable<Awaited<ReturnType<typeof inspirationWidgetsRetrieve>>>
+export type InspirationWidgetsRetrieveQueryError = unknown
+
+export function useInspirationWidgetsRetrieve<TData = Awaited<ReturnType<typeof inspirationWidgetsRetrieve>>, TError = unknown>(
+    id: number,
+    options: {
+        query: Partial<UseQueryOptions<Awaited<ReturnType<typeof inspirationWidgetsRetrieve>>, TError, TData>> &
+            Pick<DefinedInitialDataOptions<Awaited<ReturnType<typeof inspirationWidgetsRetrieve>>, TError, Awaited<ReturnType<typeof inspirationWidgetsRetrieve>>>, "initialData">
+        request?: SecondParameter<typeof customInstance>
+    },
+    queryClient?: QueryClient
+): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useInspirationWidgetsRetrieve<TData = Awaited<ReturnType<typeof inspirationWidgetsRetrieve>>, TError = unknown>(
+    id: number,
+    options?: {
+        query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof inspirationWidgetsRetrieve>>, TError, TData>> &
+            Pick<UndefinedInitialDataOptions<Awaited<ReturnType<typeof inspirationWidgetsRetrieve>>, TError, Awaited<ReturnType<typeof inspirationWidgetsRetrieve>>>, "initialData">
+        request?: SecondParameter<typeof customInstance>
+    },
+    queryClient?: QueryClient
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useInspirationWidgetsRetrieve<TData = Awaited<ReturnType<typeof inspirationWidgetsRetrieve>>, TError = unknown>(
+    id: number,
+    options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof inspirationWidgetsRetrieve>>, TError, TData>>; request?: SecondParameter<typeof customInstance> },
+    queryClient?: QueryClient
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useInspirationWidgetsRetrieve<TData = Awaited<ReturnType<typeof inspirationWidgetsRetrieve>>, TError = unknown>(
+    id: number,
+    options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof inspirationWidgetsRetrieve>>, TError, TData>>; request?: SecondParameter<typeof customInstance> },
+    queryClient?: QueryClient
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+    const queryOptions = getInspirationWidgetsRetrieveQueryOptions(id, options)
+
+    const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+    query.queryKey = queryOptions.queryKey
+
+    return query
+}
+
+export const inspirationWidgetsUpdate = (id: number, inspirationWidget: NonReadonly<InspirationWidget>, options?: SecondParameter<typeof customInstance>) => {
+    return customInstance<InspirationWidget>({ url: `/api/v1/inspiration-widgets/${id}/`, method: "PUT", headers: { "Content-Type": "application/json" }, data: inspirationWidget }, options)
+}
+
+export const getInspirationWidgetsUpdateMutationOptions = <TError = unknown, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof inspirationWidgetsUpdate>>, TError, { id: number; data: NonReadonly<InspirationWidget> }, TContext>
+    request?: SecondParameter<typeof customInstance>
+}): UseMutationOptions<Awaited<ReturnType<typeof inspirationWidgetsUpdate>>, TError, { id: number; data: NonReadonly<InspirationWidget> }, TContext> => {
+    const mutationKey = ["inspirationWidgetsUpdate"]
+    const { mutation: mutationOptions, request: requestOptions } = options
+        ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+            ? options
+            : { ...options, mutation: { ...options.mutation, mutationKey } }
+        : { mutation: { mutationKey }, request: undefined }
+
+    const mutationFn: MutationFunction<Awaited<ReturnType<typeof inspirationWidgetsUpdate>>, { id: number; data: NonReadonly<InspirationWidget> }> = (props) => {
+        const { id, data } = props ?? {}
+
+        return inspirationWidgetsUpdate(id, data, requestOptions)
+    }
+
+    return { mutationFn, ...mutationOptions }
+}
+
+export type InspirationWidgetsUpdateMutationResult = NonNullable<Awaited<ReturnType<typeof inspirationWidgetsUpdate>>>
+export type InspirationWidgetsUpdateMutationBody = NonReadonly<InspirationWidget>
+export type InspirationWidgetsUpdateMutationError = unknown
+
+export const useInspirationWidgetsUpdate = <TError = unknown, TContext = unknown>(
+    options?: {
+        mutation?: UseMutationOptions<Awaited<ReturnType<typeof inspirationWidgetsUpdate>>, TError, { id: number; data: NonReadonly<InspirationWidget> }, TContext>
+        request?: SecondParameter<typeof customInstance>
+    },
+    queryClient?: QueryClient
+): UseMutationResult<Awaited<ReturnType<typeof inspirationWidgetsUpdate>>, TError, { id: number; data: NonReadonly<InspirationWidget> }, TContext> => {
+    const mutationOptions = getInspirationWidgetsUpdateMutationOptions(options)
+
+    return useMutation(mutationOptions, queryClient)
+}
+
+export const inspirationWidgetsPartialUpdate = (id: number, patchedInspirationWidget: NonReadonly<PatchedInspirationWidget>, options?: SecondParameter<typeof customInstance>) => {
+    return customInstance<InspirationWidget>({ url: `/api/v1/inspiration-widgets/${id}/`, method: "PATCH", headers: { "Content-Type": "application/json" }, data: patchedInspirationWidget }, options)
+}
+
+export const getInspirationWidgetsPartialUpdateMutationOptions = <TError = unknown, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof inspirationWidgetsPartialUpdate>>, TError, { id: number; data: NonReadonly<PatchedInspirationWidget> }, TContext>
+    request?: SecondParameter<typeof customInstance>
+}): UseMutationOptions<Awaited<ReturnType<typeof inspirationWidgetsPartialUpdate>>, TError, { id: number; data: NonReadonly<PatchedInspirationWidget> }, TContext> => {
+    const mutationKey = ["inspirationWidgetsPartialUpdate"]
+    const { mutation: mutationOptions, request: requestOptions } = options
+        ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+            ? options
+            : { ...options, mutation: { ...options.mutation, mutationKey } }
+        : { mutation: { mutationKey }, request: undefined }
+
+    const mutationFn: MutationFunction<Awaited<ReturnType<typeof inspirationWidgetsPartialUpdate>>, { id: number; data: NonReadonly<PatchedInspirationWidget> }> = (props) => {
+        const { id, data } = props ?? {}
+
+        return inspirationWidgetsPartialUpdate(id, data, requestOptions)
+    }
+
+    return { mutationFn, ...mutationOptions }
+}
+
+export type InspirationWidgetsPartialUpdateMutationResult = NonNullable<Awaited<ReturnType<typeof inspirationWidgetsPartialUpdate>>>
+export type InspirationWidgetsPartialUpdateMutationBody = NonReadonly<PatchedInspirationWidget>
+export type InspirationWidgetsPartialUpdateMutationError = unknown
+
+export const useInspirationWidgetsPartialUpdate = <TError = unknown, TContext = unknown>(
+    options?: {
+        mutation?: UseMutationOptions<Awaited<ReturnType<typeof inspirationWidgetsPartialUpdate>>, TError, { id: number; data: NonReadonly<PatchedInspirationWidget> }, TContext>
+        request?: SecondParameter<typeof customInstance>
+    },
+    queryClient?: QueryClient
+): UseMutationResult<Awaited<ReturnType<typeof inspirationWidgetsPartialUpdate>>, TError, { id: number; data: NonReadonly<PatchedInspirationWidget> }, TContext> => {
+    const mutationOptions = getInspirationWidgetsPartialUpdateMutationOptions(options)
+
+    return useMutation(mutationOptions, queryClient)
+}
+
+export const inspirationWidgetsDestroy = (id: number, options?: SecondParameter<typeof customInstance>) => {
+    return customInstance<void>({ url: `/api/v1/inspiration-widgets/${id}/`, method: "DELETE" }, options)
+}
+
+export const getInspirationWidgetsDestroyMutationOptions = <TError = unknown, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof inspirationWidgetsDestroy>>, TError, { id: number }, TContext>
+    request?: SecondParameter<typeof customInstance>
+}): UseMutationOptions<Awaited<ReturnType<typeof inspirationWidgetsDestroy>>, TError, { id: number }, TContext> => {
+    const mutationKey = ["inspirationWidgetsDestroy"]
+    const { mutation: mutationOptions, request: requestOptions } = options
+        ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+            ? options
+            : { ...options, mutation: { ...options.mutation, mutationKey } }
+        : { mutation: { mutationKey }, request: undefined }
+
+    const mutationFn: MutationFunction<Awaited<ReturnType<typeof inspirationWidgetsDestroy>>, { id: number }> = (props) => {
+        const { id } = props ?? {}
+
+        return inspirationWidgetsDestroy(id, requestOptions)
+    }
+
+    return { mutationFn, ...mutationOptions }
+}
+
+export type InspirationWidgetsDestroyMutationResult = NonNullable<Awaited<ReturnType<typeof inspirationWidgetsDestroy>>>
+
+export type InspirationWidgetsDestroyMutationError = unknown
+
+export const useInspirationWidgetsDestroy = <TError = unknown, TContext = unknown>(
+    options?: { mutation?: UseMutationOptions<Awaited<ReturnType<typeof inspirationWidgetsDestroy>>, TError, { id: number }, TContext>; request?: SecondParameter<typeof customInstance> },
+    queryClient?: QueryClient
+): UseMutationResult<Awaited<ReturnType<typeof inspirationWidgetsDestroy>>, TError, { id: number }, TContext> => {
+    const mutationOptions = getInspirationWidgetsDestroyMutationOptions(options)
 
     return useMutation(mutationOptions, queryClient)
 }
