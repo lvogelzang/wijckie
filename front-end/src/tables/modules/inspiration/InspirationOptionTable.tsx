@@ -2,10 +2,10 @@ import type { ColumnDef } from "@tanstack/react-table"
 import { useMemo } from "react"
 import { useTranslation } from "react-i18next"
 import { Link } from "react-router-dom"
-import { useInspirationOptionsList } from "../api/endpoints/api"
-import type { InspirationModule, InspirationOption } from "../api/models/api"
-import Table from "../components/table/Table"
-import type { TableButtonDef } from "../components/table/TableButtonDef"
+import { useInspirationOptionsList } from "../../../api/endpoints/api"
+import type { InspirationModule, InspirationOption } from "../../../api/models/api"
+import Table from "../../../components/table/Table"
+import type { TableButtonDef } from "../../../components/table/TableButtonDef"
 
 interface Props {
     module: InspirationModule

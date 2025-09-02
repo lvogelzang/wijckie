@@ -1,7 +1,7 @@
 import type { FC } from "react"
 import { useTranslation } from "react-i18next"
-import DailyTodosModuleTable from "../tables/DailyTodosModuleTable"
-import InspirationModuleTable from "../tables/InspirationModuleTable"
+import DailyTodosModuleTable from "../tables/modules/dailyTodos/DailyTodosModuleTable"
+import InspirationModuleTable from "../tables/modules/inspiration/InspirationModuleTable"
 
 const Modules: FC = () => {
     const { t } = useTranslation()

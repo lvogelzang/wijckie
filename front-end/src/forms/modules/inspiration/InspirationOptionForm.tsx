@@ -10,13 +10,13 @@ import {
     useInspirationOptionsUpdate,
     type InspirationOptionsCreateMutationResult,
     type InspirationOptionsUpdateMutationResult,
-} from "../api/endpoints/api"
-import { type FileUpload, type InspirationModule, type InspirationOption, type TypeEnum } from "../api/models/api"
-import ErrorMessage from "../components/ErrorMessage"
-import SaveAndDelete from "../components/form/SaveAndDelete"
-import { handleUpload } from "../helpers/uploadHelper"
-import { useErrorHandler } from "../helpers/useErrorHandler"
-import useInspirationOptionTypeOptions from "../helpers/useInspirationOptionTypeOptions"
+} from "../../../api/endpoints/api"
+import type { FileUpload, InspirationModule, InspirationOption, TypeEnum } from "../../../api/models/api"
+import ErrorMessage from "../../../components/ErrorMessage"
+import SaveAndDelete from "../../../components/form/SaveAndDelete"
+import { handleUpload } from "../../../helpers/uploadHelper"
+import { useErrorHandler } from "../../../helpers/useErrorHandler"
+import useInspirationOptionTypeOptions from "../../../helpers/useInspirationOptionTypeOptions"
 
 interface Props {
     mode: "Create" | "Update"

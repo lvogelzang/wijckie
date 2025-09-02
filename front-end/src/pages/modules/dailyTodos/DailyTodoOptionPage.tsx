@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom"
 import { useDailyTodoOptionsRetrieve, useDailyTodosModulesRetrieve } from "../../../api/endpoints/api"
 import Loader from "../../../components/Loader"
-import DailyTodoOptionForm from "../../../forms/DailyTodoOptionForm"
+import DailyTodoOptionForm from "../../../forms/modules/dailyTodos/DailyTodoOptionForm"
 
 interface Props {
     mode: "Create" | "Update"

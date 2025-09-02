@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom"
 import { useInspirationModulesRetrieve, useInspirationOptionsRetrieve } from "../../../api/endpoints/api"
 import Loader from "../../../components/Loader"
-import InspirationOptionForm from "../../../forms/InspirationOptionForm"
+import InspirationOptionForm from "../../../forms/modules/inspiration/InspirationOptionForm"
 
 interface Props {
     mode: "Create" | "Update"

@@ -3,15 +3,15 @@ import { Form } from "react-bootstrap"
 import { useForm, type SubmitHandler } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { useNavigate } from "react-router-dom"
-import { useDailyTodoOptionsCreate, useDailyTodoOptionsDestroy, useDailyTodoOptionsUpdate } from "../api/endpoints/api"
-import { type DailyTodoOption, type InspirationModule, type TypeEnum } from "../api/models/api"
-import ErrorMessage from "../components/ErrorMessage"
-import SaveAndDelete from "../components/form/SaveAndDelete"
-import { useErrorHandler } from "../helpers/useErrorHandler"
+import { useDailyTodoOptionsCreate, useDailyTodoOptionsDestroy, useDailyTodoOptionsUpdate } from "../../../api/endpoints/api"
+import { type DailyTodoOption, type DailyTodosModule, type TypeEnum } from "../../../api/models/api"
+import ErrorMessage from "../../../components/ErrorMessage"
+import SaveAndDelete from "../../../components/form/SaveAndDelete"
+import { useErrorHandler } from "../../../helpers/useErrorHandler"
 
 interface Props {
     mode: "Create" | "Update"
-    module: InspirationModule
+    module: DailyTodosModule
     option?: DailyTodoOption
 }
 
@@ -42,7 +42,7 @@ const DailyTodoOptionForm = ({ mode, module, option }: Props) => {
         },
     })
 
-    const navigateToParent = useCallback(() => {
+    const onSuccess = useCallback(() => {
         navigate(`/modules/daily-todos/${module.id}`)
     }, [navigate, module])
 
@@ -65,7 +65,7 @@ const DailyTodoOptionForm = ({ mode, module, option }: Props) => {
                         },
                     },
                     {
-                        onSuccess: navigateToParent,
+                        onSuccess,
                         onError,
                     }
                 )
@@ -73,13 +73,13 @@ const DailyTodoOptionForm = ({ mode, module, option }: Props) => {
                 update.mutate(
                     { id: option!.id, data: { name, text } },
                     {
-                        onSuccess: navigateToParent,
+                        onSuccess,
                         onError,
                     }
                 )
             }
         },
-        [mode, module, option, create, update, navigateToParent, onError]
+        [mode, module, option, create, update, onSuccess, onError]
     )
 
     const onDelete = useCallback(() => {
@@ -105,7 +105,7 @@ const DailyTodoOptionForm = ({ mode, module, option }: Props) => {
                     <ErrorMessage error={errors.text} />
                 </Form.Control.Feedback>
             </Form.Group>
-            <SaveAndDelete mode={mode} name={`${option?.name}`} onDelete={onDelete} onDeleted={navigateToParent} />
+            <SaveAndDelete mode={mode} name={`${option?.name}`} onDelete={onDelete} onDeleted={onSuccess} />
             <ErrorMessage error={errors.root} />
         </Form>
     )

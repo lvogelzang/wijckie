@@ -6,10 +6,15 @@ from rest_framework import routers, serializers, viewsets
 
 from wijckie.csrf import csrf
 from wijckie.fileUpload import FileUploadViewSet, dev_file_upload
-from wijckie.modules.dailyTodos import DailyTodoOptionViewSet, DailyTodosModuleViewSet
+from wijckie.modules.dailyTodos import (
+    DailyTodoOptionViewSet,
+    DailyTodosModuleViewSet,
+    DailyTodosWidgetViewSet,
+)
 from wijckie.modules.inspiration import (
     InspirationModuleViewSet,
     InspirationOptionViewSet,
+    InspirationWidgetViewSet,
 )
 from wijckie_models.models import User
 
@@ -35,10 +40,16 @@ router.register(
     r"inspiration-options", InspirationOptionViewSet, basename="inspiration-options"
 )
 router.register(
+    r"inspiration-widgets", InspirationWidgetViewSet, basename="inspiration-widgets"
+)
+router.register(
     r"daily-todos-modules", DailyTodosModuleViewSet, basename="daily-todos-modules"
 )
 router.register(
     r"daily-todo-options", DailyTodoOptionViewSet, basename="daily-todo-options"
+)
+router.register(
+    r"daily-todos-widgets", DailyTodosWidgetViewSet, basename="daily-todos-widgets"
 )
 
 urlpatterns = (

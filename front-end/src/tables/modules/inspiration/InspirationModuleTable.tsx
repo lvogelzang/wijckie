@@ -2,10 +2,10 @@ import { createColumnHelper, type ColumnDef } from "@tanstack/react-table"
 import { useMemo, type FC } from "react"
 import { useTranslation } from "react-i18next"
 import { Link } from "react-router-dom"
-import { useInspirationModulesList } from "../api/endpoints/api"
-import type { InspirationModule } from "../api/models/api"
-import Table from "../components/table/Table"
-import type { TableButtonDef } from "../components/table/TableButtonDef"
+import { useInspirationModulesList } from "../../../api/endpoints/api"
+import type { InspirationModule } from "../../../api/models/api"
+import Table from "../../../components/table/Table"
+import type { TableButtonDef } from "../../../components/table/TableButtonDef"
 
 const InspirationModuleTable: FC = () => {
     const { t } = useTranslation()

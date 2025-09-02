@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.core.files.storage import default_storage
 from drf_spectacular.utils import extend_schema_field
 from drf_spectacular.types import OpenApiTypes
@@ -9,7 +8,10 @@ from wijckie_models.models import (
     InspirationModule,
     InspirationOption,
     InspirationOptionType,
+    InspirationWidget,
 )
+
+# --- Module ---
 
 
 class InspirationModuleSerializer(serializers.ModelSerializer):
@@ -25,6 +27,29 @@ class InspirationModuleSerializer(serializers.ModelSerializer):
     class Meta:
         model = InspirationModule
         fields = ["id", "user", "createdAt", "name"]
+
+
+class InspirationModuleViewSet(
+    mixins.CreateModelMixin,
+    mixins.RetrieveModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin,
+    mixins.ListModelMixin,
+    viewsets.GenericViewSet,
+):
+    serializer_class = InspirationModuleSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_anonymous:
+            return InspirationModule.objects.none()
+
+        queryset = InspirationModule.objects.filter(user=user)
+
+        return queryset
+
+
+# --- Option ---
 
 
 class CreateInspirationOptionSerializer(serializers.ModelSerializer):
@@ -81,26 +106,6 @@ class InspirationOptionSerializer(serializers.ModelSerializer):
         fields = ["id", "module", "name", "type", "text", "image", "imageURL"]
 
 
-class InspirationModuleViewSet(
-    mixins.CreateModelMixin,
-    mixins.RetrieveModelMixin,
-    mixins.UpdateModelMixin,
-    mixins.DestroyModelMixin,
-    mixins.ListModelMixin,
-    viewsets.GenericViewSet,
-):
-    serializer_class = InspirationModuleSerializer
-
-    def get_queryset(self):
-        user = self.request.user
-        if user.is_anonymous:
-            return InspirationModule.objects.none()
-
-        queryset = InspirationModule.objects.filter(user=user)
-
-        return queryset
-
-
 class InspirationOptionViewSet(
     mixins.CreateModelMixin,
     mixins.RetrieveModelMixin,
@@ -123,6 +128,52 @@ class InspirationOptionViewSet(
             return InspirationOption.objects.none()
 
         queryset = InspirationOption.objects.filter(module__user=user)
+
+        module = self.request.query_params.get("module")
+        if module is not None:
+            queryset = queryset.filter(module_id=module)
+
+        return queryset
+
+
+# --- Widget ---
+
+
+class CreateInspirationWidgetSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = InspirationWidget
+        fields = ["id", "module", "name"]
+
+
+class InspirationWidgetSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = InspirationWidget
+        fields = ["id", "module", "name"]
+        read_only_fields = ["module"]
+
+
+class InspirationWidgetViewSet(
+    mixins.CreateModelMixin,
+    mixins.RetrieveModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin,
+    mixins.ListModelMixin,
+    viewsets.GenericViewSet,
+):
+    filterset_fields = ["module"]
+
+    def get_serializer_class(self):
+        if self.request.method == "POST":
+            return CreateInspirationWidgetSerializer
+        else:
+            return InspirationWidgetSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_anonymous:
+            return InspirationWidget.objects.none()
+
+        queryset = InspirationWidget.objects.filter(module__user=user)
 
         module = self.request.query_params.get("module")
         if module is not None:

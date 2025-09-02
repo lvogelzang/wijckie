@@ -1,8 +1,9 @@
 import { useParams } from "react-router-dom"
 import { useInspirationModulesRetrieve } from "../../../api/endpoints/api"
 import Loader from "../../../components/Loader"
-import InspirationModuleForm from "../../../forms/InspirationModuleForm"
-import InspirationOptionTable from "../../../tables/InspirationOptionTable"
+import InspirationModuleForm from "../../../forms/modules/inspiration/InspirationModuleForm"
+import InspirationOptionTable from "../../../tables/modules/inspiration/InspirationOptionTable"
+import InspirationWidgetTable from "../../../tables/modules/inspiration/InspirationWidgetTable"
 
 interface Props {
     mode: "Create" | "Update"
@@ -21,6 +22,7 @@ const InspirationModulePage = ({ mode }: Props) => {
         <div>
             <InspirationModuleForm mode={mode} module={module} />
             {mode === "Update" ? <InspirationOptionTable module={module!} /> : null}
+            {mode === "Update" ? <InspirationWidgetTable module={module!} /> : null}
         </div>
     )
 }

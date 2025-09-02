@@ -15,8 +15,10 @@ import Logout from "./pages/Logout"
 import Modules from "./pages/Modules"
 import DailyTodoOptionPage from "./pages/modules/dailyTodos/DailyTodoOptionPage"
 import DailyTodosModulePage from "./pages/modules/dailyTodos/DailyTodosModulePage"
+import DailyTodosWidgetPage from "./pages/modules/dailyTodos/DailyTodosWidgetPage"
 import InspirationModulePage from "./pages/modules/inspiration/InspirationModulePage"
 import InspirationOptionPage from "./pages/modules/inspiration/InspirationOptionPage"
+import InspirationWidgetPage from "./pages/modules/inspiration/InspirationWidgetPage"
 import MyAccount from "./pages/MyAccount"
 import ReauthenticateWebAuthn from "./pages/ReauthenticateWebAuthn"
 import RequestLoginCode from "./pages/RequestLoginCode"
@@ -175,6 +177,22 @@ const createRouter = () => {
                     ),
                 },
                 {
+                    path: "/modules/daily-todos/:moduleId/widgets/new",
+                    element: (
+                        <AuthenticatedRoute>
+                            <DailyTodosWidgetPage mode="Create" />
+                        </AuthenticatedRoute>
+                    ),
+                },
+                {
+                    path: "/modules/daily-todos/:moduleId/widgets/:widgetId",
+                    element: (
+                        <AuthenticatedRoute>
+                            <DailyTodosWidgetPage mode="Update" />
+                        </AuthenticatedRoute>
+                    ),
+                },
+                {
                     path: "/modules/inspiration/new",
                     element: (
                         <AuthenticatedRoute>
@@ -203,6 +221,22 @@ const createRouter = () => {
                     element: (
                         <AuthenticatedRoute>
                             <InspirationOptionPage mode="Update" />
+                        </AuthenticatedRoute>
+                    ),
+                },
+                {
+                    path: "/modules/inspiration/:moduleId/widgets/new",
+                    element: (
+                        <AuthenticatedRoute>
+                            <InspirationWidgetPage mode="Create" />
+                        </AuthenticatedRoute>
+                    ),
+                },
+                {
+                    path: "/modules/inspiration/:moduleId/widgets/:widgetId",
+                    element: (
+                        <AuthenticatedRoute>
+                            <InspirationWidgetPage mode="Update" />
                         </AuthenticatedRoute>
                     ),
                 },

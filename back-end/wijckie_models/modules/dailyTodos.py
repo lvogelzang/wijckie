@@ -41,7 +41,7 @@ class DailyTodoItem(models.Model):
         ordering = ["module", "date", "option", "id"]
 
 
-class DailyTodoWidget(models.Model):
+class DailyTodosWidget(models.Model):
     module = models.ForeignKey(DailyTodosModule, on_delete=models.CASCADE)
     name = models.CharField(max_length=30, validators=[MinLengthValidator(1)])
 
