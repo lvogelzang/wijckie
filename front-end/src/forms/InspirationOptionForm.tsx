@@ -1,24 +1,22 @@
-import { useCallback, useState } from "react"
+import { useCallback } from "react"
 import { Form } from "react-bootstrap"
 import { useForm, type SubmitHandler } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { useNavigate } from "react-router-dom"
 import {
-    fileUploadsCreate,
     useInspirationOptionsCreate,
     useInspirationOptionsDestroy,
     useInspirationOptionsPartialUpdate,
     useInspirationOptionsUpdate,
     type InspirationOptionsCreateMutationResult,
+    type InspirationOptionsUpdateMutationResult,
 } from "../api/endpoints/api"
-import { type InspirationModule, type InspirationOption, type TypeEnum } from "../api/models/api"
+import { type FileUpload, type InspirationModule, type InspirationOption, type TypeEnum } from "../api/models/api"
 import ErrorMessage from "../components/ErrorMessage"
 import SaveAndDelete from "../components/form/SaveAndDelete"
-import UploadHandler from "../components/upload/UploadHandler"
-import { UPLOAD_SIZE_LIMIT } from "../helpers/constants"
+import { handleUpload } from "../helpers/uploadHelper"
 import { useErrorHandler } from "../helpers/useErrorHandler"
 import useInspirationOptionTypeOptions from "../helpers/useInspirationOptionTypeOptions"
-import type { UploadJob } from "../types/UploadJob"
 
 interface Props {
     mode: "Create" | "Update"
@@ -43,8 +41,6 @@ const InspirationOptionForm = ({ mode, module, option }: Props) => {
     const partialUpdate = useInspirationOptionsPartialUpdate()
     const destroy = useInspirationOptionsDestroy()
 
-    const [uploadJob, setUploadJob] = useState<UploadJob<InspirationOption>>()
-
     const {
         register,
         setError,
@@ -59,8 +55,6 @@ const InspirationOptionForm = ({ mode, module, option }: Props) => {
         },
     })
 
-    const imageFile = watch("image")
-
     const selectedType = watch("type")
 
     const navigateToParent = useCallback(() => {
@@ -74,18 +68,11 @@ const InspirationOptionForm = ({ mode, module, option }: Props) => {
         [handleFormErrors, setError]
     )
 
-    const startUpload = useCallback(
-        (object: InspirationOptionsCreateMutationResult) => {
-            const file = imageFile.item(0)!
-            if (file.size > UPLOAD_SIZE_LIMIT) {
-                onError({ manualErrors: [{ field: "image", code: "too_big" }] })
-            } else {
-                fileUploadsCreate({ fileName: file.name })
-                    .then((response) => setUploadJob({ fileUpload: response, target: object }))
-                    .catch(onError)
-            }
+    const attachFileUploadToOption = useCallback(
+        (fileUpload: FileUpload, inspirationOption: InspirationOptionsCreateMutationResult | InspirationOptionsUpdateMutationResult) => {
+            partialUpdate.mutate({ id: inspirationOption.id, data: { image: fileUpload.id } }, { onSuccess: navigateToParent, onError })
         },
-        [onError, setUploadJob, imageFile]
+        [partialUpdate, navigateToParent, onError]
     )
 
     const onSubmit: SubmitHandler<Inputs> = useCallback(
@@ -100,13 +87,28 @@ const InspirationOptionForm = ({ mode, module, option }: Props) => {
                             text: type === "text" ? text : undefined,
                         },
                     },
-                    { onSuccess: image.length > 0 ? startUpload : navigateToParent, onError }
+                    {
+                        onSuccess:
+                            image.length > 0
+                                ? (inspirationOption: InspirationOptionsCreateMutationResult) => handleUpload(inspirationOption, "image", image, attachFileUploadToOption, onError)
+                                : navigateToParent,
+                        onError,
+                    }
                 )
             } else if (mode === "Update") {
-                update.mutate({ id: option!.id, data: { name, type, text } }, { onSuccess: image.length > 0 ? startUpload : navigateToParent, onError })
+                update.mutate(
+                    { id: option!.id, data: { name, type, text: type === "text" ? text : undefined } },
+                    {
+                        onSuccess:
+                            image.length > 0
+                                ? (inspirationOption: InspirationOptionsUpdateMutationResult) => handleUpload(inspirationOption, "image", image, attachFileUploadToOption, onError)
+                                : navigateToParent,
+                        onError,
+                    }
+                )
             }
         },
-        [mode, option, create, update, module, startUpload, navigateToParent, onError]
+        [mode, module, option, create, update, navigateToParent, onError]
     )
 
     const onDelete = useCallback(() => {
@@ -114,13 +116,6 @@ const InspirationOptionForm = ({ mode, module, option }: Props) => {
             destroy.mutate({ id: option!.id }, { onSuccess, onError })
         })
     }, [destroy, option])
-
-    const attachFileUploadToOption = useCallback(
-        (uploadJob: UploadJob<InspirationOption>) => {
-            partialUpdate.mutate({ id: uploadJob.target.id, data: { image: uploadJob.fileUpload.id } }, { onSuccess: navigateToParent, onError })
-        },
-        [partialUpdate, navigateToParent, onError]
-    )
 
     return (
         <Form noValidate onSubmit={handleSubmit(onSubmit)}>
@@ -152,13 +147,12 @@ const InspirationOptionForm = ({ mode, module, option }: Props) => {
             <Form.Group hidden={selectedType !== "image"}>
                 <Form.Label>{t("Main.image")}</Form.Label>
                 <Form.Control type="file" hidden={true} />
-                <div>
+                <div hidden={!option?.imageURL}>
                     <img src={option?.imageURL} style={{ width: "10rem", height: "10rem" }} />
                 </div>
                 <Form.Control type="file" {...register("image")} isInvalid={!!errors.image} />
             </Form.Group>
             <SaveAndDelete mode={mode} name={`${option?.name}`} onDelete={onDelete} onDeleted={navigateToParent} />
-            <UploadHandler uploadJob={uploadJob} file={imageFile} onSuccess={attachFileUploadToOption} />
             <ErrorMessage error={errors.root} />
         </Form>
     )
