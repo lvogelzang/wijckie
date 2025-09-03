@@ -10,6 +10,7 @@ from wijckie_models.models import (
     InspirationOptionType,
     InspirationWidget,
 )
+from wijckie_models.modules.inspiration import InspirationItem
 
 # --- Module ---
 
@@ -132,6 +133,62 @@ class InspirationOptionViewSet(
         module = self.request.query_params.get("module")
         if module is not None:
             queryset = queryset.filter(module_id=module)
+
+        return queryset
+
+
+# --- Item ---
+
+
+class CreateInspirationItemSerializer(serializers.ModelSerializer):
+    def create(self, validated_data):
+        option = (
+            InspirationOption.objects.filter(module=validated_data["module"])
+            .order_by("?")
+            .first()
+        )
+        return InspirationItem.objects.create(**validated_data, option=option)
+
+    class Meta:
+        model = InspirationItem
+        fields = ["id", "module", "date", "option"]
+        read_only_fields = ["option"]
+
+
+class InspirationItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = InspirationItem
+        fields = ["id", "module", "date", "option"]
+        read_only_fields = ["module", "date", "option"]
+
+
+class InspirationItemViewSet(
+    mixins.CreateModelMixin,
+    mixins.ListModelMixin,
+    viewsets.GenericViewSet,
+):
+    filterset_fields = ["module", "date"]
+
+    def get_serializer_class(self):
+        if self.request.method == "POST":
+            return CreateInspirationItemSerializer
+        else:
+            return InspirationItemSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_anonymous:
+            return InspirationItem.objects.none()
+
+        queryset = InspirationItem.objects.filter(module__user=user)
+
+        module = self.request.query_params.get("module")
+        if module is not None:
+            queryset = queryset.filter(module_id=module)
+
+        date = self.request.query_params.get("date")
+        if date is not None:
+            queryset = queryset.filter(date=date)
 
         return queryset
 

@@ -7,15 +7,18 @@ from rest_framework import routers, serializers, viewsets
 from wijckie.csrf import csrf
 from wijckie.fileUpload import FileUploadViewSet, dev_file_upload
 from wijckie.modules.dailyTodos import (
+    DailyTodoItemViewSet,
     DailyTodoOptionViewSet,
     DailyTodosModuleViewSet,
     DailyTodosWidgetViewSet,
 )
 from wijckie.modules.inspiration import (
+    InspirationItemViewSet,
     InspirationModuleViewSet,
     InspirationOptionViewSet,
     InspirationWidgetViewSet,
 )
+from wijckie.modules.widgets import WidgetsViewSet
 from wijckie_models.models import User
 
 
@@ -40,6 +43,9 @@ router.register(
     r"inspiration-options", InspirationOptionViewSet, basename="inspiration-options"
 )
 router.register(
+    r"inspiration-items", InspirationItemViewSet, basename="inspiration-items"
+)
+router.register(
     r"inspiration-widgets", InspirationWidgetViewSet, basename="inspiration-widgets"
 )
 router.register(
@@ -48,6 +54,7 @@ router.register(
 router.register(
     r"daily-todo-options", DailyTodoOptionViewSet, basename="daily-todo-options"
 )
+router.register(r"daily-todo-items", DailyTodoItemViewSet, basename="daily-todo-items")
 router.register(
     r"daily-todos-widgets", DailyTodosWidgetViewSet, basename="daily-todos-widgets"
 )
@@ -56,6 +63,11 @@ urlpatterns = (
     [
         path("api/v1/csrf/", csrf),
         path("api/v1/", include(router.urls)),
+        path(
+            "api/v1/widgets/",
+            WidgetsViewSet.as_view({"get": "retrieve"}),
+            name="widgets",
+        ),
         path(
             "api/v1/schema/",
             SpectacularAPIView.as_view(),

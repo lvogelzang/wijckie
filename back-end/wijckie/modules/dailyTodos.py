@@ -1,10 +1,7 @@
-from django.conf import settings
-from django.core.files.storage import default_storage
-from drf_spectacular.utils import extend_schema_field
-from drf_spectacular.types import OpenApiTypes
 from rest_framework import mixins, serializers, viewsets
 
 from wijckie_models.models import DailyTodosModule, DailyTodoOption, DailyTodosWidget
+from wijckie_models.modules.dailyTodos import DailyTodoItem
 
 # --- Module ---
 
@@ -86,6 +83,54 @@ class DailyTodoOptionViewSet(
         module = self.request.query_params.get("module")
         if module is not None:
             queryset = queryset.filter(module_id=module)
+
+        return queryset
+
+
+# --- Item ---
+
+
+class CreateDailyTodoItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DailyTodoItem
+        fields = ["id", "module", "date", "option", "status"]
+
+
+class DailyTodoItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DailyTodoItem
+        fields = ["id", "module", "date", "option", "status"]
+        read_only_fields = ["module", "date", "option"]
+
+
+class DailyTodoItemViewSet(
+    mixins.CreateModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.ListModelMixin,
+    viewsets.GenericViewSet,
+):
+    filterset_fields = ["module", "date"]
+
+    def get_serializer_class(self):
+        if self.request.method == "POST":
+            return CreateDailyTodoItemSerializer
+        else:
+            return DailyTodoItemSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_anonymous:
+            return DailyTodoItem.objects.none()
+
+        queryset = DailyTodoItem.objects.filter(module__user=user)
+
+        module = self.request.query_params.get("module")
+        if module is not None:
+            queryset = queryset.filter(module_id=module)
+
+        date = self.request.query_params.get("date")
+        if date is not None:
+            queryset = queryset.filter(date=date)
 
         return queryset
 

@@ -37,7 +37,7 @@ class DailyTodoItem(models.Model):
     status = models.CharField(max_length=30, choices=DailyTodoItemStatus.choices)
 
     class Meta:
-        unique_together = ("module", "date")
+        unique_together = ("module", "date", "option")
         ordering = ["module", "date", "option", "id"]
 
 
