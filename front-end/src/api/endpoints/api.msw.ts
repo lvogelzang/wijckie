@@ -9,12 +9,15 @@ import { faker } from "@faker-js/faker"
 
 import { HttpResponse, delay, http } from "msw"
 
-import { TypeEnum } from "../models/api"
+import { StatusEnum, TypeEnum } from "../models/api"
 import type {
+    CreateDailyTodoItem,
     CreateDailyTodoOption,
     CreateDailyTodosWidget,
+    CreateInspirationItem,
     CreateInspirationOption,
     CreateInspirationWidget,
+    DailyTodoItem,
     DailyTodoOption,
     DailyTodosModule,
     DailyTodosWidget,
@@ -23,18 +26,60 @@ import type {
     InspirationModule,
     InspirationOption,
     InspirationWidget,
+    PaginatedDailyTodoItemList,
     PaginatedDailyTodoOptionList,
     PaginatedDailyTodosModuleList,
     PaginatedDailyTodosWidgetList,
+    PaginatedInspirationItemList,
     PaginatedInspirationModuleList,
     PaginatedInspirationOptionList,
     PaginatedInspirationWidgetList,
     PaginatedUserList,
     User,
+    WidgetsBatch,
 } from "../models/api"
 
 export const getCsrfRetrieveResponseMock = (overrideResponse: Partial<DefaultOKResponse> = {}): DefaultOKResponse => ({
     status: faker.helpers.arrayElement([faker.string.alpha({ length: { min: 10, max: 20 } }), undefined]),
+    ...overrideResponse,
+})
+
+export const getDailyTodoItemsListResponseMock = (overrideResponse: Partial<PaginatedDailyTodoItemList> = {}): PaginatedDailyTodoItemList => ({
+    pageCount: faker.number.int({ min: undefined, max: undefined, multipleOf: undefined }),
+    results: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({
+        id: faker.number.int({ min: undefined, max: undefined, multipleOf: undefined }),
+        module: faker.number.int({ min: undefined, max: undefined, multipleOf: undefined }),
+        date: faker.date.past().toISOString().split("T")[0],
+        option: faker.number.int({ min: undefined, max: undefined, multipleOf: undefined }),
+        status: faker.helpers.arrayElement(Object.values(StatusEnum)),
+    })),
+    ...overrideResponse,
+})
+
+export const getDailyTodoItemsCreateResponseMock = (overrideResponse: Partial<CreateDailyTodoItem> = {}): CreateDailyTodoItem => ({
+    id: faker.number.int({ min: undefined, max: undefined, multipleOf: undefined }),
+    module: faker.number.int({ min: undefined, max: undefined, multipleOf: undefined }),
+    date: faker.date.past().toISOString().split("T")[0],
+    option: faker.number.int({ min: undefined, max: undefined, multipleOf: undefined }),
+    status: faker.helpers.arrayElement(Object.values(StatusEnum)),
+    ...overrideResponse,
+})
+
+export const getDailyTodoItemsUpdateResponseMock = (overrideResponse: Partial<DailyTodoItem> = {}): DailyTodoItem => ({
+    id: faker.number.int({ min: undefined, max: undefined, multipleOf: undefined }),
+    module: faker.number.int({ min: undefined, max: undefined, multipleOf: undefined }),
+    date: faker.date.past().toISOString().split("T")[0],
+    option: faker.number.int({ min: undefined, max: undefined, multipleOf: undefined }),
+    status: faker.helpers.arrayElement(Object.values(StatusEnum)),
+    ...overrideResponse,
+})
+
+export const getDailyTodoItemsPartialUpdateResponseMock = (overrideResponse: Partial<DailyTodoItem> = {}): DailyTodoItem => ({
+    id: faker.number.int({ min: undefined, max: undefined, multipleOf: undefined }),
+    module: faker.number.int({ min: undefined, max: undefined, multipleOf: undefined }),
+    date: faker.date.past().toISOString().split("T")[0],
+    option: faker.number.int({ min: undefined, max: undefined, multipleOf: undefined }),
+    status: faker.helpers.arrayElement(Object.values(StatusEnum)),
     ...overrideResponse,
 })
 
@@ -169,6 +214,25 @@ export const getFileUploadsCreateResponseMock = (overrideResponse: Partial<FileU
     fileUUID: faker.string.uuid(),
     fileName: faker.helpers.fromRegExp('^[^<>:;,?"*|/]+$'),
     fileUploadURL: faker.string.alpha({ length: { min: 10, max: 20 } }),
+    ...overrideResponse,
+})
+
+export const getInspirationItemsListResponseMock = (overrideResponse: Partial<PaginatedInspirationItemList> = {}): PaginatedInspirationItemList => ({
+    pageCount: faker.number.int({ min: undefined, max: undefined, multipleOf: undefined }),
+    results: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({
+        id: faker.number.int({ min: undefined, max: undefined, multipleOf: undefined }),
+        module: faker.number.int({ min: undefined, max: undefined, multipleOf: undefined }),
+        date: faker.date.past().toISOString().split("T")[0],
+        option: faker.number.int({ min: undefined, max: undefined, multipleOf: undefined }),
+    })),
+    ...overrideResponse,
+})
+
+export const getInspirationItemsCreateResponseMock = (overrideResponse: Partial<CreateInspirationItem> = {}): CreateInspirationItem => ({
+    id: faker.number.int({ min: undefined, max: undefined, multipleOf: undefined }),
+    module: faker.number.int({ min: undefined, max: undefined, multipleOf: undefined }),
+    date: faker.date.past().toISOString().split("T")[0],
+    option: faker.number.int({ min: undefined, max: undefined, multipleOf: undefined }),
     ...overrideResponse,
 })
 
@@ -354,12 +418,74 @@ export const getUsersPartialUpdateResponseMock = (overrideResponse: Partial<User
     ...overrideResponse,
 })
 
+export const getWidgetsRetrieveResponseMock = (overrideResponse: Partial<WidgetsBatch> = {}): WidgetsBatch => ({
+    dailyTodos: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({
+        id: faker.number.int({ min: undefined, max: undefined, multipleOf: undefined }),
+        module: faker.number.int({ min: undefined, max: undefined, multipleOf: undefined }),
+        name: faker.string.alpha({ length: { min: 1, max: 30 } }),
+    })),
+    inspiration: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({
+        id: faker.number.int({ min: undefined, max: undefined, multipleOf: undefined }),
+        module: faker.number.int({ min: undefined, max: undefined, multipleOf: undefined }),
+        name: faker.string.alpha({ length: { min: 1, max: 30 } }),
+    })),
+    ...overrideResponse,
+})
+
 export const getCsrfRetrieveMockHandler = (overrideResponse?: DefaultOKResponse | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<DefaultOKResponse> | DefaultOKResponse)) => {
     return http.get("*/api/v1/csrf/", async (info) => {
         await delay(1000)
 
         return new HttpResponse(
             JSON.stringify(overrideResponse !== undefined ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) : getCsrfRetrieveResponseMock()),
+            { status: 200, headers: { "Content-Type": "application/json" } }
+        )
+    })
+}
+
+export const getDailyTodoItemsListMockHandler = (
+    overrideResponse?: PaginatedDailyTodoItemList | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PaginatedDailyTodoItemList> | PaginatedDailyTodoItemList)
+) => {
+    return http.get("*/api/v1/daily-todo-items/", async (info) => {
+        await delay(1000)
+
+        return new HttpResponse(
+            JSON.stringify(overrideResponse !== undefined ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) : getDailyTodoItemsListResponseMock()),
+            { status: 200, headers: { "Content-Type": "application/json" } }
+        )
+    })
+}
+
+export const getDailyTodoItemsCreateMockHandler = (
+    overrideResponse?: CreateDailyTodoItem | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<CreateDailyTodoItem> | CreateDailyTodoItem)
+) => {
+    return http.post("*/api/v1/daily-todo-items/", async (info) => {
+        await delay(1000)
+
+        return new HttpResponse(
+            JSON.stringify(overrideResponse !== undefined ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) : getDailyTodoItemsCreateResponseMock()),
+            { status: 201, headers: { "Content-Type": "application/json" } }
+        )
+    })
+}
+
+export const getDailyTodoItemsUpdateMockHandler = (overrideResponse?: DailyTodoItem | ((info: Parameters<Parameters<typeof http.put>[1]>[0]) => Promise<DailyTodoItem> | DailyTodoItem)) => {
+    return http.put("*/api/v1/daily-todo-items/:id/", async (info) => {
+        await delay(1000)
+
+        return new HttpResponse(
+            JSON.stringify(overrideResponse !== undefined ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) : getDailyTodoItemsUpdateResponseMock()),
+            { status: 200, headers: { "Content-Type": "application/json" } }
+        )
+    })
+}
+
+export const getDailyTodoItemsPartialUpdateMockHandler = (overrideResponse?: DailyTodoItem | ((info: Parameters<Parameters<typeof http.patch>[1]>[0]) => Promise<DailyTodoItem> | DailyTodoItem)) => {
+    return http.patch("*/api/v1/daily-todo-items/:id/", async (info) => {
+        await delay(1000)
+
+        return new HttpResponse(
+            JSON.stringify(overrideResponse !== undefined ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) : getDailyTodoItemsPartialUpdateResponseMock()),
             { status: 200, headers: { "Content-Type": "application/json" } }
         )
     })
@@ -598,6 +724,32 @@ export const getFileUploadsCreateMockHandler = (overrideResponse?: FileUpload | 
 
         return new HttpResponse(
             JSON.stringify(overrideResponse !== undefined ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) : getFileUploadsCreateResponseMock()),
+            { status: 201, headers: { "Content-Type": "application/json" } }
+        )
+    })
+}
+
+export const getInspirationItemsListMockHandler = (
+    overrideResponse?: PaginatedInspirationItemList | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<PaginatedInspirationItemList> | PaginatedInspirationItemList)
+) => {
+    return http.get("*/api/v1/inspiration-items/", async (info) => {
+        await delay(1000)
+
+        return new HttpResponse(
+            JSON.stringify(overrideResponse !== undefined ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) : getInspirationItemsListResponseMock()),
+            { status: 200, headers: { "Content-Type": "application/json" } }
+        )
+    })
+}
+
+export const getInspirationItemsCreateMockHandler = (
+    overrideResponse?: CreateInspirationItem | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<CreateInspirationItem> | CreateInspirationItem)
+) => {
+    return http.post("*/api/v1/inspiration-items/", async (info) => {
+        await delay(1000)
+
+        return new HttpResponse(
+            JSON.stringify(overrideResponse !== undefined ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) : getInspirationItemsCreateResponseMock()),
             { status: 201, headers: { "Content-Type": "application/json" } }
         )
     })
@@ -898,8 +1050,23 @@ export const getUsersDestroyMockHandler = (overrideResponse?: void | ((info: Par
         return new HttpResponse(null, { status: 204 })
     })
 }
+
+export const getWidgetsRetrieveMockHandler = (overrideResponse?: WidgetsBatch | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<WidgetsBatch> | WidgetsBatch)) => {
+    return http.get("*/api/v1/widgets/", async (info) => {
+        await delay(1000)
+
+        return new HttpResponse(
+            JSON.stringify(overrideResponse !== undefined ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) : getWidgetsRetrieveResponseMock()),
+            { status: 200, headers: { "Content-Type": "application/json" } }
+        )
+    })
+}
 export const getWijckieAPIMock = () => [
     getCsrfRetrieveMockHandler(),
+    getDailyTodoItemsListMockHandler(),
+    getDailyTodoItemsCreateMockHandler(),
+    getDailyTodoItemsUpdateMockHandler(),
+    getDailyTodoItemsPartialUpdateMockHandler(),
     getDailyTodoOptionsListMockHandler(),
     getDailyTodoOptionsCreateMockHandler(),
     getDailyTodoOptionsRetrieveMockHandler(),
@@ -919,6 +1086,8 @@ export const getWijckieAPIMock = () => [
     getDailyTodosWidgetsPartialUpdateMockHandler(),
     getDailyTodosWidgetsDestroyMockHandler(),
     getFileUploadsCreateMockHandler(),
+    getInspirationItemsListMockHandler(),
+    getInspirationItemsCreateMockHandler(),
     getInspirationModulesListMockHandler(),
     getInspirationModulesCreateMockHandler(),
     getInspirationModulesRetrieveMockHandler(),
@@ -943,4 +1112,5 @@ export const getWijckieAPIMock = () => [
     getUsersUpdateMockHandler(),
     getUsersPartialUpdateMockHandler(),
     getUsersDestroyMockHandler(),
+    getWidgetsRetrieveMockHandler(),
 ]

@@ -22,10 +22,14 @@ import type {
 } from "@tanstack/react-query"
 
 import type {
+    CreateDailyTodoItem,
     CreateDailyTodoOption,
     CreateDailyTodosWidget,
+    CreateInspirationItem,
     CreateInspirationOption,
     CreateInspirationWidget,
+    DailyTodoItem,
+    DailyTodoItemsListParams,
     DailyTodoOption,
     DailyTodoOptionsListParams,
     DailyTodosModule,
@@ -34,19 +38,23 @@ import type {
     DailyTodosWidgetsListParams,
     DefaultOKResponse,
     FileUpload,
+    InspirationItemsListParams,
     InspirationModule,
     InspirationModulesListParams,
     InspirationOption,
     InspirationOptionsListParams,
     InspirationWidget,
     InspirationWidgetsListParams,
+    PaginatedDailyTodoItemList,
     PaginatedDailyTodoOptionList,
     PaginatedDailyTodosModuleList,
     PaginatedDailyTodosWidgetList,
+    PaginatedInspirationItemList,
     PaginatedInspirationModuleList,
     PaginatedInspirationOptionList,
     PaginatedInspirationWidgetList,
     PaginatedUserList,
+    PatchedDailyTodoItem,
     PatchedDailyTodoOption,
     PatchedDailyTodosModule,
     PatchedDailyTodosWidget,
@@ -56,6 +64,7 @@ import type {
     PatchedUser,
     User,
     UsersListParams,
+    WidgetsBatch,
 } from "../models/api"
 
 import { customInstance } from "../../helpers/api"
@@ -138,6 +147,188 @@ export function useCsrfRetrieve<TData = Awaited<ReturnType<typeof csrfRetrieve>>
     query.queryKey = queryOptions.queryKey
 
     return query
+}
+
+export const dailyTodoItemsList = (params?: DailyTodoItemsListParams, options?: SecondParameter<typeof customInstance>, signal?: AbortSignal) => {
+    return customInstance<PaginatedDailyTodoItemList>({ url: `/api/v1/daily-todo-items/`, method: "GET", params, signal }, options)
+}
+
+export const getDailyTodoItemsListQueryKey = (params?: DailyTodoItemsListParams) => {
+    return [`/api/v1/daily-todo-items/`, ...(params ? [params] : [])] as const
+}
+
+export const getDailyTodoItemsListQueryOptions = <TData = Awaited<ReturnType<typeof dailyTodoItemsList>>, TError = unknown>(
+    params?: DailyTodoItemsListParams,
+    options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof dailyTodoItemsList>>, TError, TData>>; request?: SecondParameter<typeof customInstance> }
+) => {
+    const { query: queryOptions, request: requestOptions } = options ?? {}
+
+    const queryKey = queryOptions?.queryKey ?? getDailyTodoItemsListQueryKey(params)
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof dailyTodoItemsList>>> = ({ signal }) => dailyTodoItemsList(params, requestOptions, signal)
+
+    return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<Awaited<ReturnType<typeof dailyTodoItemsList>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type DailyTodoItemsListQueryResult = NonNullable<Awaited<ReturnType<typeof dailyTodoItemsList>>>
+export type DailyTodoItemsListQueryError = unknown
+
+export function useDailyTodoItemsList<TData = Awaited<ReturnType<typeof dailyTodoItemsList>>, TError = unknown>(
+    params: undefined | DailyTodoItemsListParams,
+    options: {
+        query: Partial<UseQueryOptions<Awaited<ReturnType<typeof dailyTodoItemsList>>, TError, TData>> &
+            Pick<DefinedInitialDataOptions<Awaited<ReturnType<typeof dailyTodoItemsList>>, TError, Awaited<ReturnType<typeof dailyTodoItemsList>>>, "initialData">
+        request?: SecondParameter<typeof customInstance>
+    },
+    queryClient?: QueryClient
+): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useDailyTodoItemsList<TData = Awaited<ReturnType<typeof dailyTodoItemsList>>, TError = unknown>(
+    params?: DailyTodoItemsListParams,
+    options?: {
+        query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof dailyTodoItemsList>>, TError, TData>> &
+            Pick<UndefinedInitialDataOptions<Awaited<ReturnType<typeof dailyTodoItemsList>>, TError, Awaited<ReturnType<typeof dailyTodoItemsList>>>, "initialData">
+        request?: SecondParameter<typeof customInstance>
+    },
+    queryClient?: QueryClient
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useDailyTodoItemsList<TData = Awaited<ReturnType<typeof dailyTodoItemsList>>, TError = unknown>(
+    params?: DailyTodoItemsListParams,
+    options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof dailyTodoItemsList>>, TError, TData>>; request?: SecondParameter<typeof customInstance> },
+    queryClient?: QueryClient
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useDailyTodoItemsList<TData = Awaited<ReturnType<typeof dailyTodoItemsList>>, TError = unknown>(
+    params?: DailyTodoItemsListParams,
+    options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof dailyTodoItemsList>>, TError, TData>>; request?: SecondParameter<typeof customInstance> },
+    queryClient?: QueryClient
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+    const queryOptions = getDailyTodoItemsListQueryOptions(params, options)
+
+    const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+    query.queryKey = queryOptions.queryKey
+
+    return query
+}
+
+export const dailyTodoItemsCreate = (createDailyTodoItem: NonReadonly<CreateDailyTodoItem>, options?: SecondParameter<typeof customInstance>, signal?: AbortSignal) => {
+    return customInstance<CreateDailyTodoItem>({ url: `/api/v1/daily-todo-items/`, method: "POST", headers: { "Content-Type": "application/json" }, data: createDailyTodoItem, signal }, options)
+}
+
+export const getDailyTodoItemsCreateMutationOptions = <TError = unknown, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof dailyTodoItemsCreate>>, TError, { data: NonReadonly<CreateDailyTodoItem> }, TContext>
+    request?: SecondParameter<typeof customInstance>
+}): UseMutationOptions<Awaited<ReturnType<typeof dailyTodoItemsCreate>>, TError, { data: NonReadonly<CreateDailyTodoItem> }, TContext> => {
+    const mutationKey = ["dailyTodoItemsCreate"]
+    const { mutation: mutationOptions, request: requestOptions } = options
+        ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+            ? options
+            : { ...options, mutation: { ...options.mutation, mutationKey } }
+        : { mutation: { mutationKey }, request: undefined }
+
+    const mutationFn: MutationFunction<Awaited<ReturnType<typeof dailyTodoItemsCreate>>, { data: NonReadonly<CreateDailyTodoItem> }> = (props) => {
+        const { data } = props ?? {}
+
+        return dailyTodoItemsCreate(data, requestOptions)
+    }
+
+    return { mutationFn, ...mutationOptions }
+}
+
+export type DailyTodoItemsCreateMutationResult = NonNullable<Awaited<ReturnType<typeof dailyTodoItemsCreate>>>
+export type DailyTodoItemsCreateMutationBody = NonReadonly<CreateDailyTodoItem>
+export type DailyTodoItemsCreateMutationError = unknown
+
+export const useDailyTodoItemsCreate = <TError = unknown, TContext = unknown>(
+    options?: {
+        mutation?: UseMutationOptions<Awaited<ReturnType<typeof dailyTodoItemsCreate>>, TError, { data: NonReadonly<CreateDailyTodoItem> }, TContext>
+        request?: SecondParameter<typeof customInstance>
+    },
+    queryClient?: QueryClient
+): UseMutationResult<Awaited<ReturnType<typeof dailyTodoItemsCreate>>, TError, { data: NonReadonly<CreateDailyTodoItem> }, TContext> => {
+    const mutationOptions = getDailyTodoItemsCreateMutationOptions(options)
+
+    return useMutation(mutationOptions, queryClient)
+}
+
+export const dailyTodoItemsUpdate = (id: number, dailyTodoItem: NonReadonly<DailyTodoItem>, options?: SecondParameter<typeof customInstance>) => {
+    return customInstance<DailyTodoItem>({ url: `/api/v1/daily-todo-items/${id}/`, method: "PUT", headers: { "Content-Type": "application/json" }, data: dailyTodoItem }, options)
+}
+
+export const getDailyTodoItemsUpdateMutationOptions = <TError = unknown, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof dailyTodoItemsUpdate>>, TError, { id: number; data: NonReadonly<DailyTodoItem> }, TContext>
+    request?: SecondParameter<typeof customInstance>
+}): UseMutationOptions<Awaited<ReturnType<typeof dailyTodoItemsUpdate>>, TError, { id: number; data: NonReadonly<DailyTodoItem> }, TContext> => {
+    const mutationKey = ["dailyTodoItemsUpdate"]
+    const { mutation: mutationOptions, request: requestOptions } = options
+        ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+            ? options
+            : { ...options, mutation: { ...options.mutation, mutationKey } }
+        : { mutation: { mutationKey }, request: undefined }
+
+    const mutationFn: MutationFunction<Awaited<ReturnType<typeof dailyTodoItemsUpdate>>, { id: number; data: NonReadonly<DailyTodoItem> }> = (props) => {
+        const { id, data } = props ?? {}
+
+        return dailyTodoItemsUpdate(id, data, requestOptions)
+    }
+
+    return { mutationFn, ...mutationOptions }
+}
+
+export type DailyTodoItemsUpdateMutationResult = NonNullable<Awaited<ReturnType<typeof dailyTodoItemsUpdate>>>
+export type DailyTodoItemsUpdateMutationBody = NonReadonly<DailyTodoItem>
+export type DailyTodoItemsUpdateMutationError = unknown
+
+export const useDailyTodoItemsUpdate = <TError = unknown, TContext = unknown>(
+    options?: {
+        mutation?: UseMutationOptions<Awaited<ReturnType<typeof dailyTodoItemsUpdate>>, TError, { id: number; data: NonReadonly<DailyTodoItem> }, TContext>
+        request?: SecondParameter<typeof customInstance>
+    },
+    queryClient?: QueryClient
+): UseMutationResult<Awaited<ReturnType<typeof dailyTodoItemsUpdate>>, TError, { id: number; data: NonReadonly<DailyTodoItem> }, TContext> => {
+    const mutationOptions = getDailyTodoItemsUpdateMutationOptions(options)
+
+    return useMutation(mutationOptions, queryClient)
+}
+
+export const dailyTodoItemsPartialUpdate = (id: number, patchedDailyTodoItem: NonReadonly<PatchedDailyTodoItem>, options?: SecondParameter<typeof customInstance>) => {
+    return customInstance<DailyTodoItem>({ url: `/api/v1/daily-todo-items/${id}/`, method: "PATCH", headers: { "Content-Type": "application/json" }, data: patchedDailyTodoItem }, options)
+}
+
+export const getDailyTodoItemsPartialUpdateMutationOptions = <TError = unknown, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof dailyTodoItemsPartialUpdate>>, TError, { id: number; data: NonReadonly<PatchedDailyTodoItem> }, TContext>
+    request?: SecondParameter<typeof customInstance>
+}): UseMutationOptions<Awaited<ReturnType<typeof dailyTodoItemsPartialUpdate>>, TError, { id: number; data: NonReadonly<PatchedDailyTodoItem> }, TContext> => {
+    const mutationKey = ["dailyTodoItemsPartialUpdate"]
+    const { mutation: mutationOptions, request: requestOptions } = options
+        ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+            ? options
+            : { ...options, mutation: { ...options.mutation, mutationKey } }
+        : { mutation: { mutationKey }, request: undefined }
+
+    const mutationFn: MutationFunction<Awaited<ReturnType<typeof dailyTodoItemsPartialUpdate>>, { id: number; data: NonReadonly<PatchedDailyTodoItem> }> = (props) => {
+        const { id, data } = props ?? {}
+
+        return dailyTodoItemsPartialUpdate(id, data, requestOptions)
+    }
+
+    return { mutationFn, ...mutationOptions }
+}
+
+export type DailyTodoItemsPartialUpdateMutationResult = NonNullable<Awaited<ReturnType<typeof dailyTodoItemsPartialUpdate>>>
+export type DailyTodoItemsPartialUpdateMutationBody = NonReadonly<PatchedDailyTodoItem>
+export type DailyTodoItemsPartialUpdateMutationError = unknown
+
+export const useDailyTodoItemsPartialUpdate = <TError = unknown, TContext = unknown>(
+    options?: {
+        mutation?: UseMutationOptions<Awaited<ReturnType<typeof dailyTodoItemsPartialUpdate>>, TError, { id: number; data: NonReadonly<PatchedDailyTodoItem> }, TContext>
+        request?: SecondParameter<typeof customInstance>
+    },
+    queryClient?: QueryClient
+): UseMutationResult<Awaited<ReturnType<typeof dailyTodoItemsPartialUpdate>>, TError, { id: number; data: NonReadonly<PatchedDailyTodoItem> }, TContext> => {
+    const mutationOptions = getDailyTodoItemsPartialUpdateMutationOptions(options)
+
+    return useMutation(mutationOptions, queryClient)
 }
 
 export const dailyTodoOptionsList = (params?: DailyTodoOptionsListParams, options?: SecondParameter<typeof customInstance>, signal?: AbortSignal) => {
@@ -1025,6 +1216,108 @@ export const useFileUploadsCreate = <TError = unknown, TContext = unknown>(
     queryClient?: QueryClient
 ): UseMutationResult<Awaited<ReturnType<typeof fileUploadsCreate>>, TError, { data: NonReadonly<FileUpload> }, TContext> => {
     const mutationOptions = getFileUploadsCreateMutationOptions(options)
+
+    return useMutation(mutationOptions, queryClient)
+}
+
+export const inspirationItemsList = (params?: InspirationItemsListParams, options?: SecondParameter<typeof customInstance>, signal?: AbortSignal) => {
+    return customInstance<PaginatedInspirationItemList>({ url: `/api/v1/inspiration-items/`, method: "GET", params, signal }, options)
+}
+
+export const getInspirationItemsListQueryKey = (params?: InspirationItemsListParams) => {
+    return [`/api/v1/inspiration-items/`, ...(params ? [params] : [])] as const
+}
+
+export const getInspirationItemsListQueryOptions = <TData = Awaited<ReturnType<typeof inspirationItemsList>>, TError = unknown>(
+    params?: InspirationItemsListParams,
+    options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof inspirationItemsList>>, TError, TData>>; request?: SecondParameter<typeof customInstance> }
+) => {
+    const { query: queryOptions, request: requestOptions } = options ?? {}
+
+    const queryKey = queryOptions?.queryKey ?? getInspirationItemsListQueryKey(params)
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof inspirationItemsList>>> = ({ signal }) => inspirationItemsList(params, requestOptions, signal)
+
+    return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<Awaited<ReturnType<typeof inspirationItemsList>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type InspirationItemsListQueryResult = NonNullable<Awaited<ReturnType<typeof inspirationItemsList>>>
+export type InspirationItemsListQueryError = unknown
+
+export function useInspirationItemsList<TData = Awaited<ReturnType<typeof inspirationItemsList>>, TError = unknown>(
+    params: undefined | InspirationItemsListParams,
+    options: {
+        query: Partial<UseQueryOptions<Awaited<ReturnType<typeof inspirationItemsList>>, TError, TData>> &
+            Pick<DefinedInitialDataOptions<Awaited<ReturnType<typeof inspirationItemsList>>, TError, Awaited<ReturnType<typeof inspirationItemsList>>>, "initialData">
+        request?: SecondParameter<typeof customInstance>
+    },
+    queryClient?: QueryClient
+): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useInspirationItemsList<TData = Awaited<ReturnType<typeof inspirationItemsList>>, TError = unknown>(
+    params?: InspirationItemsListParams,
+    options?: {
+        query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof inspirationItemsList>>, TError, TData>> &
+            Pick<UndefinedInitialDataOptions<Awaited<ReturnType<typeof inspirationItemsList>>, TError, Awaited<ReturnType<typeof inspirationItemsList>>>, "initialData">
+        request?: SecondParameter<typeof customInstance>
+    },
+    queryClient?: QueryClient
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useInspirationItemsList<TData = Awaited<ReturnType<typeof inspirationItemsList>>, TError = unknown>(
+    params?: InspirationItemsListParams,
+    options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof inspirationItemsList>>, TError, TData>>; request?: SecondParameter<typeof customInstance> },
+    queryClient?: QueryClient
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useInspirationItemsList<TData = Awaited<ReturnType<typeof inspirationItemsList>>, TError = unknown>(
+    params?: InspirationItemsListParams,
+    options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof inspirationItemsList>>, TError, TData>>; request?: SecondParameter<typeof customInstance> },
+    queryClient?: QueryClient
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+    const queryOptions = getInspirationItemsListQueryOptions(params, options)
+
+    const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+    query.queryKey = queryOptions.queryKey
+
+    return query
+}
+
+export const inspirationItemsCreate = (createInspirationItem: NonReadonly<CreateInspirationItem>, options?: SecondParameter<typeof customInstance>, signal?: AbortSignal) => {
+    return customInstance<CreateInspirationItem>({ url: `/api/v1/inspiration-items/`, method: "POST", headers: { "Content-Type": "application/json" }, data: createInspirationItem, signal }, options)
+}
+
+export const getInspirationItemsCreateMutationOptions = <TError = unknown, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<Awaited<ReturnType<typeof inspirationItemsCreate>>, TError, { data: NonReadonly<CreateInspirationItem> }, TContext>
+    request?: SecondParameter<typeof customInstance>
+}): UseMutationOptions<Awaited<ReturnType<typeof inspirationItemsCreate>>, TError, { data: NonReadonly<CreateInspirationItem> }, TContext> => {
+    const mutationKey = ["inspirationItemsCreate"]
+    const { mutation: mutationOptions, request: requestOptions } = options
+        ? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+            ? options
+            : { ...options, mutation: { ...options.mutation, mutationKey } }
+        : { mutation: { mutationKey }, request: undefined }
+
+    const mutationFn: MutationFunction<Awaited<ReturnType<typeof inspirationItemsCreate>>, { data: NonReadonly<CreateInspirationItem> }> = (props) => {
+        const { data } = props ?? {}
+
+        return inspirationItemsCreate(data, requestOptions)
+    }
+
+    return { mutationFn, ...mutationOptions }
+}
+
+export type InspirationItemsCreateMutationResult = NonNullable<Awaited<ReturnType<typeof inspirationItemsCreate>>>
+export type InspirationItemsCreateMutationBody = NonReadonly<CreateInspirationItem>
+export type InspirationItemsCreateMutationError = unknown
+
+export const useInspirationItemsCreate = <TError = unknown, TContext = unknown>(
+    options?: {
+        mutation?: UseMutationOptions<Awaited<ReturnType<typeof inspirationItemsCreate>>, TError, { data: NonReadonly<CreateInspirationItem> }, TContext>
+        request?: SecondParameter<typeof customInstance>
+    },
+    queryClient?: QueryClient
+): UseMutationResult<Awaited<ReturnType<typeof inspirationItemsCreate>>, TError, { data: NonReadonly<CreateInspirationItem> }, TContext> => {
+    const mutationOptions = getInspirationItemsCreateMutationOptions(options)
 
     return useMutation(mutationOptions, queryClient)
 }
@@ -2157,4 +2450,62 @@ export const useUsersDestroy = <TError = unknown, TContext = unknown>(
     const mutationOptions = getUsersDestroyMutationOptions(options)
 
     return useMutation(mutationOptions, queryClient)
+}
+
+export const widgetsRetrieve = (options?: SecondParameter<typeof customInstance>, signal?: AbortSignal) => {
+    return customInstance<WidgetsBatch>({ url: `/api/v1/widgets/`, method: "GET", signal }, options)
+}
+
+export const getWidgetsRetrieveQueryKey = () => {
+    return [`/api/v1/widgets/`] as const
+}
+
+export const getWidgetsRetrieveQueryOptions = <TData = Awaited<ReturnType<typeof widgetsRetrieve>>, TError = unknown>(options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof widgetsRetrieve>>, TError, TData>>
+    request?: SecondParameter<typeof customInstance>
+}) => {
+    const { query: queryOptions, request: requestOptions } = options ?? {}
+
+    const queryKey = queryOptions?.queryKey ?? getWidgetsRetrieveQueryKey()
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof widgetsRetrieve>>> = ({ signal }) => widgetsRetrieve(requestOptions, signal)
+
+    return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<Awaited<ReturnType<typeof widgetsRetrieve>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type WidgetsRetrieveQueryResult = NonNullable<Awaited<ReturnType<typeof widgetsRetrieve>>>
+export type WidgetsRetrieveQueryError = unknown
+
+export function useWidgetsRetrieve<TData = Awaited<ReturnType<typeof widgetsRetrieve>>, TError = unknown>(
+    options: {
+        query: Partial<UseQueryOptions<Awaited<ReturnType<typeof widgetsRetrieve>>, TError, TData>> &
+            Pick<DefinedInitialDataOptions<Awaited<ReturnType<typeof widgetsRetrieve>>, TError, Awaited<ReturnType<typeof widgetsRetrieve>>>, "initialData">
+        request?: SecondParameter<typeof customInstance>
+    },
+    queryClient?: QueryClient
+): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useWidgetsRetrieve<TData = Awaited<ReturnType<typeof widgetsRetrieve>>, TError = unknown>(
+    options?: {
+        query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof widgetsRetrieve>>, TError, TData>> &
+            Pick<UndefinedInitialDataOptions<Awaited<ReturnType<typeof widgetsRetrieve>>, TError, Awaited<ReturnType<typeof widgetsRetrieve>>>, "initialData">
+        request?: SecondParameter<typeof customInstance>
+    },
+    queryClient?: QueryClient
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useWidgetsRetrieve<TData = Awaited<ReturnType<typeof widgetsRetrieve>>, TError = unknown>(
+    options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof widgetsRetrieve>>, TError, TData>>; request?: SecondParameter<typeof customInstance> },
+    queryClient?: QueryClient
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useWidgetsRetrieve<TData = Awaited<ReturnType<typeof widgetsRetrieve>>, TError = unknown>(
+    options?: { query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof widgetsRetrieve>>, TError, TData>>; request?: SecondParameter<typeof customInstance> },
+    queryClient?: QueryClient
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+    const queryOptions = getWidgetsRetrieveQueryOptions(options)
+
+    const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+    query.queryKey = queryOptions.queryKey
+
+    return query
 }
