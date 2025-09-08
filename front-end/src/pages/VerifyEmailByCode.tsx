@@ -63,7 +63,7 @@ const VerifyEmailByCode: FC = () => {
             <Form noValidate onSubmit={handleSubmit(onSubmit)}>
                 <Form.Group>
                     <Form.Label>{t("VerifyEmailPage.code")}</Form.Label>
-                    <Form.Control type="text" {...register("key")} isInvalid={!!errors.key} autoFocus />
+                    <Form.Control type="text" {...register("key")} isInvalid={!!errors.key} autoFocus data-cy="verificationCodeInput" />
                     <Form.Control.Feedback type="invalid">
                         <ErrorMessage error={errors.key} />
                     </Form.Control.Feedback>

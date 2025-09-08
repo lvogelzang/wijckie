@@ -78,7 +78,7 @@ const CreatePasskey: FC = () => {
             <Form noValidate onSubmit={handleSubmit(onSubmit)}>
                 <Form.Group>
                     <Form.Label>{t("UpdatePasskey.name")}</Form.Label>
-                    <Form.Control {...register("name")} isInvalid={!!errors.name} />
+                    <Form.Control {...register("name")} isInvalid={!!errors.name} data-cy="nameInput" />
                     <Form.Control.Feedback type="invalid">
                         <ErrorMessage error={errors.name} />
                     </Form.Control.Feedback>

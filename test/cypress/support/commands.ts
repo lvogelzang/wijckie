@@ -3,11 +3,21 @@ export {}
 declare global {
     namespace Cypress {
         interface Chainable {
+            afterRemoveUser(email: string): Chainable<void>
             getTOTPCodeFromLastEmail(): Chainable<number>
             screenshotForDocs(file: string, test: string, followUpNumber: number): Chainable<void>
         }
     }
 }
+
+Cypress.Commands.add("afterRemoveUser", (email: string) => {
+    cy.task("queryDb", `DELETE FROM account_emailaddress WHERE email="${email}";`).then((results) => {
+        expect(results).to.be.an("array").that.is.empty
+    })
+    cy.task("queryDb", `DELETE FROM wijckie_models_user WHERE email="${email}";`).then((results) => {
+        expect(results).to.be.an("array").that.is.empty
+    })
+})
 
 interface EmailData {
     id: string

@@ -63,7 +63,7 @@ const SignupByPasskey: FC = () => {
             <Form noValidate onSubmit={handleSubmit(onSubmit)}>
                 <Form.Group>
                     <Form.Label>{t("SignUpPage.email_address")}</Form.Label>
-                    <Form.Control type="email" autoComplete="email" {...register("email")} isInvalid={!!errors.email} autoFocus />
+                    <Form.Control type="email" autoComplete="email" {...register("email")} isInvalid={!!errors.email} autoFocus data-cy="emailInput" />
                     <Form.Control.Feedback type="invalid">
                         <ErrorMessage error={errors.email} />
                     </Form.Control.Feedback>
@@ -81,7 +81,10 @@ const SignupByPasskey: FC = () => {
             <p>
                 <Trans i18nKey="SignUpPage.already_an_account">
                     Already have an account? Go to
-                    <Link to="/account/authenticate/webauthn">Login</Link>.
+                    <Link to="/account/authenticate/webauthn" data-cy="toLoginLink">
+                        Login
+                    </Link>
+                    .
                 </Trans>
             </p>
         </div>

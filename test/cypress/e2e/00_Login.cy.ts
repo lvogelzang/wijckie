@@ -22,4 +22,12 @@ describe("login page", () => {
             cy.get('[data-cy="confirmCodeInput"]').type("{enter}")
         })
     })
+
+    it("supports navigating to account creation", () => {
+        cy.setCookie("django_language", "en-GB")
+
+        cy.visit("/")
+        cy.get('[data-cy="signUp"]').click()
+        cy.get("h1").contains("Create account")
+    })
 })

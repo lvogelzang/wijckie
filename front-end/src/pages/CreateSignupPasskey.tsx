@@ -78,7 +78,7 @@ const CreateSignupPasskey: FC = () => {
             <Form noValidate onSubmit={handleSubmit(onSubmit)}>
                 <Form.Group>
                     <Form.Label>{t("CreateSignupPasskey.passkey_name")}</Form.Label>
-                    <Form.Control {...register("name")} isInvalid={!!errors.name} autoFocus />
+                    <Form.Control {...register("name")} isInvalid={!!errors.name} autoFocus data-cy="nameInput" />
                     <Form.Control.Feedback type="invalid">
                         <ErrorMessage error={errors.name} />
                     </Form.Control.Feedback>
