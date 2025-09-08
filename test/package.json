@@ -1,10 +1,11 @@
 {
-  "name": "wijckie-test",
-  "private": true,
-  "version": "1.0.0",
-  "devDependencies": {
-    "cypress": "14.3.2",
-    "prettier": "^3.6.2",
-    "typescript": "^5.9.2"
-  }
+    "name": "wijckie-test",
+    "private": true,
+    "version": "1.0.0",
+    "devDependencies": {
+        "@cypress/code-coverage": "^3.14.6",
+        "cypress": "14.3.2",
+        "prettier": "^3.6.2",
+        "typescript": "^5.9.2"
+    }
 }

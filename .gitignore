@@ -182,3 +182,5 @@ back-end/media/
 !cypress.template.env.json
 node_modules/
 screenshots/
+.nyc_output/
+coverage/

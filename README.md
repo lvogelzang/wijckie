@@ -52,3 +52,8 @@ Personal start page
 - Put everything in private subnets, 2 options:
   - Back-end in AWS App Runner with a VPC endpoints (costly) to reach smtp/rds/..
   - Back-end in ECS service in private subnet, with load balancer (costly) to reach back-end
+
+### How coverage works:
+
+- The vite-plugin-istanbul package keeps track of all covered lines during runtime. Enter `window.__coverage__` in your browser console to view the current status of the coverage. The istanbul plugin is added in vite.config.ts, arrange included and excluded files there.
+- The @cypress/code-coverage adds tools to generate coverage reports when running Cypress. First it collects coverage data in the /test/.nyc_output folder. When tests are done, a report is written to /test/coverage/lcov-report/index.html.

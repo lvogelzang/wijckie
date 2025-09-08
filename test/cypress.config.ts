@@ -1,3 +1,4 @@
+import registerCodeCoverageTasks from "@cypress/code-coverage/task"
 import { defineConfig } from "cypress"
 
 export default defineConfig({
@@ -7,6 +8,7 @@ export default defineConfig({
         screenshotOnRunFailure: false,
         video: false,
         setupNodeEvents(on, config) {
+            registerCodeCoverageTasks(on, config)
             config.baseUrl = config.env.FRONTEND_URL
             return config
         },
