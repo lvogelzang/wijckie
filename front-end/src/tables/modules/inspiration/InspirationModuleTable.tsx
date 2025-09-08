@@ -31,7 +31,7 @@ const InspirationModuleTable: FC = () => {
         ]
     }, [t])
 
-    return <Table id="InspirationModules" title="InspirationModules" columns={columns} buttons={buttons} subject={t("InspirationModule.plural_name")} dataQuery={dataQuery} />
+    return <Table id="InspirationModules" title={t("InspirationModule.plural_title")} columns={columns} buttons={buttons} subject={t("InspirationModule.plural_name")} dataQuery={dataQuery} />
 }
 
 export default InspirationModuleTable

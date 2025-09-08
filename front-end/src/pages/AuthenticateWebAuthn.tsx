@@ -67,13 +67,19 @@ const AuthenticateWebAuthn: FC = () => {
             <p>
                 <Trans i18nKey="AuthenticateWebAuthn.no_passkey_yet">
                     No passkey on this device yet? Go to
-                    <Link to="/account/login/code">Request a sign-in code</Link>.
+                    <Link to="/account/login/code" data-cy="requestCode">
+                        Request a sign-in code
+                    </Link>
+                    .
                 </Trans>
             </p>
             <p>
                 <Trans i18nKey="AuthenticateWebAuthn.no_account_yet">
                     No account yet? Go to the
-                    <Link to="/account/signup/passkey">Sign-up page</Link>.
+                    <Link to="/account/signup/passkey" data-cy="signUp">
+                        Sign-up page
+                    </Link>
+                    .
                 </Trans>
             </p>
         </div>

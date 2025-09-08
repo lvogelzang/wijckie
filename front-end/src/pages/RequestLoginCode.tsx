@@ -64,13 +64,15 @@ const RequestLoginCode: FC = () => {
             <Form noValidate onSubmit={handleSubmit(onSubmit)}>
                 <Form.Group>
                     <Form.Label>{t("RequestLoginCodePage.email_address")}</Form.Label>
-                    <Form.Control type="email" autoComplete="email" {...register("email")} isInvalid={!!errors.email} autoFocus />
+                    <Form.Control type="email" autoComplete="email" {...register("email")} isInvalid={!!errors.email} autoFocus data-cy="emailInput" />
                     <Form.Control.Feedback type="invalid">
                         <ErrorMessage error={errors.email} />
                     </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group>
-                    <Button type="submit">{t("RequestLoginCodePage.submit_button")}</Button>
+                    <Button type="submit" data-cy="submitButton">
+                        {t("RequestLoginCodePage.submit_button")}
+                    </Button>
                 </Form.Group>
                 <Form.Group hidden={!errors.root}>
                     <Form.Control type="hidden" isInvalid={!!errors.root} />
@@ -81,7 +83,7 @@ const RequestLoginCode: FC = () => {
                 <p>
                     <Trans i18nKey="RequestLoginCodePage.back_to_login">
                         Already a passkey? Go back to
-                        <Link to="/account/authenticate/webauthn">Login</Link>.
+                        <Link to="/account/logout">Login</Link>.
                     </Trans>
                 </p>
             </Form>

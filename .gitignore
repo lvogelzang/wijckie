@@ -176,3 +176,9 @@ cython_debug/
 latest_version.txt
 
 back-end/media/
+
+# test
+*.env.json
+!cypress.template.env.json
+node_modules/
+screenshots/

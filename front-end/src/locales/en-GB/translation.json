@@ -10,8 +10,8 @@
     "save": "Save",
     "title_new": "New",
     "name": "Name",
-    "type": "Type",
     "text": "Text",
+    "type": "Type",
     "image": "Image",
     "new": "New"
   },
@@ -120,7 +120,24 @@
   "VerifyEmailByCode": {
     "already_an_account": "Already have an account? Go to <1>Login</1>."
   },
+  "DailyTodoOption": {
+    "plural_title": "Daily todo options",
+    "plural_name": "daily todo options"
+  },
+  "DailyTodosModule": {
+    "plural_title": "Daily todo's modules",
+    "plural_name": "daily todo's modules"
+  },
+  "DailyTodoWidget": {
+    "plural_title": "Daily todo's widgets",
+    "plural_name": "daily todo's widgets"
+  },
   "InspirationModule": {
+    "plural_title": "Inspiration modules",
     "plural_name": "inspiration modules"
+  },
+  "InspirationWidget": {
+    "plural_title": "Inspiration widgets",
+    "plural_name": "inspiration widgets"
   }
 }

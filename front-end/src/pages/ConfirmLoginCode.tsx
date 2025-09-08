@@ -60,7 +60,7 @@ const ConfirmLoginCode: FC = () => {
             <Form noValidate onSubmit={handleSubmit(onSubmit)}>
                 <Form.Group>
                     <Form.Label>{t("ConfirmLoginCode.code")}</Form.Label>
-                    <Form.Control {...register("code")} isInvalid={!!errors.code} autoFocus />
+                    <Form.Control {...register("code")} isInvalid={!!errors.code} autoFocus data-cy="confirmCodeInput" />
                     <Form.Control.Feedback type="invalid">
                         <ErrorMessage error={errors.code} />
                     </Form.Control.Feedback>
@@ -77,7 +77,7 @@ const ConfirmLoginCode: FC = () => {
                 <p>
                     <Trans i18nKey="ConfirmLoginCode.back_to_login">
                         Already a passkey? Go back to
-                        <Link to="/account/authenticate/webauthn">Login</Link>.
+                        <Link to="/account/logout">Login</Link>.
                     </Trans>
                 </p>
             </Form>

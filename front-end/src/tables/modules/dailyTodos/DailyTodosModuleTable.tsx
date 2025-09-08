@@ -31,7 +31,7 @@ const DailyTodosModuleTable: FC = () => {
         ]
     }, [t])
 
-    return <Table id="DailyTodosModules" title="DailyTodosModules" columns={columns} buttons={buttons} subject={t("DailyTodosModule.plural_name")} dataQuery={dataQuery} />
+    return <Table id="DailyTodosModules" title={t("DailyTodosModule.plural_title")} columns={columns} buttons={buttons} subject={t("DailyTodosModule.plural_name")} dataQuery={dataQuery} />
 }
 
 export default DailyTodosModuleTable

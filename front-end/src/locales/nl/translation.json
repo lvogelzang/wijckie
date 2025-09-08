@@ -10,8 +10,8 @@
     "save": "Opslaan",
     "title_new": "Nieuw",
     "name": "Naam",
-    "type": "Type",
     "text": "Tekst",
+    "type": "Type",
     "image": "Afbeelding",
     "new": "Nieuw"
   },
@@ -120,7 +120,24 @@
   "VerifyEmailByCode": {
     "already_an_account": "Heb je al een account? Ga naar <1>Inloggen</1>."
   },
+  "DailyTodoOption": {
+    "plural_title": "Todo's",
+    "plural_name": "todo's"
+  },
+  "DailyTodosModule": {
+    "plural_title": "Dagelijkse todo's modules",
+    "plural_name": "dagelijkse todo's modules"
+  },
+  "DailyTodoWidget": {
+    "plural_title": "Dagelijkse todo's widgets",
+    "plural_name": "dagelijkse todo's widgets"
+  },
   "InspirationModule": {
+    "plural_title": "Inspiratiemodules",
     "plural_name": "inspiratiemodules"
+  },
+  "InspirationWidget": {
+    "plural_title": "Inspiratiewidgets",
+    "plural_name": "inspiratiewidgets"
   }
 }
