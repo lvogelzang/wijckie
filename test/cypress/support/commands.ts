@@ -4,8 +4,12 @@ declare global {
     namespace Cypress {
         interface Chainable {
             afterRemoveUser(email: string): Chainable<void>
-            getTOTPCodeFromLastEmail(): Chainable<number>
+            loginByHttpCalls(email: string): Chainable<void>
+            deleteExistingEmails(): Chainable<void>
+            getTOTPCodeFromLastEmail(): Chainable<string>
             screenshotForDocs(file: string, test: string, followUpNumber: number): Chainable<void>
+            setPrimaryEmailAddress(email: string): Chainable<void>
+            deleteEmailAddress(email: string): Chainable<void>
         }
     }
 }
@@ -19,27 +23,96 @@ Cypress.Commands.add("afterRemoveUser", (email: string) => {
     })
 })
 
+Cypress.Commands.add("loginByHttpCalls", (email: string) => {
+    cy.deleteExistingEmails().then(() => {
+        cy.request(`${Cypress.env("BACKEND_URL")}/api/v1/csrf/`).then((response) => {
+            const token = /csrftoken=([^;]*);.*/g.exec(response.headers["set-cookie"][0])![1]
+            cy.setCookie("csrftoken", token)
+            cy.request({
+                url: `${Cypress.env("BACKEND_URL")}/_allauth/browser/v1/auth/code/request`,
+                method: "POST",
+                headers: { "X-CSRFTOKEN": token },
+                body: { email },
+                failOnStatusCode: false,
+            })
+                .its("status")
+                .should("be.equal", 401)
+                .then(() => {
+                    cy.getTOTPCodeFromLastEmail().then((code) => {
+                        cy.request({
+                            url: `${Cypress.env("BACKEND_URL")}/_allauth/browser/v1/auth/code/confirm`,
+                            method: "POST",
+                            headers: { "X-CSRFTOKEN": token },
+                            body: { code },
+                        })
+                    })
+                })
+        })
+    })
+})
+
+// This is useful to prevent race conditions. Sometimes you're not sure if
+// an e-mail is already sent/received/stored so you'll want to wait for that.
+// You can achieve this by deleting all stored e-mails, do your action (e.g:
+// request your login token), and wait until there is 1 e-mail in your inbox.
+Cypress.Commands.add("deleteExistingEmails", () => {
+    cy.request({ url: `${Cypress.env("EMAIL_URL")}/api/delete-all`, method: "POST" })
+        .its("status")
+        .should("be.equal", 200)
+})
+
 interface EmailData {
     id: string
     time: number
 }
 
 Cypress.Commands.add("getTOTPCodeFromLastEmail", () => {
-    cy.request({ url: `${Cypress.env("EMAIL_URL")}/api/messages` }).then((listResponse) => {
-        const emails = listResponse.body as EmailData[]
-        emails.sort((a, b) => a.time - b.time)
-        const id = emails.pop()!.id
-        cy.request({ url: `${Cypress.env("EMAIL_URL")}/api/message/${id}` }).then((emailResponse) => {
-            const textBody = emailResponse.body.text
-            const regex = new RegExp("([0-9A-Z]{6})")
-            const code = regex.exec(textBody)![1]
-            return code
+    cy.request({ url: `${Cypress.env("EMAIL_URL")}/api/messages` })
+        .its("body")
+        .should("have.length.gte", 1)
+        .then((listResponse) => {
+            console.log("ASDF", listResponse)
+
+            const emails = listResponse as EmailData[]
+            emails.sort((a, b) => a.time - b.time)
+            const id = emails.pop()!.id
+            cy.request({ url: `${Cypress.env("EMAIL_URL")}/api/message/${id}` }).then((emailResponse) => {
+                const textBody = emailResponse.body.text
+                const regex = new RegExp("([0-9A-Z]{6})")
+                const code = regex.exec(textBody)![1]
+                return code
+            })
         })
-    })
 })
 
 Cypress.Commands.add("screenshotForDocs", (file: string, test: string, followUpNumber: number) => {
     if (Cypress.env("CAPTURE_SCREENSHOTS")) {
         cy.screenshot(`${file}__${test}__${followUpNumber}`, { overwrite: true })
     }
+})
+
+Cypress.Commands.add("setPrimaryEmailAddress", (email: string) => {
+    cy.task(
+        "queryDb",
+        `UPDATE account_emailaddress 
+SET "primary" = FALSE
+FROM (SELECT user_id FROM account_emailaddress WHERE email="${email}") AS address
+WHERE account_emailaddress.user_id = address.user_id;`
+    ).then((results) => {
+        expect(results).to.be.an("array").that.is.empty
+    })
+    cy.task(
+        "queryDb",
+        `UPDATE account_emailaddress 
+SET "primary" = TRUE
+WHERE email = "${email}";`
+    ).then((results) => {
+        expect(results).to.be.an("array").that.is.empty
+    })
+})
+
+Cypress.Commands.add("deleteEmailAddress", (email: string) => {
+    cy.task("queryDb", `DELETE FROM account_emailaddress WHERE email="${email}";`).then((results) => {
+        expect(results).to.be.an("array").that.is.empty
+    })
 })

@@ -198,6 +198,8 @@ class Dev(Base):
     CSRF_COOKIE_SECURE = False
     BASE_DIR = Path(__file__).resolve().parent.parent
 
+    ACCOUNT_RATE_LIMITS = False
+
     STATIC_URL = "static/"
     STATIC_ROOT = "static/"
     MEDIA_URL = "media/"

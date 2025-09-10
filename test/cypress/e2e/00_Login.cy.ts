@@ -16,8 +16,8 @@ describe("login page", () => {
         cy.get('[data-cy="submitButton"]').click()
         cy.screenshotForDocs("00_Login", "00_Sign_in_by_code", 3)
 
-        cy.getTOTPCodeFromLastEmail().then((c) => {
-            cy.get('[data-cy="confirmCodeInput"]').type(c.toString())
+        cy.getTOTPCodeFromLastEmail().then((code) => {
+            cy.get('[data-cy="confirmCodeInput"]').type(code)
             cy.screenshotForDocs("00_Login", "00_Sign_in_by_code", 4)
             cy.get('[data-cy="confirmCodeInput"]').type("{enter}")
         })

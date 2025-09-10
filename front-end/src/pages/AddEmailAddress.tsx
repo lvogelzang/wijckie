@@ -58,7 +58,7 @@ const AddEmailAddress: FC = () => {
             <Form noValidate onSubmit={handleSubmit(onSubmit)}>
                 <Form.Group>
                     <Form.Label>{t("AddEmailAddress.email")}</Form.Label>
-                    <Form.Control {...register("email")} isInvalid={!!errors.email} />
+                    <Form.Control {...register("email")} isInvalid={!!errors.email} data-cy="emailInput" />
                     <Form.Control.Feedback type="invalid">
                         <ErrorMessage error={errors.email} />
                     </Form.Control.Feedback>

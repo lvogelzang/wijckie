@@ -1,4 +1,5 @@
 import datetime
+from allauth.account.models import EmailAddress
 from test_setup.factory.InspirationItemFactory import InspirationItemFactory
 from test_setup.factory.InspirationOptionFactory import InspirationOptionFactory
 from test_setup.factory.InspirationWidgetFactory import InspirationWidgetFactory
@@ -6,6 +7,7 @@ from test_setup.factory.dailyTodosItemFactory import DailyTodoItemFactory
 from test_setup.factory.dailyTodosModuleFactory import DailyTodosModuleFactory
 from test_setup.factory.dailyTodosOptionFactory import DailyTodosOptionFactory
 from test_setup.factory.dailyTodosWidgetFactory import DailyTodosWidgetFactory
+from test_setup.factory.emailAddressFactory import EmailAddressFactory
 from test_setup.factory.inspirationModuleFactory import InspirationModuleFactory
 from wijckie_models.modules.dailyTodos import DailyTodoItemStatus
 from wijckie_models.user import Language, TimeZone, User
@@ -21,6 +23,10 @@ def setup_johnny():
         time_zone=TimeZone.EUROPE_LONDON,
     )
     johnny.save()
+
+    email_address_factory = EmailAddressFactory(johnny)
+    email_address_factory.create("j.test@wijckie.com", primary=True)
+    email_address_factory.create("j.test-2@wijckie.com")
 
     date_1 = datetime.date(2026, 1, 1)
     date_2 = datetime.date(2026, 1, 2)

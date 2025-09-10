@@ -8,6 +8,7 @@ export default defineConfig({
         viewportHeight: 700,
         screenshotOnRunFailure: false,
         video: false,
+        experimentalRunAllSpecs: true,
         setupNodeEvents(on, config) {
             registerCodeCoverageTasks(on, config)
 

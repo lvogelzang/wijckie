@@ -2,7 +2,6 @@ describe("account creation flow", () => {
     it("allow registering a new account", () => {
         cy.setCookie("django_language", "en-GB")
 
-        // Sometimes the verify_email: pending flow is missing in the response of the signup call, due to rate limits.
         cy.afterRemoveUser("new-account@wijckie.com").then(() => {
             cy.visit("/account/signup/passkey")
 

@@ -74,22 +74,32 @@ const MyAccount: FC = () => {
                 <tbody>
                     {emailResponse.content?.data.map(({ email, verified, primary }) => {
                         return (
-                            <tr key={email}>
-                                <td>{email}</td>
-                                <td>{verified ? "y" : "n"}</td>
+                            <tr key={email} data-cy="emailAddressRow">
+                                <td data-cy="emailValue">{email}</td>
+                                <td data-cy="verifiedValue">{verified ? "y" : "n"}</td>
                                 <td>
-                                    <input onChange={() => markAsPrimary(email)} type="radio" checked={primary} disabled={!verified} />
+                                    <input onChange={() => markAsPrimary(email)} type="radio" checked={primary} disabled={!verified} data-cy="primaryRadioButton" />
                                 </td>
                                 <td>
-                                    {!verified ? <Button onClick={() => requestEmailVerification(email)}>{t("MyAccount.email_verify")}</Button> : null}
-                                    {!primary ? <Button onClick={() => deleteEmail(email)}>{t("MyAccount.email_delete")}</Button> : null}
+                                    {!verified ? (
+                                        <Button onClick={() => requestEmailVerification(email)} data-cy="verifyButton">
+                                            {t("MyAccount.email_verify")}
+                                        </Button>
+                                    ) : null}
+                                    {!primary ? (
+                                        <Button onClick={() => deleteEmail(email)} data-cy="deleteButton">
+                                            {t("MyAccount.email_delete")}
+                                        </Button>
+                                    ) : null}
                                 </td>
                             </tr>
                         )
                     })}
                 </tbody>
             </Table>
-            <Link to="/account/my/email-addresses/add">{t("MyAccount.add_email_address")}</Link>
+            <Link to="/account/my/email-addresses/add" data-cy="addEmailLink">
+                {t("MyAccount.add_email_address")}
+            </Link>
             <h2>{t("MyAccount.passkeys")}</h2>
             <Table>
                 <thead>
@@ -113,7 +123,9 @@ const MyAccount: FC = () => {
                     })}
                 </tbody>
             </Table>
-            <Link to="/account/my/passkeys/add">{t("MyAccount.add_passkey")}</Link>
+            <Link to="/account/my/passkeys/add" data-cy="addPasskeyLink">
+                {t("MyAccount.add_passkey")}
+            </Link>
         </div>
     )
 }
