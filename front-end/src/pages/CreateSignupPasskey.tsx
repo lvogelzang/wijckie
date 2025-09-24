@@ -1,6 +1,5 @@
 import { create, parseCreationOptionsFromJSON, type CredentialCreationOptionsJSON, type RegistrationPublicKeyCredential } from "@github/webauthn-json/browser-ponyfill"
 import { useCallback, useMemo, type FC } from "react"
-import { Button, Form } from "react-bootstrap"
 import { useForm, type SubmitHandler } from "react-hook-form"
 import { Trans, useTranslation } from "react-i18next"
 import { Link } from "react-router-dom"
@@ -8,7 +7,13 @@ import type { ObjectSchema } from "yup"
 import * as yup from "yup"
 import { getAllauthClientV1AuthWebauthnSignup, putAllauthClientV1AuthWebauthnSignup } from "../api/endpoints/allauth"
 import type { AddWebAuthnAuthenticatorBody, AuthenticatedResponse, StatusOK } from "../api/models/allauth"
-import ErrorMessage from "../components/ErrorMessage"
+import WButton from "../components/button/WButton"
+import RootErrorMessage from "../components/form/RootErrorMessage"
+import WErrorMessage from "../components/form/WErrorMessage"
+import WField from "../components/form/WField"
+import WForm from "../components/form/WForm"
+import WInput from "../components/form/WInput"
+import WLabel from "../components/form/WLabel"
 import { useErrorHandler } from "../helpers/useErrorHandler"
 import { useYupValidationResolver } from "../helpers/useYupValidationResolver"
 
@@ -75,24 +80,17 @@ const CreateSignupPasskey: FC = () => {
     return (
         <div>
             <h1>{t("CreateSignupPasskey.title")}</h1>
-            <Form noValidate onSubmit={handleSubmit(onSubmit)}>
-                <Form.Group>
-                    <Form.Label>{t("CreateSignupPasskey.passkey_name")}</Form.Label>
-                    <Form.Control {...register("name")} isInvalid={!!errors.name} autoFocus data-cy="nameInput" />
-                    <Form.Control.Feedback type="invalid">
-                        <ErrorMessage error={errors.name} />
-                    </Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group>
-                    <Button type="submit">{t("CreateSignupPasskey.submit_button")}</Button>
-                </Form.Group>
-                <Form.Group hidden={!errors.root}>
-                    <Form.Control type="hidden" isInvalid={!!errors.root} />
-                    <Form.Control.Feedback type="invalid">
-                        <ErrorMessage error={errors.root} />
-                    </Form.Control.Feedback>
-                </Form.Group>
-            </Form>
+            <WForm onSubmit={handleSubmit(onSubmit)}>
+                <WField>
+                    <WLabel>{t("CreateSignupPasskey.passkey_name")}</WLabel>
+                    <WInput type="text" {...register("name")} invalid={!!errors.name} autoFocus data-cy="nameInput" />
+                    <WErrorMessage error={errors.name} />
+                </WField>
+                <WField>
+                    <WButton type="submit">{t("CreateSignupPasskey.submit_button")}</WButton>
+                </WField>
+                <RootErrorMessage errors={errors} />
+            </WForm>
             <p>
                 <Trans i18nKey="CreateSignupPasskey.already_an_account">
                     Already have an account? Go to

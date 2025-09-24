@@ -1,5 +1,4 @@
 import { useCallback, useMemo, type FC } from "react"
-import { Button, Form } from "react-bootstrap"
 import { useForm, type SubmitHandler } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { useLoaderData, useNavigate, useParams } from "react-router-dom"
@@ -8,7 +7,13 @@ import * as yup from "yup"
 import { deleteAllauthClientV1AccountAuthenticatorsWebauthn, putAllauthClientV1AccountAuthenticatorsWebauthn } from "../api/endpoints/allauth"
 import type { AuthenticatorList } from "../api/models/allauth"
 import { AuthenticatorTypes } from "../auth/allauth"
-import ErrorMessage from "../components/ErrorMessage"
+import WButton from "../components/button/WButton"
+import RootErrorMessage from "../components/form/RootErrorMessage"
+import WErrorMessage from "../components/form/WErrorMessage"
+import WField from "../components/form/WField"
+import WForm from "../components/form/WForm"
+import WInput from "../components/form/WInput"
+import WLabel from "../components/form/WLabel"
 import { useErrorHandler } from "../helpers/useErrorHandler"
 import { useYupValidationResolver } from "../helpers/useYupValidationResolver"
 
@@ -68,21 +73,20 @@ const UpdatePasskey: FC = () => {
     return (
         <div>
             <h1>{t("UpdatePasskey.title")}</h1>
-            <Form noValidate onSubmit={handleSubmit(onSubmit)}>
-                <Form.Group>
-                    <Form.Label>{t("UpdatePasskey.name")}</Form.Label>
-                    <Form.Control {...register("name")} isInvalid={!!errors.name} />
-                    <Form.Control.Feedback type="invalid">
-                        <ErrorMessage error={errors.name} />
-                    </Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group>
-                    <Button type="submit">{t("UpdatePasskey.submit_button")}</Button>
-                    <Button type="button" variant="danger" onClick={onDelete}>
+            <WForm onSubmit={handleSubmit(onSubmit)}>
+                <WField>
+                    <WLabel>{t("UpdatePasskey.name")}</WLabel>
+                    <WInput type="text" {...register("name")} invalid={!!errors.name} />
+                    <WErrorMessage error={errors.name} />
+                </WField>
+                <WField>
+                    <WButton type="submit">{t("UpdatePasskey.submit_button")}</WButton>
+                    <WButton type="button" variant="danger" onClick={onDelete}>
                         {t("UpdatePasskey.delete_button")}
-                    </Button>
-                </Form.Group>
-            </Form>
+                    </WButton>
+                </WField>
+                <RootErrorMessage errors={errors} />
+            </WForm>
         </div>
     )
 }

@@ -1,12 +1,16 @@
 import { useCallback } from "react"
-import { Form } from "react-bootstrap"
 import { useForm, type SubmitHandler } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { useNavigate } from "react-router-dom"
 import { useDailyTodosModulesCreate, useDailyTodosModulesDestroy, useDailyTodosModulesUpdate } from "../../../api/endpoints/api"
 import type { DailyTodosModule } from "../../../api/models/api"
-import ErrorMessage from "../../../components/ErrorMessage"
+import RootErrorMessage from "../../../components/form/RootErrorMessage"
 import SaveAndDelete from "../../../components/form/SaveAndDelete"
+import WErrorMessage from "../../../components/form/WErrorMessage"
+import WField from "../../../components/form/WField"
+import WForm from "../../../components/form/WForm"
+import WInput from "../../../components/form/WInput"
+import WLabel from "../../../components/form/WLabel"
 import { useErrorHandler } from "../../../helpers/useErrorHandler"
 
 interface Props {
@@ -80,18 +84,16 @@ const DailyTodosModuleForm = ({ mode, module }: Props) => {
     }, [destroy, module])
 
     return (
-        <Form noValidate onSubmit={handleSubmit(onSubmit)}>
+        <WForm onSubmit={handleSubmit(onSubmit)}>
             <h2>{mode === "Create" ? t("Main.title_new") : module!.name}</h2>
-            <Form.Group>
-                <Form.Label>{t("Main.name")}</Form.Label>
-                <Form.Control type="text" {...register("name")} isInvalid={!!errors.name} />
-                <Form.Control.Feedback type="invalid">
-                    <ErrorMessage error={errors.name} />
-                </Form.Control.Feedback>
-            </Form.Group>
+            <WField>
+                <WLabel>{t("Main.name")}</WLabel>
+                <WInput type="text" {...register("name")} invalid={!!errors.name} />
+                <WErrorMessage error={errors.name} />
+            </WField>
             <SaveAndDelete mode={mode} name={`${module?.name}`} onDelete={onDelete} onDeleted={navigateToParent} />
-            <ErrorMessage error={errors.root} />
-        </Form>
+            <RootErrorMessage errors={errors} />
+        </WForm>
     )
 }
 

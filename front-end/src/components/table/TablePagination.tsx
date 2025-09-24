@@ -1,6 +1,6 @@
 import { useCallback, useMemo, type ChangeEvent } from "react"
-import { ButtonGroup } from "react-bootstrap"
 import { useTranslation } from "react-i18next"
+import ButtonGroup from "../button/WButtonGroup"
 import TablePaginationButton from "./TablePaginationButton"
 
 interface Props {

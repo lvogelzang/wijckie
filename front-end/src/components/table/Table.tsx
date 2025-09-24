@@ -1,7 +1,6 @@
 import type { UseQueryResult } from "@tanstack/react-query"
 import { flexRender, getCoreRowModel, useReactTable, type ColumnDef, type PaginationState } from "@tanstack/react-table"
 import { useEffect, useState } from "react"
-import { Table as BootstrapTable } from "react-bootstrap"
 import { useTranslation } from "react-i18next"
 import { useGetPaginationCacheKey, useGetPaginationValue } from "../../helpers/useCache"
 import type { TableButtonDef } from "./TableButtonDef"
@@ -58,7 +57,7 @@ const Table = <Type,>({ id, title, columns, buttons, dataQuery, subject, default
                 <TableButtons buttons={buttons} />
             </div>
             <div className="overflow-scroll">
-                <BootstrapTable>
+                <table>
                     <thead>
                         {table.getHeaderGroups().map((headerGroup) => (
                             <tr key={headerGroup.id}>
@@ -92,7 +91,7 @@ const Table = <Type,>({ id, title, columns, buttons, dataQuery, subject, default
                             </tr>
                         ) : null}
                     </tbody>
-                </BootstrapTable>
+                </table>
             </div>
             <TablePagination pagination={pagination} pageCount={table.getPageCount()} goToPage={table.setPageIndex} setPageSize={table.setPageSize} />
         </div>

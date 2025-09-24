@@ -1,5 +1,4 @@
 import { useCallback } from "react"
-import { Form } from "react-bootstrap"
 import { useForm, type SubmitHandler } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { useNavigate } from "react-router-dom"
@@ -12,8 +11,14 @@ import {
     type InspirationOptionsUpdateMutationResult,
 } from "../../../api/endpoints/api"
 import type { FileUpload, InspirationModule, InspirationOption, TypeEnum } from "../../../api/models/api"
-import ErrorMessage from "../../../components/ErrorMessage"
+import RootErrorMessage from "../../../components/form/RootErrorMessage"
 import SaveAndDelete from "../../../components/form/SaveAndDelete"
+import WErrorMessage from "../../../components/form/WErrorMessage"
+import WField from "../../../components/form/WField"
+import WForm from "../../../components/form/WForm"
+import WInput from "../../../components/form/WInput"
+import WLabel from "../../../components/form/WLabel"
+import WSelect from "../../../components/form/WSelect"
 import { handleUpload } from "../../../helpers/uploadHelper"
 import { useErrorHandler } from "../../../helpers/useErrorHandler"
 import useInspirationOptionTypeOptions from "../../../helpers/useInspirationOptionTypeOptions"
@@ -118,43 +123,40 @@ const InspirationOptionForm = ({ mode, module, option }: Props) => {
     }, [destroy, option])
 
     return (
-        <Form noValidate onSubmit={handleSubmit(onSubmit)}>
+        <WForm onSubmit={handleSubmit(onSubmit)}>
             <h2>{mode === "Create" ? t("Main.title_new") : option!.name}</h2>
-            <Form.Group>
-                <Form.Label>{t("Main.name")}</Form.Label>
-                <Form.Control type="text" {...register("name")} isInvalid={!!errors.name} />
-                <Form.Control.Feedback type="invalid">
-                    <ErrorMessage error={errors.name} />
-                </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group>
-                <Form.Label>{t("Main.type")}</Form.Label>
-                <Form.Select {...register("type")} isInvalid={!!errors.type} disabled={mode !== "Create"}>
+            <WField>
+                <WLabel>{t("Main.name")}</WLabel>
+                <WInput type="text" {...register("name")} invalid={!!errors.name} />
+                <WErrorMessage error={errors.name} />
+            </WField>
+            <WField>
+                <WLabel>{t("Main.type")}</WLabel>
+                <WSelect label={t("Main.type")} {...register("type")} invalid={!!errors.type} disabled={mode !== "Create"}>
                     {typeOptions.map(({ id, label }) => (
                         <option key={id} value={id}>
                             {label}
                         </option>
                     ))}
-                </Form.Select>
-            </Form.Group>
-            <Form.Group hidden={selectedType !== "text"}>
-                <Form.Label>{t("Main.text")}</Form.Label>
-                <Form.Control type="text" {...register("text")} isInvalid={!!errors.text} />
-                <Form.Control.Feedback type="invalid">
-                    <ErrorMessage error={errors.text} />
-                </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group hidden={selectedType !== "image"}>
-                <Form.Label>{t("Main.image")}</Form.Label>
-                <Form.Control type="file" hidden={true} />
+                </WSelect>
+                <WErrorMessage error={errors.type} />
+            </WField>
+            <WField hidden={selectedType !== "text"}>
+                <WLabel>{t("Main.text")}</WLabel>
+                <WInput type="text" {...register("text")} invalid={!!errors.text} />
+                <WErrorMessage error={errors.text} />
+            </WField>
+            <WField hidden={selectedType !== "image"}>
+                <WLabel>{t("Main.image")}</WLabel>
                 <div hidden={!option?.imageURL}>
                     <img src={option?.imageURL} style={{ height: "20rem", maxWidth: "100rem" }} />
                 </div>
-                <Form.Control type="file" {...register("image")} isInvalid={!!errors.image} />
-            </Form.Group>
+                <WInput type="file" {...register("image")} invalid={!!errors.image} />
+                <WErrorMessage error={errors.image} />
+            </WField>
             <SaveAndDelete mode={mode} name={`${option?.name}`} onDelete={onDelete} onDeleted={navigateToParent} />
-            <ErrorMessage error={errors.root} />
-        </Form>
+            <RootErrorMessage errors={errors} />
+        </WForm>
     )
 }
 

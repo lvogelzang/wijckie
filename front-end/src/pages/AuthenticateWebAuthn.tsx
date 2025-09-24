@@ -1,12 +1,14 @@
 import { get, parseRequestOptionsFromJSON, type AuthenticationPublicKeyCredential } from "@github/webauthn-json/browser-ponyfill"
 import { useCallback, type FC } from "react"
-import { Button, Form } from "react-bootstrap"
 import { useForm } from "react-hook-form"
 import { Trans, useTranslation } from "react-i18next"
 import { Link } from "react-router-dom"
 import { getAllauthClientV1AuthWebauthnLogin, postAllauthClientV1AuthWebauthnLogin } from "../api/endpoints/allauth"
 import type { AuthenticatedResponse, WebAuthnCredential } from "../api/models/allauth"
-import ErrorMessage from "../components/ErrorMessage"
+import WButton from "../components/button/WButton"
+import RootErrorMessage from "../components/form/RootErrorMessage"
+import WField from "../components/form/WField"
+import WForm from "../components/form/WForm"
 import { useErrorHandler } from "../helpers/useErrorHandler"
 
 /* eslint-disable */
@@ -53,17 +55,12 @@ const AuthenticateWebAuthn: FC = () => {
     return (
         <div>
             <h1>{t("AuthenticateWebAuthn.title")}</h1>
-            <Form noValidate onSubmit={handleSubmit(onSubmit)}>
-                <Form.Group>
-                    <Button type="submit">{t("WebAuthnLoginButton.title")}</Button>
-                </Form.Group>
-                <Form.Group hidden={!errors.root}>
-                    <Form.Control type="hidden" isInvalid={!!errors.root} />
-                    <Form.Control.Feedback type="invalid">
-                        <ErrorMessage error={errors.root} />
-                    </Form.Control.Feedback>
-                </Form.Group>
-            </Form>
+            <WForm onSubmit={handleSubmit(onSubmit)}>
+                <WField>
+                    <WButton type="submit">{t("WebAuthnLoginButton.title")}</WButton>
+                </WField>
+                <RootErrorMessage errors={errors} />
+            </WForm>
             <p>
                 <Trans i18nKey="AuthenticateWebAuthn.no_passkey_yet">
                     No passkey on this device yet? Go to

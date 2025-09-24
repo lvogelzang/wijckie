@@ -1,5 +1,5 @@
 import { useCallback } from "react"
-import { Button } from "react-bootstrap"
+import WButton from "../button/WButton"
 
 interface Props {
     pageIndex: number
@@ -20,11 +20,11 @@ const TablePaginationButton = ({ pageIndex, goToPage, isCurrent, isFirst, isLast
     }
 
     return (
-        <Button type="button" variant={isCurrent ? "segment-selected" : "segment"} onClick={onClick}>
+        <WButton type="button" variant={isCurrent ? "segment-selected" : "segment"} onClick={onClick}>
             {isFirst ? "<<" : null}
             {!(isFirst || isLast) ? pageIndex + 1 : null}
             {isLast ? ">>" : null}
-        </Button>
+        </WButton>
     )
 }
 

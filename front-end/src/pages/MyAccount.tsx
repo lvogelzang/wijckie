@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useMemo, useState, type FC } from "react"
-import { Button, Table } from "react-bootstrap"
 import { useTranslation } from "react-i18next"
 import { Link, useLoaderData, useNavigate } from "react-router-dom"
 import { deleteAllauthClientV1AccountEmail, getAllauthClientV1AccountEmail, patchAllauthClientV1AccountEmail, putAllauthClientV1AccountEmail } from "../api/endpoints/allauth"
 import { type AuthenticatorList, type EmailAddressesResponse } from "../api/models/allauth"
 import { AuthenticatorTypes } from "../auth/allauth"
-import ErrorModal from "../components/ErrorModal"
+import WButton from "../components/button/WButton"
+import ErrorDialog from "../components/ErrorDialog"
 
 interface EmailResponse {
     fetching: boolean
@@ -61,8 +61,8 @@ const MyAccount: FC = () => {
         <div>
             <h1>{t("MyAccount.title")}</h1>
             <h2>{t("MyAccount.email_addresses")}</h2>
-            <ErrorModal error={error} setError={setError} />
-            <Table>
+            <ErrorDialog error={error} setError={setError} />
+            <table>
                 <thead>
                     <tr>
                         <th>{t("MyAccount.email_address")}</th>
@@ -82,26 +82,26 @@ const MyAccount: FC = () => {
                                 </td>
                                 <td>
                                     {!verified ? (
-                                        <Button onClick={() => requestEmailVerification(email)} data-cy="verifyButton">
+                                        <WButton onClick={() => requestEmailVerification(email)} data-cy="verifyButton">
                                             {t("MyAccount.email_verify")}
-                                        </Button>
+                                        </WButton>
                                     ) : null}
                                     {!primary ? (
-                                        <Button onClick={() => deleteEmail(email)} data-cy="deleteButton">
+                                        <WButton onClick={() => deleteEmail(email)} data-cy="deleteButton">
                                             {t("MyAccount.email_delete")}
-                                        </Button>
+                                        </WButton>
                                     ) : null}
                                 </td>
                             </tr>
                         )
                     })}
                 </tbody>
-            </Table>
+            </table>
             <Link to="/account/my/email-addresses/add" data-cy="addEmailLink">
                 {t("MyAccount.add_email_address")}
             </Link>
             <h2>{t("MyAccount.passkeys")}</h2>
-            <Table>
+            <table>
                 <thead>
                     <tr>
                         <th>{t("MyAccount.passkey_name")}</th>
@@ -122,7 +122,7 @@ const MyAccount: FC = () => {
                         )
                     })}
                 </tbody>
-            </Table>
+            </table>
             <Link to="/account/my/passkeys/add" data-cy="addPasskeyLink">
                 {t("MyAccount.add_passkey")}
             </Link>

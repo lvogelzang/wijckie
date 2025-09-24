@@ -1,7 +1,7 @@
 import type { DateTime } from "luxon"
 import { useCallback, type Dispatch, type SetStateAction } from "react"
-import { Button } from "react-bootstrap"
 import useDateTimeHelper from "../helpers/useDateTimeHelper"
+import WButton from "./button/WButton"
 
 interface Props {
     date: DateTime
@@ -22,8 +22,8 @@ const DateSelector = ({ date, setDate }: Props) => {
     return (
         <div>
             {dateTimeHelper.dateTimeToIsoDate(date)}
-            <Button onClick={previousDay}>&lt;</Button>
-            <Button onClick={nextDay}>&gt;</Button>
+            <WButton onClick={previousDay}>&lt;</WButton>
+            <WButton onClick={nextDay}>&gt;</WButton>
         </div>
     )
 }

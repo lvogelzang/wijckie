@@ -1,5 +1,4 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
-import "bootstrap/dist/js/bootstrap.js"
 import { csrfRetrieve } from "./api/endpoints/api"
 import AuthContextProvider from "./auth/AuthContextProvider"
 import "./i18n"

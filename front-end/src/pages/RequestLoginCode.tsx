@@ -1,12 +1,17 @@
 import { useCallback, useMemo, type FC } from "react"
-import { Button, Form } from "react-bootstrap"
 import { useForm, type SubmitHandler } from "react-hook-form"
 import { Trans, useTranslation } from "react-i18next"
 import { Link, useNavigate } from "react-router-dom"
 import * as yup from "yup"
 import { ObjectSchema } from "yup"
 import { postAllauthClientV1AuthCodeRequest } from "../api/endpoints/allauth"
-import ErrorMessage from "../components/ErrorMessage"
+import WButton from "../components/button/WButton"
+import RootErrorMessage from "../components/form/RootErrorMessage"
+import WErrorMessage from "../components/form/WErrorMessage"
+import WField from "../components/form/WField"
+import WForm from "../components/form/WForm"
+import WInput from "../components/form/WInput"
+import WLabel from "../components/form/WLabel"
 import { isAllauthResponse401 } from "../helpers/AllauthHelper"
 import { useErrorHandler } from "../helpers/useErrorHandler"
 import { useYupValidationResolver } from "../helpers/useYupValidationResolver"
@@ -61,32 +66,25 @@ const RequestLoginCode: FC = () => {
         <div>
             <h1>{t("RequestLoginCodePage.title")}</h1>
             <p>{t("RequestLoginCodePage.body")}</p>
-            <Form noValidate onSubmit={handleSubmit(onSubmit)}>
-                <Form.Group>
-                    <Form.Label>{t("RequestLoginCodePage.email_address")}</Form.Label>
-                    <Form.Control type="email" autoComplete="email" {...register("email")} isInvalid={!!errors.email} autoFocus data-cy="emailInput" />
-                    <Form.Control.Feedback type="invalid">
-                        <ErrorMessage error={errors.email} />
-                    </Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group>
-                    <Button type="submit" data-cy="submitButton">
+            <WForm onSubmit={handleSubmit(onSubmit)}>
+                <WField>
+                    <WLabel>{t("RequestLoginCodePage.email_address")}</WLabel>
+                    <WInput type="email" autoComplete="email" {...register("email")} invalid={!!errors.email} autoFocus data-cy="emailInput" />
+                    <WErrorMessage error={errors.email} />
+                </WField>
+                <WField>
+                    <WButton type="submit" data-cy="submitButton">
                         {t("RequestLoginCodePage.submit_button")}
-                    </Button>
-                </Form.Group>
-                <Form.Group hidden={!errors.root}>
-                    <Form.Control type="hidden" isInvalid={!!errors.root} />
-                    <Form.Control.Feedback type="invalid">
-                        <ErrorMessage error={errors.root} />
-                    </Form.Control.Feedback>
-                </Form.Group>
+                    </WButton>
+                </WField>
+                <RootErrorMessage errors={errors} />
                 <p>
                     <Trans i18nKey="RequestLoginCodePage.back_to_login">
                         Already a passkey? Go back to
                         <Link to="/account/logout">Login</Link>.
                     </Trans>
                 </p>
-            </Form>
+            </WForm>
         </div>
     )
 }

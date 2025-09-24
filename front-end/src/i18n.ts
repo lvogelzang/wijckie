@@ -1,10 +1,8 @@
-import "bootstrap/dist/js/bootstrap.js"
 import i18n from "i18next"
 import Cookies from "js-cookie"
 import { initReactI18next } from "react-i18next"
 import translationEnGb from "./locales/en-GB/translation.json"
 import translationNl from "./locales/nl/translation.json"
-import "./sass/main.scss"
 
 const getLocale = () => {
     const cookieLocale = Cookies.get("django_language")

@@ -1,6 +1,6 @@
 import { useCallback } from "react"
-import { Button } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
+import Button from "../button/WButton"
 
 interface Props {
     label: string
@@ -8,7 +8,7 @@ interface Props {
     target?: string
     link?: string
     onClick?: () => void
-    variant?: string
+    variant?: "primary" | "link" | "danger"
 }
 
 const TableButton = ({ label, href, target, link, onClick, variant }: Props) => {

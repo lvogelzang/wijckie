@@ -1,12 +1,17 @@
 import { useCallback, useMemo, type FC } from "react"
-import { Button, Form } from "react-bootstrap"
 import { useForm, type SubmitHandler } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { useNavigate } from "react-router-dom"
 import type { ObjectSchema } from "yup"
 import * as yup from "yup"
 import { postAllauthClientV1AccountEmail } from "../api/endpoints/allauth"
-import ErrorMessage from "../components/ErrorMessage"
+import WButton from "../components/button/WButton"
+import RootErrorMessage from "../components/form/RootErrorMessage"
+import WErrorMessage from "../components/form/WErrorMessage"
+import WField from "../components/form/WField"
+import WForm from "../components/form/WForm"
+import WInput from "../components/form/WInput"
+import WLabel from "../components/form/WLabel"
 import { useErrorHandler } from "../helpers/useErrorHandler"
 import { useYupValidationResolver } from "../helpers/useYupValidationResolver"
 
@@ -55,24 +60,17 @@ const AddEmailAddress: FC = () => {
     return (
         <div>
             <h1>{t("AddEmailAddress.title")}</h1>
-            <Form noValidate onSubmit={handleSubmit(onSubmit)}>
-                <Form.Group>
-                    <Form.Label>{t("AddEmailAddress.email")}</Form.Label>
-                    <Form.Control {...register("email")} isInvalid={!!errors.email} data-cy="emailInput" />
-                    <Form.Control.Feedback type="invalid">
-                        <ErrorMessage error={errors.email} />
-                    </Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group>
-                    <Button type="submit">{t("AddEmailAddress.submit_button")}</Button>
-                </Form.Group>
-                <Form.Group hidden={!errors.root}>
-                    <Form.Control type="hidden" isInvalid={!!errors.root} />
-                    <Form.Control.Feedback type="invalid">
-                        <ErrorMessage error={errors.root} />
-                    </Form.Control.Feedback>
-                </Form.Group>
-            </Form>
+            <WForm onSubmit={handleSubmit(onSubmit)}>
+                <WField>
+                    <WLabel>{t("AddEmailAddress.email")}</WLabel>
+                    <WInput type="email" {...register("email")} invalid={!!errors.email} data-cy="emailInput" />
+                    <WErrorMessage error={errors.email} />
+                </WField>
+                <WField>
+                    <WButton type="submit">{t("AddEmailAddress.submit_button")}</WButton>
+                </WField>
+                <RootErrorMessage errors={errors} />
+            </WForm>
         </div>
     )
 }

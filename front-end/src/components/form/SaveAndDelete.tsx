@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react"
-import { Button, Form } from "react-bootstrap"
 import { useTranslation } from "react-i18next"
-import DeleteConfirmationModal from "./DeleteConfirmationModal"
+import WButton from "../button/WButton"
+import DeleteConfirmationDialog from "./DeleteConfirmationDialog"
 
 interface Props {
     mode: "Create" | "Update"
@@ -12,26 +12,26 @@ interface Props {
 
 const SaveAndDelete = ({ mode, name, onDelete, onDeleted }: Props) => {
     const { t } = useTranslation()
-    const [showConfirmationModal, setShowConfirmationModal] = useState(false)
+    const [showConfirmationDialog, setShowConfirmationDialog] = useState(false)
 
     const onClickDelete = useCallback(() => {
-        setShowConfirmationModal(true)
-    }, [setShowConfirmationModal])
+        setShowConfirmationDialog(true)
+    }, [setShowConfirmationDialog])
 
-    const onCloseConfirmationModal = useCallback(() => {
-        setShowConfirmationModal(false)
-    }, [setShowConfirmationModal])
+    const onCloseConfirmationDialog = useCallback(() => {
+        setShowConfirmationDialog(false)
+    }, [setShowConfirmationDialog])
 
     return (
-        <Form.Group>
-            <Button type="submit">{t("Main.save")}</Button>
+        <div>
+            <WButton type="submit">{t("Main.save")}</WButton>
             {mode === "Update" ? (
-                <Button type="button" variant="danger" disabled={!onDelete} onClick={onClickDelete}>
+                <WButton type="button" disabled={!onDelete} onClick={onClickDelete}>
                     {t("Main.delete")}
-                </Button>
+                </WButton>
             ) : null}
-            {onDelete && onDeleted ? <DeleteConfirmationModal show={showConfirmationModal} name={name} onDelete={onDelete} onDeleted={onDeleted} onClose={onCloseConfirmationModal} /> : null}
-        </Form.Group>
+            {onDelete && onDeleted ? <DeleteConfirmationDialog open={showConfirmationDialog} name={name} onDelete={onDelete} onDeleted={onDeleted} onClose={onCloseConfirmationDialog} /> : null}
+        </div>
     )
 }
 
