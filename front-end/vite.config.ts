@@ -18,5 +18,13 @@ export default defineConfig(({ mode }) => {
                 requireEnv: true,
             }),
         ],
+        css: {
+            preprocessorOptions: {
+                scss: {
+                    quietDeps: true,
+                    silenceDeprecations: ["import", "color-functions", "global-builtin"],
+                },
+            },
+        },
     }
 })
