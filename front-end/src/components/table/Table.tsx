@@ -5,6 +5,8 @@ import { useTranslation } from "react-i18next"
 import { useGetPaginationCacheKey, useGetPaginationValue } from "../../helpers/useCache"
 import type { TableButtonDef } from "./TableButtonDef"
 import TableButtons from "./TableButtons"
+import type { TableLinkDef } from "./TableLinkDef"
+import TableLinks from "./TableLinks"
 import TablePagination from "./TablePagination"
 
 interface PageResponseType<Type> {
@@ -16,13 +18,14 @@ interface Props<Type> {
     id: string
     title: string
     columns: ColumnDef<Type, unknown>[]
+    links?: TableLinkDef[]
     buttons?: TableButtonDef[]
     dataQuery: UseQueryResult<PageResponseType<Type>, unknown>
     subject: string // Used to show when no "items" are in table, e.g: "users" or "notes".
     defaultPageSize?: number
 }
 
-const Table = <Type,>({ id, title, columns, buttons, dataQuery, subject, defaultPageSize }: Props<Type>) => {
+const Table = <Type,>({ id, title, columns, links, buttons, dataQuery, subject, defaultPageSize }: Props<Type>) => {
     const { t } = useTranslation()
     const getPaginationValue = useGetPaginationValue()
     const getPaginationCacheKey = useGetPaginationCacheKey()
@@ -54,6 +57,7 @@ const Table = <Type,>({ id, title, columns, buttons, dataQuery, subject, default
         <div>
             <div>
                 <h2>{title}</h2>
+                <TableLinks links={links} />
                 <TableButtons buttons={buttons} />
             </div>
             <div className="overflow-scroll">

@@ -1,6 +1,6 @@
 import { useCallback, useMemo, type ChangeEvent } from "react"
 import { useTranslation } from "react-i18next"
-import ButtonGroup from "../button/WButtonGroup"
+import { Pagination, PaginationContent } from "../ui/pagination"
 import TablePaginationButton from "./TablePaginationButton"
 
 interface Props {
@@ -27,8 +27,9 @@ const TablePagination = ({ pagination, pageCount, goToPage, setPageSize }: Props
     )
 
     return (
-        <div className="col-12 text-center" hidden={pageCount < 2 && pageSize === 10}>
-            <ButtonGroup>
+        <Pagination hidden={pageCount < 2 && pageSize === 10}>
+            <PaginationContent>
+                <TablePaginationButton pageIndex={0} goToPage={goToPage} show={pageIndex > 4} isFirst={true} />
                 <TablePaginationButton pageIndex={0} goToPage={goToPage} show={pageIndex > 4} isFirst={true} />
                 <TablePaginationButton pageIndex={pageIndex - 4} goToPage={goToPage} show={pageIndex === 4} />
                 <TablePaginationButton pageIndex={pageIndex - 3} goToPage={goToPage} show={pageIndex > 2} />
@@ -40,7 +41,7 @@ const TablePagination = ({ pagination, pageCount, goToPage, setPageSize }: Props
                 <TablePaginationButton pageIndex={pageIndex + 3} goToPage={goToPage} show={pageIndex + 3 < pageCount} />
                 <TablePaginationButton pageIndex={pageIndex + 4} goToPage={goToPage} show={pageIndex + 4 === pageCount - 1} />
                 <TablePaginationButton pageIndex={pageCount - 1} goToPage={goToPage} show={pageIndex + 4 < pageCount - 1} isLast={true} />
-            </ButtonGroup>
+            </PaginationContent>
             <select className="ms-2 select-inline" value={pageSize} onChange={onChangePageSize}>
                 {[10, 25, 50].map((pageSize) => (
                     <option key={pageSize} value={pageSize}>
@@ -48,7 +49,7 @@ const TablePagination = ({ pagination, pageCount, goToPage, setPageSize }: Props
                     </option>
                 ))}
             </select>
-        </div>
+        </Pagination>
     )
 }
 

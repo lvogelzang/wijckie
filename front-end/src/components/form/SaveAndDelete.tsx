@@ -1,7 +1,18 @@
 import { useCallback, useState } from "react"
 import { useTranslation } from "react-i18next"
-import WButton from "../button/WButton"
-import DeleteConfirmationDialog from "./DeleteConfirmationDialog"
+import { InlineErrorMessage } from "../error/inline-error-message"
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "../ui/alert-dialog"
+import { Button } from "../ui/button"
 
 interface Props {
     mode: "Create" | "Update"
@@ -12,25 +23,36 @@ interface Props {
 
 const SaveAndDelete = ({ mode, name, onDelete, onDeleted }: Props) => {
     const { t } = useTranslation()
-    const [showConfirmationDialog, setShowConfirmationDialog] = useState(false)
+    const [error, setError] = useState<string>()
 
-    const onClickDelete = useCallback(() => {
-        setShowConfirmationDialog(true)
-    }, [setShowConfirmationDialog])
+    const onFailure = useCallback(() => setError(t("Main.something_went_wrong")), [setError, t])
 
-    const onCloseConfirmationDialog = useCallback(() => {
-        setShowConfirmationDialog(false)
-    }, [setShowConfirmationDialog])
+    const onConfirm = useCallback(() => {
+        // TODO: Prevent closing automatically, show error instead of closing dialog when an error occurs.
+        if (onDelete) {
+            onDelete().then(onDeleted).catch(onFailure)
+        }
+    }, [onDelete])
 
     return (
         <div>
-            <WButton type="submit">{t("Main.save")}</WButton>
+            <Button type="submit">{t("Main.save")}</Button>
             {mode === "Update" ? (
-                <WButton type="button" disabled={!onDelete} onClick={onClickDelete}>
-                    {t("Main.delete")}
-                </WButton>
+                <AlertDialog>
+                    <AlertDialogTrigger>{t("Main.delete")}</AlertDialogTrigger>
+                    <AlertDialogContent>
+                        <AlertDialogHeader>
+                            <AlertDialogTitle>{t("Main.deletion_confirmation_title", { object: name })}</AlertDialogTitle>
+                            <AlertDialogDescription>{t("Main.deletion_confirmation", { object: name })}</AlertDialogDescription>
+                            <InlineErrorMessage>{error}</InlineErrorMessage>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                            <AlertDialogCancel>{t("Main.cancel")}</AlertDialogCancel>
+                            <AlertDialogAction onClick={onConfirm}>{t("Main.delete")}</AlertDialogAction>
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
+                </AlertDialog>
             ) : null}
-            {onDelete && onDeleted ? <DeleteConfirmationDialog open={showConfirmationDialog} name={name} onDelete={onDelete} onDeleted={onDeleted} onClose={onCloseConfirmationDialog} /> : null}
         </div>
     )
 }

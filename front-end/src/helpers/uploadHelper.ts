@@ -30,8 +30,7 @@ const doUpload = <Type>(fileUpload: FileUpload, file: File, object: Type, onSucc
     }
 }
 
-export const handleUpload = <Type>(object: Type, fieldName: string, fileList: FileList, onSuccess: (fileUpload: FileUpload, object: Type) => void, onError: (error: unknown) => void) => {
-    const file = fileList.item(0)!
+export const handleUpload = <Type>(object: Type, fieldName: string, file: File, onSuccess: (fileUpload: FileUpload, object: Type) => void, onError: (error: unknown) => void) => {
     if (file.size > UPLOAD_SIZE_LIMIT) {
         onError({ manualErrors: [{ field: fieldName, code: "too_big" }] })
     } else {

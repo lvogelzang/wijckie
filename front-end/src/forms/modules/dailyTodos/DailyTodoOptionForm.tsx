@@ -1,16 +1,16 @@
+import RootErrorMessage from "@/components/error/form/root-error-message"
+import { FormTitle } from "@/components/form/form-title"
+import SaveAndDelete from "@/components/form/SaveAndDelete"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { zodResolver } from "@hookform/resolvers/zod"
 import { useCallback } from "react"
 import { useForm, type SubmitHandler } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { useNavigate } from "react-router-dom"
+import { z } from "zod"
 import { useDailyTodoOptionsCreate, useDailyTodoOptionsDestroy, useDailyTodoOptionsUpdate } from "../../../api/endpoints/api"
-import { type DailyTodoOption, type DailyTodosModule, type TypeEnum } from "../../../api/models/api"
-import RootErrorMessage from "../../../components/form/RootErrorMessage"
-import SaveAndDelete from "../../../components/form/SaveAndDelete"
-import WErrorMessage from "../../../components/form/WErrorMessage"
-import WField from "../../../components/form/WField"
-import WForm from "../../../components/form/WForm"
-import WInput from "../../../components/form/WInput"
-import WLabel from "../../../components/form/WLabel"
+import { type DailyTodoOption, type DailyTodosModule } from "../../../api/models/api"
 import { useErrorHandler } from "../../../helpers/useErrorHandler"
 
 interface Props {
@@ -19,12 +19,10 @@ interface Props {
     option?: DailyTodoOption
 }
 
-interface Inputs {
-    name: string
-    type: TypeEnum
-    text: string
-    image: FileList
-}
+const formSchema = z.object({
+    name: z.string().min(1).max(50),
+    text: z.string(),
+})
 
 const DailyTodoOptionForm = ({ mode, module, option }: Props) => {
     const { t } = useTranslation()
@@ -34,12 +32,8 @@ const DailyTodoOptionForm = ({ mode, module, option }: Props) => {
     const update = useDailyTodoOptionsUpdate()
     const destroy = useDailyTodoOptionsDestroy()
 
-    const {
-        register,
-        setError,
-        formState: { errors },
-        handleSubmit,
-    } = useForm<Inputs>({
+    const form = useForm<z.infer<typeof formSchema>>({
+        resolver: zodResolver(formSchema),
         defaultValues: {
             name: mode === "Update" ? option!.name : "",
             text: mode === "Update" ? option!.text : "",
@@ -52,12 +46,12 @@ const DailyTodoOptionForm = ({ mode, module, option }: Props) => {
 
     const onError = useCallback(
         (error: unknown) => {
-            handleFormErrors(setError, error, ["name", "text"])
+            handleFormErrors(form.setError, error, ["name", "text"])
         },
-        [handleFormErrors, setError]
+        [handleFormErrors, form.setError]
     )
 
-    const onSubmit: SubmitHandler<Inputs> = useCallback(
+    const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = useCallback(
         ({ name, text }) => {
             if (mode === "Create") {
                 create.mutate(
@@ -93,21 +87,39 @@ const DailyTodoOptionForm = ({ mode, module, option }: Props) => {
     }, [destroy, option])
 
     return (
-        <WForm onSubmit={handleSubmit(onSubmit)}>
-            <h2>{mode === "Create" ? t("Main.title_new") : option!.name}</h2>
-            <WField>
-                <WLabel>{t("Main.name")}</WLabel>
-                <WInput type="text" {...register("name")} invalid={!!errors.name} />
-                <WErrorMessage error={errors.name} />
-            </WField>
-            <WField>
-                <WLabel>{t("Main.text")}</WLabel>
-                <WInput type="text" {...register("text")} invalid={!!errors.text} />
-                <WErrorMessage error={errors.text} />
-            </WField>
-            <SaveAndDelete mode={mode} name={`${option?.name}`} onDelete={onDelete} onDeleted={onSuccess} />
-            <RootErrorMessage errors={errors} />
-        </WForm>
+        <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                <FormTitle>{mode === "Create" ? t("Main.title_new") : option!.name}</FormTitle>
+                <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>{t("Main.name")}</FormLabel>
+                            <FormControl>
+                                <Input {...field} />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+                <FormField
+                    control={form.control}
+                    name="text"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>{t("Main.text")}</FormLabel>
+                            <FormControl>
+                                <Input {...field} />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+                <SaveAndDelete mode={mode} name={`${option?.name}`} onDelete={onDelete} onDeleted={onSuccess} />
+                <RootErrorMessage errors={form.formState.errors} />
+            </form>
+        </Form>
     )
 }
 

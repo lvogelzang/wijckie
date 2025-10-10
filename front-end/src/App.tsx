@@ -3,7 +3,7 @@ import { csrfRetrieve } from "./api/endpoints/api"
 import AuthContextProvider from "./auth/AuthContextProvider"
 import "./i18n"
 import Router from "./Router"
-import "./sass/main.scss"
+import "./sass/style.css"
 
 const queryClient = new QueryClient()
 

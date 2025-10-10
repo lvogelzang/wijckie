@@ -1,17 +1,15 @@
-import { useCallback } from "react"
+import { useCallback, useMemo } from "react"
 import { useNavigate } from "react-router-dom"
-import Button from "../button/WButton"
+import { Button } from "../ui/button"
 
 interface Props {
     label: string
-    href?: string
-    target?: string
     link?: string
     onClick?: () => void
-    variant?: "primary" | "link" | "danger"
+    variant?: "default" | "secondary" | "link" | "destructive"
 }
 
-const TableButton = ({ label, href, target, link, onClick, variant }: Props) => {
+const TableButton = ({ label, link, onClick, variant }: Props) => {
     const navigate = useNavigate()
 
     const handleClick = useCallback(() => {
@@ -22,8 +20,17 @@ const TableButton = ({ label, href, target, link, onClick, variant }: Props) => 
         }
     }, [link, navigate, onClick])
 
+    const defaultedVariant = useMemo(() => {
+        if (variant) {
+            return variant
+        } else if (link) {
+            return "secondary"
+        }
+        return "default"
+    }, [variant, link])
+
     return (
-        <Button type="button" href={href} target={target} onClick={link || onClick ? handleClick : undefined} variant={variant} disabled={!href && !link && !onClick}>
+        <Button type="button" onClick={handleClick} variant={defaultedVariant} disabled={!link && !onClick}>
             {label}
         </Button>
     )

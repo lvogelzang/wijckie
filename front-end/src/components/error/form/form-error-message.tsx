@@ -1,6 +1,7 @@
 import { useMemo } from "react"
 import type { Message } from "react-hook-form"
-import { useErrorHandler, type ErrorMessageType } from "../../helpers/useErrorHandler"
+import { useErrorHandler, type ErrorMessageType } from "../../../helpers/useErrorHandler"
+import { InlineErrorMessage } from "../inline-error-message"
 
 interface Props {
     error:
@@ -18,7 +19,7 @@ interface Props {
         | undefined
 }
 
-const WErrorMessage = ({ error }: Props) => {
+const FormErrorMessage = ({ error }: Props) => {
     const { translatedErrorMessages } = useErrorHandler()
 
     const message = useMemo(() => {
@@ -28,7 +29,7 @@ const WErrorMessage = ({ error }: Props) => {
         return null
     }, [error, translatedErrorMessages])
 
-    return <div hidden={!error}>{message}</div>
+    return <InlineErrorMessage hidden={!error}>{message}</InlineErrorMessage>
 }
 
-export default WErrorMessage
+export default FormErrorMessage

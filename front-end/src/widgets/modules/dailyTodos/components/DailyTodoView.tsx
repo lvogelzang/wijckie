@@ -1,9 +1,8 @@
+import { Button } from "@/components/ui/button"
 import type { DateTime } from "luxon"
 import { useCallback, useState } from "react"
 import { useDailyTodoItemsCreate, useDailyTodoItemsPartialUpdate } from "../../../../api/endpoints/api"
 import type { DailyTodoItem, DailyTodoOption, StatusEnum } from "../../../../api/models/api"
-import WButton from "../../../../components/button/WButton"
-import WButtonGroup from "../../../../components/button/WButtonGroup"
 import useDateTimeHelper from "../../../../helpers/useDateTimeHelper"
 
 interface Props {
@@ -62,17 +61,11 @@ const DailyTodoView = ({ option, date, initialItem }: Props) => {
     return (
         <div>
             {option.name}
-            <WButtonGroup>
-                <WButton variant={item?.status === "todo" ? "segment-selected" : "segment"} onClick={setStatusTodo}>
-                    Todo
-                </WButton>
-                <WButton variant={item?.status === "skip" ? "segment-selected" : "segment"} onClick={setStatusSkip}>
-                    Skip
-                </WButton>
-                <WButton variant={item?.status === "done" ? "segment-selected" : "segment"} onClick={setStatusDone}>
-                    Done
-                </WButton>
-            </WButtonGroup>
+            <div>
+                <Button onClick={setStatusTodo}>Todo</Button>
+                <Button onClick={setStatusSkip}>Skip</Button>
+                <Button onClick={setStatusDone}>Done</Button>
+            </div>
         </div>
     )
 }

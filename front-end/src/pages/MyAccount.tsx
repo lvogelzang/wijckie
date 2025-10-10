@@ -1,11 +1,11 @@
+import ErrorDialog from "@/components/error/error-dialog"
+import { Button } from "@/components/ui/button"
 import { useCallback, useEffect, useMemo, useState, type FC } from "react"
 import { useTranslation } from "react-i18next"
 import { Link, useLoaderData, useNavigate } from "react-router-dom"
 import { deleteAllauthClientV1AccountEmail, getAllauthClientV1AccountEmail, patchAllauthClientV1AccountEmail, putAllauthClientV1AccountEmail } from "../api/endpoints/allauth"
 import { type AuthenticatorList, type EmailAddressesResponse } from "../api/models/allauth"
 import { AuthenticatorTypes } from "../auth/allauth"
-import WButton from "../components/button/WButton"
-import ErrorDialog from "../components/ErrorDialog"
 
 interface EmailResponse {
     fetching: boolean
@@ -18,7 +18,7 @@ const MyAccount: FC = () => {
     const authenticators = useLoaderData<AuthenticatorList>()
 
     const [emailResponse, setEmailResponse] = useState<EmailResponse>({ fetching: true, content: undefined })
-    const [error, setError] = useState<string | null>(null)
+    const [error, setError] = useState<string>()
 
     const keys = useMemo(() => authenticators.filter((a) => a.type === AuthenticatorTypes.WEBAUTHN), [authenticators])
 
@@ -82,14 +82,14 @@ const MyAccount: FC = () => {
                                 </td>
                                 <td>
                                     {!verified ? (
-                                        <WButton onClick={() => requestEmailVerification(email)} data-cy="verifyButton">
+                                        <Button onClick={() => requestEmailVerification(email)} data-cy="verifyButton">
                                             {t("MyAccount.email_verify")}
-                                        </WButton>
+                                        </Button>
                                     ) : null}
                                     {!primary ? (
-                                        <WButton onClick={() => deleteEmail(email)} data-cy="deleteButton">
+                                        <Button onClick={() => deleteEmail(email)} data-cy="deleteButton">
                                             {t("MyAccount.email_delete")}
-                                        </WButton>
+                                        </Button>
                                     ) : null}
                                 </td>
                             </tr>

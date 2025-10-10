@@ -1,43 +1,29 @@
-import { useCallback, useMemo, type FC } from "react"
+import RootErrorMessage from "@/components/error/form/root-error-message"
+import { FormTitle } from "@/components/form/form-title"
+import { Button } from "@/components/ui/button"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useCallback, type FC } from "react"
 import { useForm, type SubmitHandler } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { useNavigate } from "react-router-dom"
-import type { ObjectSchema } from "yup"
-import * as yup from "yup"
+import { z } from "zod"
 import { postAllauthClientV1AccountEmail } from "../api/endpoints/allauth"
-import WButton from "../components/button/WButton"
-import RootErrorMessage from "../components/form/RootErrorMessage"
-import WErrorMessage from "../components/form/WErrorMessage"
-import WField from "../components/form/WField"
-import WForm from "../components/form/WForm"
-import WInput from "../components/form/WInput"
-import WLabel from "../components/form/WLabel"
 import { useErrorHandler } from "../helpers/useErrorHandler"
-import { useYupValidationResolver } from "../helpers/useYupValidationResolver"
 
-interface Inputs {
-    email: string
-}
+const formSchema = z.object({
+    email: z.email(),
+})
 
 const AddEmailAddress: FC = () => {
     const { t } = useTranslation()
     const navigate = useNavigate()
     const { handleFormErrors } = useErrorHandler()
 
-    const validationSchema: ObjectSchema<Inputs> = useMemo(() => {
-        return yup.object({
-            email: yup.string().email().required(),
-        })
-    }, [])
-
-    const resolver = useYupValidationResolver(validationSchema)
-
-    const {
-        formState: { errors },
-        handleSubmit,
-        register,
-        setError,
-    } = useForm<Inputs>({ resolver, mode: "onSubmit", reValidateMode: "onSubmit" })
+    const form = useForm<z.infer<typeof formSchema>>({
+        resolver: zodResolver(formSchema),
+    })
 
     const onSuccess = useCallback(() => {
         navigate("/account/verify-email")
@@ -45,12 +31,12 @@ const AddEmailAddress: FC = () => {
 
     const onFailure = useCallback(
         (error: unknown) => {
-            handleFormErrors(setError, error, ["email"])
+            handleFormErrors(form.setError, error, ["email"])
         },
-        [handleFormErrors, setError]
+        [handleFormErrors, form.setError]
     )
 
-    const onSubmit: SubmitHandler<Inputs> = useCallback(
+    const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = useCallback(
         ({ email }) => {
             postAllauthClientV1AccountEmail("browser", { email }).then(onSuccess).catch(onFailure)
         },
@@ -60,17 +46,26 @@ const AddEmailAddress: FC = () => {
     return (
         <div>
             <h1>{t("AddEmailAddress.title")}</h1>
-            <WForm onSubmit={handleSubmit(onSubmit)}>
-                <WField>
-                    <WLabel>{t("AddEmailAddress.email")}</WLabel>
-                    <WInput type="email" {...register("email")} invalid={!!errors.email} data-cy="emailInput" />
-                    <WErrorMessage error={errors.email} />
-                </WField>
-                <WField>
-                    <WButton type="submit">{t("AddEmailAddress.submit_button")}</WButton>
-                </WField>
-                <RootErrorMessage errors={errors} />
-            </WForm>
+            <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                    <FormTitle>{t("Main.title_new")}</FormTitle>
+                    <FormField
+                        control={form.control}
+                        name="email"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>{t("Main.email")}</FormLabel>
+                                <FormControl>
+                                    <Input {...field} data-cy="emailInput" />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <Button type="submit">{t("AddEmailAddress.submit_button")}</Button>
+                    <RootErrorMessage errors={form.formState.errors} />
+                </form>
+            </Form>
         </div>
     )
 }

@@ -1,26 +1,27 @@
 {
-  "ErrorDialog": {
-    "title": "Fout"
-  },
   "Main": {
     "something_went_wrong": "Er is iets misgegaan",
+    "save": "Opslaan",
+    "delete": "Verwijder",
     "deletion_confirmation_title": "Verwijderen {{object}}",
     "deletion_confirmation": "Weet je zeker dat je {{object}} wilt verwijderen?",
-    "delete": "Verwijder",
-    "save": "Opslaan",
+    "cancel": "Annuleer",
     "title_new": "Nieuw",
     "name": "Naam",
     "text": "Tekst",
-    "type": "Type",
     "image": "Afbeelding",
-    "new": "Nieuw"
+    "email": "E-mailadres",
+    "new": "Nieuw",
+    "type": "Type"
   },
   "NavBar": {
-    "language": "Taal"
+    "settings": "Instellingen",
+    "language": "Taal",
+    "my_account": "Mijn account",
+    "logout": "Uitloggen"
   },
   "Table": {
-    "no_items_in_table": "Geen {{subject}}",
-    "show_amount": "Toon"
+    "no_items_in_table": "Geen {{subject}}"
   },
   "ErrorMessage": {
     "invalid": "Vul een geldige waarde in",
@@ -38,7 +39,6 @@
   },
   "AddEmailAddress": {
     "title": "E-mailadres toevoegen",
-    "email": "E-mailadres",
     "submit_button": "Toevoegen"
   },
   "AuthenticateWebAuthn": {
@@ -60,15 +60,8 @@
     "title": "Passkey toevoegen",
     "submit_button": "Voeg toe"
   },
-  "UpdatePasskey": {
-    "name": "Naam",
-    "title": "Passkey bewerken",
-    "submit_button": "Opslaan",
-    "delete_button": "Verwijder"
-  },
   "CreateSignupPasskey": {
     "title": "Passkey aanmaken",
-    "passkey_name": "Naam",
     "submit_button": "Opslaan",
     "already_an_account": "Already have an account? Go to <1>Login</1>."
   },
@@ -111,6 +104,12 @@
     "email_address": "E-mailadres",
     "submit_button": "Account aanmaken",
     "already_an_account": "Heb je al een account? Ga naar <1>Inloggen</1>."
+  },
+  "UpdatePasskey": {
+    "title": "Passkey bewerken",
+    "name": "Naam",
+    "submit_button": "Opslaan",
+    "delete_button": "Verwijder"
   },
   "VerifyEmailPage": {
     "title": "Verifieer je e-mailadres",

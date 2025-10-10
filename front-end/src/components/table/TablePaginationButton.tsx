@@ -1,5 +1,6 @@
 import { useCallback } from "react"
-import WButton from "../button/WButton"
+import { Button } from "../ui/button"
+import { PaginationItem } from "../ui/pagination"
 
 interface Props {
     pageIndex: number
@@ -20,11 +21,13 @@ const TablePaginationButton = ({ pageIndex, goToPage, isCurrent, isFirst, isLast
     }
 
     return (
-        <WButton type="button" variant={isCurrent ? "segment-selected" : "segment"} onClick={onClick}>
-            {isFirst ? "<<" : null}
-            {!(isFirst || isLast) ? pageIndex + 1 : null}
-            {isLast ? ">>" : null}
-        </WButton>
+        <PaginationItem>
+            <Button type="button" onClick={onClick}>
+                {isFirst ? "<<" : null}
+                {!(isFirst || isLast) ? pageIndex + 1 : null}
+                {isLast ? ">>" : null}
+            </Button>
+        </PaginationItem>
     )
 }
 

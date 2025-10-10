@@ -1,45 +1,30 @@
+import RootErrorMessage from "@/components/error/form/root-error-message"
+import { Button } from "@/components/ui/button"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
 import { create, parseCreationOptionsFromJSON, type CredentialCreationOptionsJSON, type RegistrationPublicKeyCredential } from "@github/webauthn-json/browser-ponyfill"
-import { useCallback, useMemo, type FC } from "react"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useCallback, type FC } from "react"
 import { useForm, type SubmitHandler } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { useNavigate } from "react-router-dom"
-import type { ObjectSchema } from "yup"
-import * as yup from "yup"
+import { z } from "zod"
 import { getAllauthClientV1AccountAuthenticatorsWebauthn, postAllauthClientV1AccountAuthenticatorsWebauthn } from "../api/endpoints/allauth"
 import type { AddWebAuthnAuthenticatorBody, StatusOK } from "../api/models/allauth"
-import WButton from "../components/button/WButton"
-import RootErrorMessage from "../components/form/RootErrorMessage"
-import WErrorMessage from "../components/form/WErrorMessage"
-import WField from "../components/form/WField"
-import WForm from "../components/form/WForm"
-import WInput from "../components/form/WInput"
-import WLabel from "../components/form/WLabel"
 import { useErrorHandler } from "../helpers/useErrorHandler"
-import { useYupValidationResolver } from "../helpers/useYupValidationResolver"
 
-interface Inputs {
-    name: string
-}
+const formSchema = z.object({
+    name: z.string().min(1).max(50),
+})
 
 const CreatePasskey: FC = () => {
     const { t } = useTranslation()
     const navigate = useNavigate()
     const { handleFormErrors } = useErrorHandler()
 
-    const validationSchema: ObjectSchema<Inputs> = useMemo(() => {
-        return yup.object({
-            name: yup.string().required(),
-        })
-    }, [])
-
-    const resolver = useYupValidationResolver(validationSchema)
-
-    const {
-        formState: { errors },
-        handleSubmit,
-        register,
-        setError,
-    } = useForm<Inputs>({ resolver, mode: "onSubmit", reValidateMode: "onSubmit" })
+    const form = useForm<z.infer<typeof formSchema>>({
+        resolver: zodResolver(formSchema),
+    })
 
     const onSuccess = useCallback(() => {
         navigate("/account/my")
@@ -47,12 +32,12 @@ const CreatePasskey: FC = () => {
 
     const onFailure = useCallback(
         (error: unknown) => {
-            handleFormErrors(setError, error, ["name"])
+            handleFormErrors(form.setError, error, ["name"])
         },
-        [handleFormErrors, setError]
+        [handleFormErrors, form.setError]
     )
 
-    const onSubmit: SubmitHandler<Inputs> = useCallback(
+    const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = useCallback(
         ({ name }) => {
             getAllauthClientV1AccountAuthenticatorsWebauthn("browser")
                 .then((optionsResponse) => {
@@ -80,17 +65,25 @@ const CreatePasskey: FC = () => {
     return (
         <div>
             <h1>{t("CreatePasskey.title")}</h1>
-            <WForm onSubmit={handleSubmit(onSubmit)}>
-                <WField>
-                    <WLabel>{t("UpdatePasskey.name")}</WLabel>
-                    <WInput type="text" {...register("name")} invalid={!!errors.name} data-cy="nameInput" />
-                    <WErrorMessage error={errors.name} />
-                </WField>
-                <WField>
-                    <WButton type="submit">{t("CreatePasskey.submit_button")}</WButton>
-                </WField>
-                <RootErrorMessage errors={errors} />
-            </WForm>
+            <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                    <FormField
+                        control={form.control}
+                        name="name"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>{t("Main.name")}</FormLabel>
+                                <FormControl>
+                                    <Input {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <Button type="submit">{t("CreatePasskey.submit_button")}</Button>
+                    <RootErrorMessage errors={form.formState.errors} />
+                </form>
+            </Form>
         </div>
     )
 }

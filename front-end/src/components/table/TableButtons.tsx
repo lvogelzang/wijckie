@@ -12,8 +12,8 @@ const TableButtons = ({ buttons }: Props) => {
 
     return (
         <div>
-            {buttons.map(({ label, href, target, link, onClick, variant }) => (
-                <TableButton key={label} label={label} href={href} target={target} link={link} onClick={onClick} variant={variant} />
+            {buttons.map(({ label, link, onClick, variant }) => (
+                <TableButton key={label} label={label} link={link} onClick={onClick} variant={variant} />
             ))}
         </div>
     )

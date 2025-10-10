@@ -1,7 +1,15 @@
+import RootErrorMessage from "@/components/error/form/root-error-message"
+import { FormTitle } from "@/components/form/form-title"
+import SaveAndDelete from "@/components/form/SaveAndDelete"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { zodResolver } from "@hookform/resolvers/zod"
 import { useCallback } from "react"
 import { useForm, type SubmitHandler } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { useNavigate } from "react-router-dom"
+import { z } from "zod"
 import {
     useInspirationOptionsCreate,
     useInspirationOptionsDestroy,
@@ -10,15 +18,7 @@ import {
     type InspirationOptionsCreateMutationResult,
     type InspirationOptionsUpdateMutationResult,
 } from "../../../api/endpoints/api"
-import type { FileUpload, InspirationModule, InspirationOption, TypeEnum } from "../../../api/models/api"
-import RootErrorMessage from "../../../components/form/RootErrorMessage"
-import SaveAndDelete from "../../../components/form/SaveAndDelete"
-import WErrorMessage from "../../../components/form/WErrorMessage"
-import WField from "../../../components/form/WField"
-import WForm from "../../../components/form/WForm"
-import WInput from "../../../components/form/WInput"
-import WLabel from "../../../components/form/WLabel"
-import WSelect from "../../../components/form/WSelect"
+import { TypeEnum, type FileUpload, type InspirationModule, type InspirationOption } from "../../../api/models/api"
 import { handleUpload } from "../../../helpers/uploadHelper"
 import { useErrorHandler } from "../../../helpers/useErrorHandler"
 import useInspirationOptionTypeOptions from "../../../helpers/useInspirationOptionTypeOptions"
@@ -29,12 +29,12 @@ interface Props {
     option?: InspirationOption
 }
 
-interface Inputs {
-    name: string
-    type: TypeEnum
-    text: string
-    image: FileList
-}
+const formSchema = z.object({
+    name: z.string().min(1).max(50),
+    type: z.enum(TypeEnum),
+    text: z.string(),
+    image: z.file(),
+})
 
 const InspirationOptionForm = ({ mode, module, option }: Props) => {
     const { t } = useTranslation()
@@ -46,13 +46,8 @@ const InspirationOptionForm = ({ mode, module, option }: Props) => {
     const partialUpdate = useInspirationOptionsPartialUpdate()
     const destroy = useInspirationOptionsDestroy()
 
-    const {
-        register,
-        setError,
-        formState: { errors },
-        handleSubmit,
-        watch,
-    } = useForm<Inputs>({
+    const form = useForm<z.infer<typeof formSchema>>({
+        resolver: zodResolver(formSchema),
         defaultValues: {
             name: mode === "Update" ? option!.name : "",
             type: mode === "Update" ? option!.type : "text",
@@ -60,17 +55,15 @@ const InspirationOptionForm = ({ mode, module, option }: Props) => {
         },
     })
 
-    const selectedType = watch("type")
-
     const navigateToParent = useCallback(() => {
         navigate(`/modules/inspiration/${module.id}`)
     }, [navigate, module])
 
     const onError = useCallback(
         (error: unknown) => {
-            handleFormErrors(setError, error, ["name", "type", "text", "image"])
+            handleFormErrors(form.setError, error, ["name", "type", "text", "image"])
         },
-        [handleFormErrors, setError]
+        [handleFormErrors, form.setError]
     )
 
     const attachFileUploadToOption = useCallback(
@@ -80,7 +73,7 @@ const InspirationOptionForm = ({ mode, module, option }: Props) => {
         [partialUpdate, navigateToParent, onError]
     )
 
-    const onSubmit: SubmitHandler<Inputs> = useCallback(
+    const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = useCallback(
         ({ name, type, text, image }) => {
             if (mode === "Create") {
                 create.mutate(
@@ -93,10 +86,9 @@ const InspirationOptionForm = ({ mode, module, option }: Props) => {
                         },
                     },
                     {
-                        onSuccess:
-                            image.length > 0
-                                ? (inspirationOption: InspirationOptionsCreateMutationResult) => handleUpload(inspirationOption, "image", image, attachFileUploadToOption, onError)
-                                : navigateToParent,
+                        onSuccess: image
+                            ? (inspirationOption: InspirationOptionsCreateMutationResult) => handleUpload(inspirationOption, "image", image, attachFileUploadToOption, onError)
+                            : navigateToParent,
                         onError,
                     }
                 )
@@ -104,10 +96,9 @@ const InspirationOptionForm = ({ mode, module, option }: Props) => {
                 update.mutate(
                     { id: option!.id, data: { name, type, text: type === "text" ? text : undefined } },
                     {
-                        onSuccess:
-                            image.length > 0
-                                ? (inspirationOption: InspirationOptionsUpdateMutationResult) => handleUpload(inspirationOption, "image", image, attachFileUploadToOption, onError)
-                                : navigateToParent,
+                        onSuccess: image
+                            ? (inspirationOption: InspirationOptionsUpdateMutationResult) => handleUpload(inspirationOption, "image", image, attachFileUploadToOption, onError)
+                            : navigateToParent,
                         onError,
                     }
                 )
@@ -122,41 +113,83 @@ const InspirationOptionForm = ({ mode, module, option }: Props) => {
         })
     }, [destroy, option])
 
+    const selectedType = form.watch("type")
+
     return (
-        <WForm onSubmit={handleSubmit(onSubmit)}>
-            <h2>{mode === "Create" ? t("Main.title_new") : option!.name}</h2>
-            <WField>
-                <WLabel>{t("Main.name")}</WLabel>
-                <WInput type="text" {...register("name")} invalid={!!errors.name} />
-                <WErrorMessage error={errors.name} />
-            </WField>
-            <WField>
-                <WLabel>{t("Main.type")}</WLabel>
-                <WSelect label={t("Main.type")} {...register("type")} invalid={!!errors.type} disabled={mode !== "Create"}>
-                    {typeOptions.map(({ id, label }) => (
-                        <option key={id} value={id}>
-                            {label}
-                        </option>
-                    ))}
-                </WSelect>
-                <WErrorMessage error={errors.type} />
-            </WField>
-            <WField hidden={selectedType !== "text"}>
-                <WLabel>{t("Main.text")}</WLabel>
-                <WInput type="text" {...register("text")} invalid={!!errors.text} />
-                <WErrorMessage error={errors.text} />
-            </WField>
-            <WField hidden={selectedType !== "image"}>
-                <WLabel>{t("Main.image")}</WLabel>
-                <div hidden={!option?.imageURL}>
-                    <img src={option?.imageURL} style={{ height: "20rem", maxWidth: "100rem" }} />
-                </div>
-                <WInput type="file" {...register("image")} invalid={!!errors.image} />
-                <WErrorMessage error={errors.image} />
-            </WField>
-            <SaveAndDelete mode={mode} name={`${option?.name}`} onDelete={onDelete} onDeleted={navigateToParent} />
-            <RootErrorMessage errors={errors} />
-        </WForm>
+        <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                <FormTitle>{mode === "Create" ? t("Main.title_new") : option!.name}</FormTitle>
+                <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>{t("Main.name")}</FormLabel>
+                            <FormControl>
+                                <Input {...field} />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+                <FormField
+                    control={form.control}
+                    name="type"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Email</FormLabel>
+                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                <FormControl>
+                                    <SelectTrigger>
+                                        <SelectValue placeholder="Select a verified email to display" />
+                                    </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                    {typeOptions.map(({ id, label }) => (
+                                        <SelectItem key={id} value={id}>
+                                            {label}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+                {selectedType === "text" ? (
+                    <FormField
+                        control={form.control}
+                        name="text"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>{t("Main.text")}</FormLabel>
+                                <FormControl>
+                                    <Input {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                ) : null}
+                {selectedType === "image" ? (
+                    <FormField
+                        control={form.control}
+                        name="image"
+                        render={({ field: { value, onChange, ...fieldProps } }) => (
+                            <FormItem>
+                                <FormLabel>{t("Main.image")}</FormLabel>
+                                <FormControl>
+                                    <Input {...fieldProps} type="file" accept="image/*" onChange={(event) => onChange(event.target.files && event.target.files[0])} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                ) : null}
+                <SaveAndDelete mode={mode} name={`${option?.name}`} onDelete={onDelete} onDeleted={navigateToParent} />
+                <RootErrorMessage errors={form.formState.errors} />
+            </form>
+        </Form>
     )
 }
 

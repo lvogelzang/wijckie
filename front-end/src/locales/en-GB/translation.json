@@ -1,26 +1,27 @@
 {
-  "ErrorDialog": {
-    "title": "Error"
-  },
   "Main": {
     "something_went_wrong": "Something went wrong...",
+    "save": "Save",
+    "delete": "Delete",
     "deletion_confirmation_title": "Delete {{object}}",
     "deletion_confirmation": "Are you sure you want to delete {{object}}?",
-    "delete": "Delete",
-    "save": "Save",
+    "cancel": "Cancel",
     "title_new": "New",
     "name": "Name",
     "text": "Text",
-    "type": "Type",
     "image": "Image",
-    "new": "New"
+    "email": "E-mail address",
+    "new": "New",
+    "type": "Type"
   },
   "NavBar": {
-    "language": "Language"
+    "settings": "Settings",
+    "language": "Language",
+    "my_account": "My account",
+    "logout": "Logout"
   },
   "Table": {
-    "no_items_in_table": "No {{subject}}",
-    "show_amount": "Show"
+    "no_items_in_table": "No {{subject}}"
   },
   "ErrorMessage": {
     "invalid": "Invalid value",
@@ -38,7 +39,6 @@
   },
   "AddEmailAddress": {
     "title": "Add e-mail address",
-    "email": "E-mail address",
     "submit_button": "Add"
   },
   "AuthenticateWebAuthn": {
@@ -60,15 +60,8 @@
     "title": "Add passkey",
     "submit_button": "Add"
   },
-  "UpdatePasskey": {
-    "name": "Name",
-    "title": "Update passkey",
-    "submit_button": "Save",
-    "delete_button": "Delete"
-  },
   "CreateSignupPasskey": {
     "title": "Save Passkey",
-    "passkey_name": "Name",
     "submit_button": "Save",
     "already_an_account": "Already have an account? Go to <1>Login</1>."
   },
@@ -111,6 +104,12 @@
     "email_address": "Email address",
     "submit_button": "Create account",
     "already_an_account": "Already have an account? Go to <1>Login</1>."
+  },
+  "UpdatePasskey": {
+    "title": "Update passkey",
+    "name": "Name",
+    "submit_button": "Save",
+    "delete_button": "Delete"
   },
   "VerifyEmailPage": {
     "title": "Verify e-mail address",
