@@ -23,6 +23,9 @@ const VerifyEmailByCode: FC = () => {
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
+        defaultValues: {
+            key: "",
+        },
     })
 
     const onSuccess = useCallback(() => {

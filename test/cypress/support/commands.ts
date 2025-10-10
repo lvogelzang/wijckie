@@ -71,8 +71,6 @@ Cypress.Commands.add("getTOTPCodeFromLastEmail", () => {
         .its("body")
         .should("have.length.gte", 1)
         .then((listResponse) => {
-            console.log("ASDF", listResponse)
-
             const emails = listResponse as EmailData[]
             emails.sort((a, b) => a.time - b.time)
             const id = emails.pop()!.id

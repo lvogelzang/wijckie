@@ -22,6 +22,9 @@ const ConfirmLoginCode: FC = () => {
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
+        defaultValues: {
+            code: "",
+        },
     })
 
     const onSuccess = useCallback((response: AuthenticatedResponse) => {

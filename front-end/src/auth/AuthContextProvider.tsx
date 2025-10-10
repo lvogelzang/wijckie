@@ -63,7 +63,7 @@ const AuthContextProvider = ({ children }: Props) => {
 
         getAllauthClientV1AuthSession("browser")
             .then((response) => handleAuthUpdate(response as AllauthResponse))
-            .catch((error) => console.error(error))
+            .catch(() => {})
 
         return () => {
             document.removeEventListener("allauth.auth.change", handleAuthUpdateEvent)

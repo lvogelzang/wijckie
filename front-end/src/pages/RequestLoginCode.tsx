@@ -23,6 +23,9 @@ const RequestLoginCode: FC = () => {
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
+        defaultValues: {
+            email: "",
+        },
     })
 
     const onSuccess = useCallback(() => {
