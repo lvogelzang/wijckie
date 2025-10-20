@@ -77,13 +77,15 @@ const CreateSignupPasskey: FC = () => {
                             <FormItem>
                                 <FormLabel>{t("Main.name")}</FormLabel>
                                 <FormControl>
-                                    <Input {...field} />
+                                    <Input {...field} data-cy="nameInput" />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
                         )}
                     />
-                    <Button type="submit">{t("CreateSignupPasskey.submit_button")}</Button>
+                    <Button type="submit" data-cy="submitButton">
+                        {t("CreateSignupPasskey.submit_button")}
+                    </Button>
                     <RootErrorMessage errors={form.formState.errors} />
                 </form>
             </Form>

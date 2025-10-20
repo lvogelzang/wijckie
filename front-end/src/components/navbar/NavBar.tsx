@@ -22,7 +22,6 @@ import {
     useSidebar,
 } from "../ui/sidebar"
 import LanguageButton from "./LanguageButton"
-import LinkButton from "./LinkButton"
 
 // TODO: Translations.
 // TODO: Consequent styling of buttons.
@@ -171,7 +170,11 @@ const NavBar = () => {
             </div>
             <NavigationMenu className="hidden lg:flex" viewport={false}>
                 <NavigationMenuList>
-                    <LinkButton label="Dashboard" to="/dashboard" />
+                    <NavigationMenuLink asChild>
+                        <Link to="/dashboard" className="text-nowrap" data-cy="dashboardButton">
+                            {t("NavBar.dashboard")}
+                        </Link>
+                    </NavigationMenuLink>
                     <NavigationMenuItem>
                         <NavigationMenuTrigger>Modules</NavigationMenuTrigger>
                         <NavigationMenuContent>
@@ -195,9 +198,11 @@ const NavBar = () => {
             <NavigationMenu className="ml-auto hidden lg:flex" viewport={false}>
                 <NavigationMenuList>
                     <NavigationMenuItem>
-                        <NavigationMenuLink>
-                            <Link to="/modules">{t("NavBar.settings")}</Link>
-                        </NavigationMenuLink>
+                        <NavigationMenuContent>
+                            <NavigationMenuLink>
+                                <Link to="/modules">{t("NavBar.settings")}</Link>
+                            </NavigationMenuLink>
+                        </NavigationMenuContent>
                     </NavigationMenuItem>
                     <NavigationMenuItem>
                         <NavigationMenuTrigger>{t("NavBar.language")}</NavigationMenuTrigger>
@@ -213,11 +218,19 @@ const NavBar = () => {
                     </NavigationMenuItem>
                     {user ? (
                         <NavigationMenuItem>
-                            <NavigationMenuTrigger>{user.username}</NavigationMenuTrigger>
+                            <NavigationMenuTrigger data-cy="menuUsername">{user.username}</NavigationMenuTrigger>
                             <NavigationMenuContent>
                                 <div className="grid p-2">
-                                    <LinkButton label={t("NavBar.my_account")} to="/account/my" />
-                                    <LinkButton label={t("NavBar.logout")} to="/account/logout" />
+                                    <NavigationMenuLink asChild>
+                                        <Link to="/account/my" className="text-nowrap" data-cy="myAccountButton">
+                                            {t("NavBar.my_account")}
+                                        </Link>
+                                    </NavigationMenuLink>
+                                    <NavigationMenuLink asChild>
+                                        <Link to="/account/logout" className="text-nowrap" data-cy="logoutButton">
+                                            {t("NavBar.logout")}
+                                        </Link>
+                                    </NavigationMenuLink>
                                 </div>
                             </NavigationMenuContent>
                         </NavigationMenuItem>

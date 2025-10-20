@@ -68,7 +68,7 @@ const AuthContextProvider = ({ children }: Props) => {
         return () => {
             document.removeEventListener("allauth.auth.change", handleAuthUpdateEvent)
         }
-    }, [handleAuthUpdate, handleAuthUpdateEvent])
+    }, [])
 
     const loading = useMemo(() => auth === undefined, [auth])
 

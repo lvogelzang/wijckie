@@ -6,6 +6,7 @@ import * as React from "react"
 import { Controller, FormProvider, useFormContext, useFormState, type ControllerProps, type FieldPath, type FieldValues } from "react-hook-form"
 
 import { Label } from "@/components/ui/label"
+import { useErrorHandler, type ErrorMessageType } from "@/helpers/useErrorHandler"
 import { cn } from "@/lib/utils"
 
 const Form = FormProvider
@@ -82,16 +83,19 @@ function FormDescription({ className, ...props }: React.ComponentProps<"p">) {
 }
 
 function FormMessage({ className, ...props }: React.ComponentProps<"p">) {
+    const { translatedErrorMessages } = useErrorHandler()
     const { error, formMessageId } = useFormField()
-    const body = error ? String(error?.message ?? "") : props.children
 
-    if (!body) {
+    const message = React.useMemo(() => {
+        if (error && typeof error === "object" && "type" in error && typeof error.type === "string") {
+            return translatedErrorMessages.get(error.type as ErrorMessageType)
+        }
         return null
-    }
+    }, [error, translatedErrorMessages])
 
     return (
-        <p data-slot="form-message" id={formMessageId} className={cn("text-destructive text-sm", className)} {...props}>
-            {body}
+        <p data-slot="form-message" id={formMessageId} className={cn("text-destructive text-sm", className)} hidden={!error} {...props}>
+            {message}
         </p>
     )
 }

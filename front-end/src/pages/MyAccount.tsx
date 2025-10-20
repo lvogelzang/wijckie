@@ -1,5 +1,6 @@
 import ErrorDialog from "@/components/error/error-dialog"
 import { Button } from "@/components/ui/button"
+import { AxiosError } from "axios"
 import { useCallback, useEffect, useMemo, useState, type FC } from "react"
 import { useTranslation } from "react-i18next"
 import { Link, useLoaderData, useNavigate } from "react-router-dom"
@@ -41,7 +42,14 @@ const MyAccount: FC = () => {
         (email: string) => {
             putAllauthClientV1AccountEmail("browser", { email })
                 .then(() => navigate("/account/verify-email"))
-                .catch(onEmailFailure)
+                .catch((error: unknown) => {
+                    if (error instanceof AxiosError && error.response?.status === 403) {
+                        // Too many email verification emails were already sent.
+                        navigate("/account/verify-email")
+                        return
+                    }
+                    onEmailFailure()
+                })
         },
         [navigate, onEmailFailure]
     )

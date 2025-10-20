@@ -17,10 +17,29 @@ describe("login page", () => {
         cy.screenshotForDocs("00_Login", "00_Sign_in_by_code", 3)
 
         cy.getTOTPCodeFromLastEmail().then((code) => {
+            cy.get('[data-cy="confirmCodeInput"]').type("!@#$%^{enter}")
+            cy.get('[data-cy="confirmCodeInput"]').should("have.attr", "aria-invalid", "true")
+
+            cy.get('[data-cy="confirmCodeInput"]').clear()
             cy.get('[data-cy="confirmCodeInput"]').type(code)
+
             cy.screenshotForDocs("00_Login", "00_Sign_in_by_code", 4)
             cy.get('[data-cy="confirmCodeInput"]').type("{enter}")
+
+            cy.expectPath("/dashboard")
         })
+    })
+
+    it("shows an error when passkey login fails", () => {
+        cy.clock(new Date(2026, 1, 1, 18, 0, 0))
+        cy.setCookie("django_language", "en-GB")
+        cy.addVirtualAuthenticator()
+
+        cy.visit("/")
+        cy.get('[data-cy="loginButton"]').click()
+        cy.get('[data-cy="errorMessage"]').contains("Something went wrong...")
+
+        cy.removeVirtualAuthenticator()
     })
 
     it("supports navigating to account creation", () => {

@@ -66,7 +66,19 @@ describe("my account page", () => {
 
         cy.deleteExistingEmails().then(() => {
             cy.get('[data-cy="addEmailLink"]').click()
+
+            cy.expectPath("/account/my/email-addresses/add")
+            cy.get("h1").contains("Add e-mail address")
+
+            cy.get('[data-cy="emailInput"]').type("j.test{enter}")
+            cy.get('[data-cy="emailInput"]').should("have.attr", "aria-invalid", "true")
+
+            cy.get('[data-cy="emailInput"]').type("@wijckie.com{enter}")
+            cy.get('[data-cy="emailInput"]').should("have.attr", "aria-invalid", "true")
+
+            cy.get('[data-cy="emailInput"]').clear()
             cy.get('[data-cy="emailInput"]').type("j.test-3@wijckie.com{enter}")
+
             cy.getTOTPCodeFromLastEmail().then((code) => {
                 cy.get('[data-cy="verificationCodeInput"]').type(`${code}{enter}`)
                 cy.visit("/account/my")
@@ -74,6 +86,50 @@ describe("my account page", () => {
                     { email: "j.test@wijckie.com", verified: true, primary: true },
                     { email: "j.test-2@wijckie.com", verified: true, primary: false },
                     { email: "j.test-3@wijckie.com", verified: true, primary: false },
+                ])
+
+                cy.get(':nth-child(3) > :nth-child(4) > [data-cy="deleteButton"]').click()
+                expectEmailAddresses([
+                    { email: "j.test@wijckie.com", verified: true, primary: true },
+                    { email: "j.test-2@wijckie.com", verified: true, primary: false },
+                ])
+            })
+        })
+    })
+
+    it("lets users add and verify an e-mail address after navigating back without verifying", () => {
+        cy.setCookie("django_language", "en-GB")
+
+        cy.deleteEmailAddress("j.test-3@wijckie.com")
+        cy.loginByHttpCalls("j.test@wijckie.com")
+        cy.visit("/account/my")
+
+        expectEmailAddresses([
+            { email: "j.test@wijckie.com", verified: true, primary: true },
+            { email: "j.test-2@wijckie.com", verified: true, primary: false },
+        ])
+
+        cy.deleteExistingEmails().then(() => {
+            cy.get('[data-cy="addEmailLink"]').click()
+
+            cy.expectPath("/account/my/email-addresses/add")
+            cy.get("h1").contains("Add e-mail address")
+
+            cy.get('[data-cy="emailInput"]').type("j.test-4@wijckie.com{enter}")
+
+            cy.visit("/account/my")
+            cy.get('[data-cy="verifyButton"]').click()
+
+            cy.expectPath("/account/verify-email")
+            cy.get("h1").contains("Verify e-mail address")
+
+            cy.getTOTPCodeFromLastEmail().then((code) => {
+                cy.get('[data-cy="verificationCodeInput"]').type(`${code}{enter}`)
+                cy.visit("/account/my")
+                expectEmailAddresses([
+                    { email: "j.test@wijckie.com", verified: true, primary: true },
+                    { email: "j.test-2@wijckie.com", verified: true, primary: false },
+                    { email: "j.test-4@wijckie.com", verified: true, primary: false },
                 ])
 
                 cy.get(':nth-child(3) > :nth-child(4) > [data-cy="deleteButton"]').click()

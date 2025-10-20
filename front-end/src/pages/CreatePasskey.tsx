@@ -77,7 +77,7 @@ const CreatePasskey: FC = () => {
                             <FormItem>
                                 <FormLabel>{t("Main.name")}</FormLabel>
                                 <FormControl>
-                                    <Input {...field} />
+                                    <Input {...field} data-cy="nameInput" />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>

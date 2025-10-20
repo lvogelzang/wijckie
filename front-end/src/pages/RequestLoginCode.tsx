@@ -51,8 +51,8 @@ const RequestLoginCode: FC = () => {
     )
 
     return (
-        <div>
-            <h1>{t("RequestLoginCodePage.title")}</h1>
+        <div className="m-auto flex flex-col items-center gap-6 text-center max-w-96">
+            <h1 className="text-xl font-bold">{t("RequestLoginCodePage.title")}</h1>
             <p>{t("RequestLoginCodePage.body")}</p>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">

@@ -10,6 +10,9 @@ declare global {
             screenshotForDocs(file: string, test: string, followUpNumber: number): Chainable<void>
             setPrimaryEmailAddress(email: string): Chainable<void>
             deleteEmailAddress(email: string): Chainable<void>
+            addVirtualAuthenticator(): Chainable<string>
+            removeVirtualAuthenticator(): Chainable<void>
+            expectPath(path: string): Chainable<void>
         }
     }
 }
@@ -113,4 +116,47 @@ Cypress.Commands.add("deleteEmailAddress", (email: string) => {
     cy.task("queryDb", `DELETE FROM account_emailaddress WHERE email="${email}";`).then((results) => {
         expect(results).to.be.an("array").that.is.empty
     })
+})
+
+Cypress.Commands.add("addVirtualAuthenticator", () => {
+    cy.wrap(
+        Cypress.automation("remote:debugger:protocol", {
+            command: "WebAuthn.enable",
+            params: {},
+        }).then(async () => {
+            const result = await Cypress.automation("remote:debugger:protocol", {
+                command: "WebAuthn.addVirtualAuthenticator",
+                params: {
+                    options: {
+                        protocol: "ctap2",
+                        transport: "internal",
+                        hasResidentKey: true,
+                        hasUserVerification: true,
+                        isUserVerified: true,
+                        automaticPresenceSimulation: true, //set to true to automatically succeed
+                    },
+                },
+            })
+            return result.authenticatorId
+        })
+    ).as("authenticatorId")
+})
+Cypress.Commands.add("removeVirtualAuthenticator", () => {
+    cy.get("@authenticatorId").then((authenticatorId) => {
+        Cypress.automation("remote:debugger:protocol", {
+            command: "WebAuthn.removeVirtualAuthenticator",
+            params: {
+                authenticatorId,
+            },
+        }).then(() => {
+            Cypress.automation("remote:debugger:protocol", {
+                command: "WebAuthn.disable",
+                params: {},
+            })
+        })
+    })
+})
+
+Cypress.Commands.add("expectPath", (path: string) => {
+    cy.location().should((l) => expect(l.pathname).to.equal(path))
 })

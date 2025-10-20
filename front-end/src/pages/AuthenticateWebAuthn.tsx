@@ -1,4 +1,4 @@
-import { InlineErrorMessage } from "@/components/error/inline-error-message"
+import ErrorMessage from "@/components/error/error-message"
 import { Button } from "@/components/ui/button"
 import { get, parseRequestOptionsFromJSON, type AuthenticationPublicKeyCredential } from "@github/webauthn-json/browser-ponyfill"
 import { useCallback, useState, type FC } from "react"
@@ -6,12 +6,12 @@ import { Trans, useTranslation } from "react-i18next"
 import { Link } from "react-router-dom"
 import { getAllauthClientV1AuthWebauthnLogin, postAllauthClientV1AuthWebauthnLogin } from "../api/endpoints/allauth"
 import type { AuthenticatedResponse, WebAuthnCredential } from "../api/models/allauth"
-import { useErrorHandler } from "../helpers/useErrorHandler"
+import { useErrorHandler, type ErrorMessageType } from "../helpers/useErrorHandler"
 
 const AuthenticateWebAuthn: FC = () => {
     const { t } = useTranslation()
-    const { handleFormErrors } = useErrorHandler()
-    const [error, setError] = useState<string>()
+    const { resolveError } = useErrorHandler()
+    const [error, setError] = useState<{ type: ErrorMessageType }>()
 
     const onSuccess = useCallback((response: AuthenticatedResponse) => {
         const event = new CustomEvent("allauth.auth.change", { detail: response })
@@ -20,9 +20,9 @@ const AuthenticateWebAuthn: FC = () => {
 
     const onFailure = useCallback(
         (error: unknown) => {
-            handleFormErrors(setError, error, [])
+            setError(resolveError(error))
         },
-        [handleFormErrors, setError]
+        [setError, resolveError]
     )
 
     const onClick = useCallback(() => {
@@ -41,12 +41,13 @@ const AuthenticateWebAuthn: FC = () => {
     }, [onSuccess, onFailure])
 
     return (
-        <div>
-            <h1>{t("AuthenticateWebAuthn.title")}</h1>
-            <Button type="button" onClick={onClick}>
+        <div className="m-auto flex flex-col items-center gap-6 text-center max-w-96">
+            <h1 className="text-xl font-bold">{t("AuthenticateWebAuthn.title")}</h1>
+            <p>{t("AuthenticateWebAuthn.body")}</p>
+            <Button type="button" onClick={onClick} data-cy="loginButton">
                 {t("WebAuthnLoginButton.title")}
             </Button>
-            <InlineErrorMessage hidden={!error}>{error}</InlineErrorMessage>
+            <ErrorMessage error={error} />
             <p>
                 <Trans i18nKey="AuthenticateWebAuthn.no_passkey_yet">
                     No passkey on this device yet? Go to

@@ -9,12 +9,15 @@ interface Props {
 const AuthenticatedRoute = ({ children }: Props) => {
     const location = useLocation()
     const { isAuthenticated } = useAuth()
-    const next = `next=${encodeURIComponent(location.pathname + location.search)}`
+    let url = "/account/authenticate/webauthn"
+    if (!location.pathname.includes("logout")) {
+        url += `?next=${encodeURIComponent(location.pathname + location.search)}`
+    }
 
     if (isAuthenticated) {
         return children
     } else {
-        return <Navigate to={`/account/authenticate/webauthn?${next}`} />
+        return <Navigate to={url} />
     }
 }
 

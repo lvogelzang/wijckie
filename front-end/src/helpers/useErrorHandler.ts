@@ -117,6 +117,14 @@ export const useErrorHandler = () => {
         return map
     }, [])
 
+    const resolveError = useCallback((error: unknown) => {
+        const errorMap = getErrorMap(error)
+
+        const type: ErrorMessageType = "general"
+
+        return { type }
+    }, [])
+
     const handleFormErrors = useCallback(
         <Type extends FieldValues>(setError: UseFormSetError<Type>, error: unknown, keys: (`root.${string}` | "root" | Path<Type>)[]) => {
             const errorMap = getErrorMap(error)
@@ -132,5 +140,5 @@ export const useErrorHandler = () => {
         [getErrorMap]
     )
 
-    return { handleFormErrors, translatedErrorMessages }
+    return { handleFormErrors, resolveError, translatedErrorMessages }
 }

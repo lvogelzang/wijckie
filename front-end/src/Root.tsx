@@ -6,11 +6,11 @@ export default function Root() {
     return (
         <SidebarProvider defaultOpen={false} className="flex-col">
             <NavBar />
-            <main>
+            <main className="grow flex">
                 <Outlet />
             </main>
-            <footer>
-                <span className="text-body-secondary">&copy; Studio Goes</span>
+            <footer className="text-center m-6">
+                <span className="text-muted-foreground">&copy; Studio Goes</span>
             </footer>
         </SidebarProvider>
     )

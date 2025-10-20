@@ -126,7 +126,11 @@ const createRouter = () => {
                 },
                 {
                     path: "/account/logout",
-                    element: <Logout />,
+                    element: (
+                        <AuthenticatedRoute>
+                            <Logout />
+                        </AuthenticatedRoute>
+                    ),
                 },
                 {
                     path: "/dashboard",

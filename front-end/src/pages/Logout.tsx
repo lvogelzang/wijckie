@@ -1,13 +1,22 @@
-import { useEffect } from "react"
-import { useNavigate } from "react-router-dom"
+import { isAllauthResponse401 } from "@/helpers/AllauthHelper"
+import { useCallback } from "react"
 import { deleteAllauthClientV1AuthSession } from "../api/endpoints/allauth"
 
 const Logout = () => {
-    const navigate = useNavigate()
+    const onSuccess = useCallback(() => console.log("Logged out succesfully"), [])
 
-    useEffect(() => {
-        deleteAllauthClientV1AuthSession("browser").finally(() => navigate("/"))
-    }, [navigate])
+    const onFailure = useCallback(
+        (error: unknown) => {
+            if (isAllauthResponse401(error)) {
+                onSuccess()
+                return
+            }
+            console.error(error)
+        },
+        [onSuccess]
+    )
+
+    deleteAllauthClientV1AuthSession("browser").then(onSuccess).catch(onFailure)
 
     return null
 }

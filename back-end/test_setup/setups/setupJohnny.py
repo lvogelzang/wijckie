@@ -1,5 +1,4 @@
 import datetime
-from allauth.account.models import EmailAddress
 from test_setup.factory.InspirationItemFactory import InspirationItemFactory
 from test_setup.factory.InspirationOptionFactory import InspirationOptionFactory
 from test_setup.factory.InspirationWidgetFactory import InspirationWidgetFactory
@@ -11,6 +10,8 @@ from test_setup.factory.emailAddressFactory import EmailAddressFactory
 from test_setup.factory.inspirationModuleFactory import InspirationModuleFactory
 from wijckie_models.modules.dailyTodos import DailyTodoItemStatus
 from wijckie_models.user import Language, TimeZone, User
+
+from allauth.mfa.webauthn.internal import auth
 
 
 def setup_johnny():
@@ -30,6 +31,24 @@ def setup_johnny():
 
     date_1 = datetime.date(2026, 1, 1)
     date_2 = datetime.date(2026, 1, 2)
+
+    # TODO: We were not able yet to get this working in E2E tests:
+    auth.WebAuthn.add(
+        johnny,
+        "1Simulator",
+        {
+            "type": "public-key",
+            "id": "gEIchSucsbfh+6rD2kI4fLIxI3F6KA5kXbMeEVORFIY",
+            "rawId": "gEIchSucsbfh+6rD2kI4fLIxI3F6KA5kXbMeEVORFIY",
+            "authenticatorAttachment": "platform",
+            "response": {
+                "clientDataJSON": "eyJ0eXBlIjoid2ViYXV0aG4uZ2V0IiwiY2hhbGxlbmdlIjoiM2J1ZUd0R0NmMkY1eVkxMXRVSnBSNmMxeFVQSDV3TUFzSkRSUDcwU2g4VSIsIm9yaWdpbiI6Imh0dHA6Ly9sb2NhbGhvc3Q6NTE3MyIsImNyb3NzT3JpZ2luIjpmYWxzZX0",
+                "attestationObject": "o2NmbXRkbm9uZWdhdHRTdG10oGhhdXRoRGF0YVikSZYN5YgOjGh0NBcPZHZgW4_krrmihjLHmVzzuoMdl2NFAAAAAQECAwQFBgcIAQIDBAUGBwgAIKvZ3GXMKtSFZ92B7JWMkW03UnoOoa8PcQewwwhkH7ZdpQECAyYgASFYILCLhT8KR7oLYgCu9rEE5gFTewYvaKrSiM4yHY3lzgA9IlggZw9CqWQr5mN-1INywIvSQkUnzy5aIG3ITfzlHWSFmHs",
+                "transports": ["internal", "hybrid"],
+            },
+            "clientExtensionResults": {"credProps": {"rk": True}},
+        },
+    ).instance
 
     # --- Daily Todos ---
 
