@@ -1,4 +1,8 @@
 {
+  "ErrorDialog": {
+    "title": "Fout",
+    "ok": "Ok"
+  },
   "Main": {
     "something_went_wrong": "Er is iets misgegaan",
     "save": "Opslaan",
@@ -17,11 +21,13 @@
   "NavBar": {
     "settings": "Instellingen",
     "language": "Taal",
+    "dashboard": "Dashboard",
     "my_account": "Mijn account",
     "logout": "Uitloggen"
   },
   "Table": {
-    "no_items_in_table": "Geen {{subject}}"
+    "no_items_in_table": "Geen {{subject}}",
+    "show_amount": "Toon"
   },
   "ErrorMessage": {
     "invalid": "Vul een geldige waarde in",
@@ -43,6 +49,7 @@
   },
   "AuthenticateWebAuthn": {
     "title": "Login",
+    "body": "Klik op login om in te loggen met een passkey.",
     "no_passkey_yet": "Nog geen passkey op dit apparaat? Ga naar <1>Logincode aanvragen</1>.",
     "no_account_yet": "Nog geen account? Ga naar <1>Account aanmaken</1>."
   },
@@ -85,12 +92,6 @@
     "passkey_created_at": "Aangemaakt",
     "passkey_last_used_at": "Laatst gebruikt",
     "add_passkey": "Voeg passkey toe"
-  },
-  "ReauthenticateWebAuthn": {
-    "title": "Opnieuw inloggen"
-  },
-  "LoginPage": {
-    "no_passkey_yet": "No passkey on this device yet? Go to<1>Request a sign-in code</1>."
   },
   "RequestLoginCodePage": {
     "title": "Inlogcode aanvragen",

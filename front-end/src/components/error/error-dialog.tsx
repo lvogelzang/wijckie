@@ -1,3 +1,5 @@
+import { useCallback } from "react"
+import { useTranslation } from "react-i18next"
 import { AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "../ui/alert-dialog"
 
 interface Props {
@@ -7,16 +9,20 @@ interface Props {
 
 // TODO: Add content, remove error on close.
 const ErrorDialog = ({ error, setError }: Props) => {
+    const { t } = useTranslation()
+    const onCancel = useCallback(() => setError(undefined), [setError])
+
     return (
         <AlertDialog open={!!error}>
             <AlertDialogContent>
                 <AlertDialogHeader>
-                    <AlertDialogTitle>Title</AlertDialogTitle>
-                    <AlertDialogDescription>Description</AlertDialogDescription>
+                    <AlertDialogTitle>{t("ErrorDialog.title")}</AlertDialogTitle>
+                    <AlertDialogDescription data-cy="errorDescription">{error}</AlertDialogDescription>
                 </AlertDialogHeader>
-                <AlertDialogContent>{error}</AlertDialogContent>
                 <AlertDialogFooter>
-                    <AlertDialogCancel>OK</AlertDialogCancel>
+                    <AlertDialogCancel onClick={onCancel} data-cy="cancelButton">
+                        {t("ErrorDialog.ok")}
+                    </AlertDialogCancel>
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>

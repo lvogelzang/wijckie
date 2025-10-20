@@ -25,20 +25,13 @@ interface AuthChangeEvent extends Event {
 }
 
 const authInfo: (auth: AllauthResponse) => AuthInfo = (auth) => {
-    let isAuthenticated = false
-    let requiresReauthentication = false
-    if (auth && auth?.status === 200) {
-        isAuthenticated = true
-    } else if (auth && auth.status === 401 && auth.meta && auth.meta.is_authenticated) {
-        isAuthenticated = true
-        requiresReauthentication = true
-    }
+    const isAuthenticated = auth && auth?.status === 200
     let user = null
     if (auth && auth.data?.user) {
         user = auth.data.user
     }
     const pendingFlow = auth ? auth.data?.flows?.find((flow) => flow.is_pending) : undefined
-    return { isAuthenticated, requiresReauthentication, user, pendingFlow }
+    return { isAuthenticated, user, pendingFlow }
 }
 
 const AuthContextProvider = ({ children }: Props) => {

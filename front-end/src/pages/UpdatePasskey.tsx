@@ -70,14 +70,14 @@ const UpdatePasskey: FC = () => {
                             <FormItem>
                                 <FormLabel>{t("UpdatePasskey.name")}</FormLabel>
                                 <FormControl>
-                                    <Input {...field} />
+                                    <Input {...field} data-cy="nameInput" />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
                         )}
                     />
                     <Button type="submit">{t("UpdatePasskey.submit_button")}</Button>
-                    <Button type="button" variant="destructive" onClick={onDelete}>
+                    <Button type="button" variant="destructive" onClick={onDelete} data-cy="deleteButton">
                         {t("UpdatePasskey.delete_button")}
                     </Button>
                     <RootErrorMessage errors={form.formState.errors} />

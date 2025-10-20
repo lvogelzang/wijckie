@@ -1,4 +1,8 @@
 {
+  "ErrorDialog": {
+    "title": "Error",
+    "ok": "OK"
+  },
   "Main": {
     "something_went_wrong": "Something went wrong...",
     "save": "Save",
@@ -17,11 +21,13 @@
   "NavBar": {
     "settings": "Settings",
     "language": "Language",
+    "dashboard": "Dashboard",
     "my_account": "My account",
     "logout": "Logout"
   },
   "Table": {
-    "no_items_in_table": "No {{subject}}"
+    "no_items_in_table": "No {{subject}}",
+    "show_amount": "Show"
   },
   "ErrorMessage": {
     "invalid": "Invalid value",
@@ -43,6 +49,7 @@
   },
   "AuthenticateWebAuthn": {
     "title": "Login",
+    "body": "Click login to log in using a passkey.",
     "no_passkey_yet": "No passkey on this device yet? Go to <1>Request a sign-in code</1>.",
     "no_account_yet": "No account yet? Go to <1>Create account</1>."
   },
@@ -85,12 +92,6 @@
     "passkey_created_at": "Created",
     "passkey_last_used_at": "Last used",
     "add_passkey": "Add passkey"
-  },
-  "ReauthenticateWebAuthn": {
-    "title": "Reauthenticate"
-  },
-  "LoginPage": {
-    "no_passkey_yet": "No passkey on this device yet? Go to<1>Request a sign-in code</1>."
   },
   "RequestLoginCodePage": {
     "title": "Request sign-in code",

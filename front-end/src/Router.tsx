@@ -20,7 +20,6 @@ import InspirationModulePage from "./pages/modules/inspiration/InspirationModule
 import InspirationOptionPage from "./pages/modules/inspiration/InspirationOptionPage"
 import InspirationWidgetPage from "./pages/modules/inspiration/InspirationWidgetPage"
 import MyAccount from "./pages/MyAccount"
-import ReauthenticateWebAuthn from "./pages/ReauthenticateWebAuthn"
 import RequestLoginCode from "./pages/RequestLoginCode"
 import SignupByPasskey from "./pages/SignupByPasskey"
 import UpdatePasskey from "./pages/UpdatePasskey"
@@ -43,14 +42,6 @@ const createRouter = () => {
                     element: (
                         <AnonymousRoute flowId={Flows.MFA_AUTHENTICATE} authenticatorType={AuthenticatorTypes.WEBAUTHN}>
                             <AuthenticateWebAuthn />
-                        </AnonymousRoute>
-                    ),
-                },
-                {
-                    path: "/account/reauthenticate/webauthn",
-                    element: (
-                        <AnonymousRoute flowId={Flows.MFA_REAUTHENTICATE} authenticatorType={AuthenticatorTypes.WEBAUTHN}>
-                            <ReauthenticateWebAuthn />
                         </AnonymousRoute>
                     ),
                 },

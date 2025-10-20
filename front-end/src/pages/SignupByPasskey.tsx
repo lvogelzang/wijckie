@@ -68,7 +68,9 @@ const SignupByPasskey: FC = () => {
                             </FormItem>
                         )}
                     />
-                    <Button type="submit">{t("SignUpPage.submit_button")}</Button>
+                    <Button type="submit" data-cy="submitButton">
+                        {t("SignUpPage.submit_button")}
+                    </Button>
                     <RootErrorMessage errors={form.formState.errors} />
                 </form>
             </Form>

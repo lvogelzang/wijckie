@@ -10,7 +10,22 @@ describe("account creation flow", () => {
             cy.get('[data-cy="emailInput"]').type("new-account{enter}")
             cy.screenshotForDocs("01_AccountCreation", "00_Sign_up", 0)
 
-            cy.get('[data-cy="emailInput"]').type("@wijckie.com{enter}")
+            cy.intercept(
+                {
+                    method: "POST",
+                    url: "/_allauth/browser/v1/auth/webauthn/signup",
+                    times: 1,
+                },
+                {
+                    statusCode: 400,
+                    body: { errors: [{ attr: "email", code: "invalid" }] },
+                }
+            )
+            cy.get('[data-cy="emailInput"]').clear()
+            cy.get('[data-cy="emailInput"]').type("new-account@wijckie.com{enter}")
+            cy.get('[data-cy="emailInput"]').should("have.attr", "aria-invalid", "true")
+
+            cy.get('[data-cy="submitButton"]').click()
             cy.screenshotForDocs("01_AccountCreation", "00_Sign_up", 1)
 
             cy.getTOTPCodeFromLastEmail().then((code) => {
@@ -36,14 +51,7 @@ describe("account creation flow", () => {
                 },
                 {
                     statusCode: 500,
-                    body: {
-                        errors: [
-                            {
-                                attr: "name",
-                                code: "invalid",
-                            },
-                        ],
-                    },
+                    body: { errors: [{ attr: "name", code: "invalid" }] },
                 }
             )
 

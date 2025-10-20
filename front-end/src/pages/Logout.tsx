@@ -11,7 +11,6 @@ const Logout = () => {
                 onSuccess()
                 return
             }
-            console.error(error)
         },
         [onSuccess]
     )

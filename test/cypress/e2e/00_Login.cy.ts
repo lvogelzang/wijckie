@@ -13,7 +13,22 @@ describe("login page", () => {
         cy.screenshotForDocs("00_Login", "00_Sign_in_by_code", 2)
 
         cy.get('[data-cy="emailInput"]').type("@wijckie.com")
+        cy.intercept(
+            {
+                method: "POST",
+                url: "/_allauth/browser/v1/auth/code/request",
+                times: 1,
+            },
+            {
+                statusCode: 400,
+                body: { errors: [{ attr: "email", code: "invalid" }] },
+            }
+        )
         cy.get('[data-cy="submitButton"]').click()
+        cy.get('[data-cy="emailInput"]').should("have.attr", "aria-invalid", "true")
+
+        cy.get('[data-cy="emailInput"]').clear()
+        cy.get('[data-cy="emailInput"]').type("j.test@wijckie.com{enter}")
         cy.screenshotForDocs("00_Login", "00_Sign_in_by_code", 3)
 
         cy.getTOTPCodeFromLastEmail().then((code) => {

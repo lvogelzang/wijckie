@@ -41,7 +41,7 @@ const MyAccount: FC = () => {
     const requestEmailVerification = useCallback(
         (email: string) => {
             putAllauthClientV1AccountEmail("browser", { email })
-                .then(() => navigate("/account/verify-email"))
+                // Do nothing at success, redirect based on allauth HTTP response handler.
                 .catch((error: unknown) => {
                     if (error instanceof AxiosError && error.response?.status === 403) {
                         // Too many email verification emails were already sent.
@@ -122,7 +122,9 @@ const MyAccount: FC = () => {
                         return (
                             <tr key={key.id}>
                                 <td>
-                                    <Link to={`/account/my/passkeys/${key.id}`}>{key.name}</Link>
+                                    <Link to={`/account/my/passkeys/${key.id}`} data-cy="passkeyLink">
+                                        {key.name}
+                                    </Link>
                                 </td>
                                 <td>{key.created_at}</td>
                                 <td>{key.last_used_at}</td>
