@@ -25,3 +25,5 @@ dist-ssr
 
 translation_old.json
 .eslintcache
+
+!src/lib/
