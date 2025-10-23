@@ -22,7 +22,7 @@ const TablePaginationButton = ({ pageIndex, goToPage, isCurrent, isFirst, isLast
 
     return (
         <PaginationItem>
-            <Button type="button" onClick={onClick}>
+            <Button type="button" onClick={onClick} className={isCurrent ? "active" : undefined}>
                 {isFirst ? "<<" : null}
                 {!(isFirst || isLast) ? pageIndex + 1 : null}
                 {isLast ? ">>" : null}

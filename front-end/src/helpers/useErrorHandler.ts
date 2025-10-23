@@ -118,10 +118,8 @@ export const useErrorHandler = () => {
     }, [])
 
     const resolveError = useCallback((error: unknown) => {
-        const errorMap = getErrorMap(error)
-
+        console.error(error)
         const type: ErrorMessageType = "general"
-
         return { type }
     }, [])
 
