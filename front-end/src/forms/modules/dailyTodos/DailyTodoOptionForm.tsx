@@ -97,7 +97,7 @@ const DailyTodoOptionForm = ({ mode, module, option }: Props) => {
                         <FormItem>
                             <FormLabel>{t("Main.name")}</FormLabel>
                             <FormControl>
-                                <Input {...field} />
+                                <Input {...field} data-cy="nameInput" />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -110,7 +110,7 @@ const DailyTodoOptionForm = ({ mode, module, option }: Props) => {
                         <FormItem>
                             <FormLabel>{t("Main.text")}</FormLabel>
                             <FormControl>
-                                <Input {...field} />
+                                <Input {...field} data-cy="textInput" />
                             </FormControl>
                             <FormMessage />
                         </FormItem>

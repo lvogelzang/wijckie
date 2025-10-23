@@ -3,13 +3,14 @@ import { useNavigate } from "react-router-dom"
 import { Button } from "../ui/button"
 
 interface Props {
+    id: string
     label: string
     link?: string
     onClick?: () => void
     variant?: "default" | "secondary" | "link" | "destructive"
 }
 
-const TableButton = ({ label, link, onClick, variant }: Props) => {
+const TableButton = ({ id, label, link, onClick, variant }: Props) => {
     const navigate = useNavigate()
 
     const handleClick = useCallback(() => {
@@ -30,7 +31,7 @@ const TableButton = ({ label, link, onClick, variant }: Props) => {
     }, [variant, link])
 
     return (
-        <Button type="button" onClick={handleClick} variant={defaultedVariant} disabled={!link && !onClick}>
+        <Button type="button" onClick={handleClick} variant={defaultedVariant} disabled={!link && !onClick} data-cy={`${id}Button`}>
             {label}
         </Button>
     )

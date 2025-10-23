@@ -1,4 +1,5 @@
 export interface TableButtonDef {
+    id: string
     label: string
     link?: string
     onClick?: () => void

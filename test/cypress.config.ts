@@ -2,6 +2,8 @@ import registerCodeCoverageTasks from "@cypress/code-coverage/task"
 import { defineConfig } from "cypress"
 import sqlite3 from "sqlite3"
 
+let screenshotCounter: Map<string, number> = new Map()
+
 export default defineConfig({
     e2e: {
         viewportWidth: 1300,
@@ -22,6 +24,11 @@ export default defineConfig({
                         })
                         db.close()
                     })
+                },
+                getScreenshotCounter(id: string) {
+                    const followUp = screenshotCounter.has(id) ? screenshotCounter.get(id)! + 1 : 1
+                    screenshotCounter.set(id, followUp)
+                    return followUp
                 },
             })
 

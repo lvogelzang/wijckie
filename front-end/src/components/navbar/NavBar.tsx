@@ -1,5 +1,5 @@
 import { useAuth } from "@/auth/useAuth"
-import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from "@/components/ui/navigation-menu"
+import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle } from "@/components/ui/navigation-menu"
 import { languageOptions } from "@/types/UserLanguageType"
 import { GalleryVerticalEnd } from "lucide-react"
 import { useTranslation } from "react-i18next"
@@ -198,19 +198,17 @@ const NavBar = () => {
             <NavigationMenu className="ml-auto hidden lg:flex" viewport={false}>
                 <NavigationMenuList>
                     <NavigationMenuItem>
-                        <NavigationMenuContent>
-                            <NavigationMenuLink>
-                                <Link to="/modules">{t("NavBar.settings")}</Link>
-                            </NavigationMenuLink>
-                        </NavigationMenuContent>
+                        <Link to="/modules" className={navigationMenuTriggerStyle()}>
+                            {t("NavBar.settings")}
+                        </Link>
                     </NavigationMenuItem>
                     <NavigationMenuItem>
                         <NavigationMenuTrigger>{t("NavBar.language")}</NavigationMenuTrigger>
                         <NavigationMenuContent>
                             <div className="grid p-2">
                                 {languageOptions.map((language) => (
-                                    <NavigationMenuLink asChild>
-                                        <LanguageButton key={language} language={language} />
+                                    <NavigationMenuLink key={language} asChild>
+                                        <LanguageButton language={language} />
                                     </NavigationMenuLink>
                                 ))}
                             </div>

@@ -20,7 +20,11 @@ const InspirationOptionTable = ({ module }: Props) => {
             {
                 id: "name",
                 header: t("Main.name"),
-                cell: ({ row }) => <Link to={`/modules/inspiration/${module.id}/options/${row.original.id}`}>{row.original.name}</Link>,
+                cell: ({ row }) => (
+                    <Link to={`/modules/inspiration/${module.id}/options/${row.original.id}`} data-cy="inspirationOptionLink">
+                        {row.original.name}
+                    </Link>
+                ),
             },
             {
                 id: "type",
@@ -33,6 +37,7 @@ const InspirationOptionTable = ({ module }: Props) => {
     const buttons = useMemo((): TableButtonDef[] => {
         return [
             {
+                id: "newInspirationOption",
                 label: t("Main.new"),
                 link: `/modules/inspiration/${module.id}/options/new`,
             },

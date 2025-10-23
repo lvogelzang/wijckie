@@ -20,7 +20,11 @@ const InspirationWidgetTable = ({ module }: Props) => {
             {
                 id: "name",
                 header: t("Main.name"),
-                cell: ({ row }) => <Link to={`/modules/inspiration/${module.id}/widgets/${row.original.id}`}>{row.original.name}</Link>,
+                cell: ({ row }) => (
+                    <Link to={`/modules/inspiration/${module.id}/widgets/${row.original.id}`} data-cy="inspirationWidgetLink">
+                        {row.original.name}
+                    </Link>
+                ),
             },
         ]
     }, [t, module])
@@ -28,6 +32,7 @@ const InspirationWidgetTable = ({ module }: Props) => {
     const buttons = useMemo((): TableButtonDef[] => {
         return [
             {
+                id: "newInspirationWidget",
                 label: t("Main.new"),
                 link: `/modules/inspiration/${module.id}/widgets/new`,
             },

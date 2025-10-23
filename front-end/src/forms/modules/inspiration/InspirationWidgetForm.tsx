@@ -39,7 +39,7 @@ const InspirationWidgetForm = ({ mode, module, widget }: Props) => {
     })
 
     const onSuccess = useCallback(() => {
-        navigate(`/modules/daily-todos/${module.id}`)
+        navigate(`/modules/inspiration/${module.id}`)
     }, [navigate, module])
 
     const onError = useCallback(
@@ -94,7 +94,7 @@ const InspirationWidgetForm = ({ mode, module, widget }: Props) => {
                         <FormItem>
                             <FormLabel>{t("Main.name")}</FormLabel>
                             <FormControl>
-                                <Input {...field} />
+                                <Input {...field} data-cy="nameInput" />
                             </FormControl>
                             <FormMessage />
                         </FormItem>

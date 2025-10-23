@@ -38,7 +38,7 @@ const InspirationWidgetView = ({ widget }: Props) => {
     }, [items])
 
     return (
-        <div className={styles.card}>
+        <div className={styles.card} data-cy="inspirationWidget">
             {widget.name}
             {item ? <InspirationView item={item} /> : null}
         </div>

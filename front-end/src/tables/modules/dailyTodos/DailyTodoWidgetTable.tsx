@@ -20,7 +20,11 @@ const DailyTodoWidgetTable = ({ module }: Props) => {
             {
                 id: "name",
                 header: t("Main.name"),
-                cell: ({ row }) => <Link to={`/modules/daily-todos/${module.id}/widgets/${row.original.id}`}>{row.original.name}</Link>,
+                cell: ({ row }) => (
+                    <Link to={`/modules/daily-todos/${module.id}/widgets/${row.original.id}`} data-cy="dailyTodosWidgetLink">
+                        {row.original.name}
+                    </Link>
+                ),
             },
         ]
     }, [t, module])
@@ -28,6 +32,7 @@ const DailyTodoWidgetTable = ({ module }: Props) => {
     const buttons = useMemo((): TableButtonDef[] => {
         return [
             {
+                id: "newDailyTodosWidget",
                 label: t("Main.new"),
                 link: `/modules/daily-todos/${module.id}/widgets/new`,
             },

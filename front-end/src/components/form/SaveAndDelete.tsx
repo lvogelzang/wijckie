@@ -36,10 +36,12 @@ const SaveAndDelete = ({ mode, name, onDelete, onDeleted }: Props) => {
 
     return (
         <div>
-            <Button type="submit">{t("Main.save")}</Button>
+            <Button type="submit" data-cy="submitButton">
+                {t("Main.save")}
+            </Button>
             {mode === "Update" ? (
                 <AlertDialog>
-                    <AlertDialogTrigger>{t("Main.delete")}</AlertDialogTrigger>
+                    <AlertDialogTrigger data-cy="deleteButton">{t("Main.delete")}</AlertDialogTrigger>
                     <AlertDialogContent>
                         <AlertDialogHeader>
                             <AlertDialogTitle>{t("Main.deletion_confirmation_title", { object: name })}</AlertDialogTitle>
@@ -48,7 +50,9 @@ const SaveAndDelete = ({ mode, name, onDelete, onDeleted }: Props) => {
                         </AlertDialogHeader>
                         <AlertDialogFooter>
                             <AlertDialogCancel>{t("Main.cancel")}</AlertDialogCancel>
-                            <AlertDialogAction onClick={onConfirm}>{t("Main.delete")}</AlertDialogAction>
+                            <AlertDialogAction onClick={onConfirm} data-cy="deleteConfirmationButton">
+                                {t("Main.delete")}
+                            </AlertDialogAction>
                         </AlertDialogFooter>
                     </AlertDialogContent>
                 </AlertDialog>

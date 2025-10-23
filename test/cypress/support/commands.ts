@@ -7,12 +7,13 @@ declare global {
             loginByHttpCalls(email: string): Chainable<void>
             deleteExistingEmails(): Chainable<void>
             getTOTPCodeFromLastEmail(): Chainable<string>
-            screenshotForDocs(file: string, test: string, followUpNumber: number): Chainable<void>
+            screenshotForDocs(): Chainable<void>
             setPrimaryEmailAddress(email: string): Chainable<void>
             deleteEmailAddress(email: string): Chainable<void>
             addVirtualAuthenticator(): Chainable<string>
             removeVirtualAuthenticator(): Chainable<void>
             expectPath(path: string): Chainable<void>
+            failOnce(method: "POST" | "GET" | "PUT" | "PATCH" | "DELETE", path: string, invalidFieldIds: string[]): Chainable<void>
         }
     }
 }
@@ -86,10 +87,15 @@ Cypress.Commands.add("getTOTPCodeFromLastEmail", () => {
         })
 })
 
-Cypress.Commands.add("screenshotForDocs", (file: string, test: string, followUpNumber: number) => {
-    if (Cypress.env("CAPTURE_SCREENSHOTS")) {
-        cy.screenshot(`${file}__${test}__${followUpNumber}`, { overwrite: true })
-    }
+Cypress.Commands.add("screenshotForDocs", () => {
+    const bundleId = Cypress.currentTest.titlePath[0]
+    let testId = Cypress.currentTest.titlePath[1]
+    testId = testId.replaceAll(" ", "_")
+    cy.task("getScreenshotCounter", `${bundleId}__${testId}`).then((followUp) => {
+        if (Cypress.env("CAPTURE_SCREENSHOTS")) {
+            cy.screenshot(`${testId}__${followUp}`, { overwrite: true })
+        }
+    })
 })
 
 Cypress.Commands.add("setPrimaryEmailAddress", (email: string) => {
@@ -159,4 +165,18 @@ Cypress.Commands.add("removeVirtualAuthenticator", () => {
 
 Cypress.Commands.add("expectPath", (path: string) => {
     cy.location().should((l) => expect(l.pathname).to.equal(path))
+})
+
+Cypress.Commands.add("failOnce", (method: "POST" | "GET" | "PUT" | "PATCH" | "DELETE", url: string, invalidFieldIds: string[]) => {
+    cy.intercept(
+        { method, url, times: 1 },
+        {
+            statusCode: 400,
+            body: {
+                errors: invalidFieldIds.map((id) => {
+                    return { attr: id, code: "invalid" }
+                }),
+            },
+        }
+    )
 })

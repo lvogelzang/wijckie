@@ -1,3 +1,3 @@
 #!/bin/sh
 
-npx cypress run
+npx cypress run --env "CAPTURE_SCREENSHOTS=true"

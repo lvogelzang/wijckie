@@ -17,7 +17,11 @@ const InspirationModuleTable: FC = () => {
             columnHelper.display({
                 id: "name",
                 header: t("Main.name"),
-                cell: ({ row }) => <Link to={`/modules/inspiration/${row.original.id}`}>{row.original.name}</Link>,
+                cell: ({ row }) => (
+                    <Link to={`/modules/inspiration/${row.original.id}`} data-cy="inspirationModuleLink">
+                        {row.original.name}
+                    </Link>
+                ),
             }),
         ]
     }, [t])
@@ -25,6 +29,7 @@ const InspirationModuleTable: FC = () => {
     const buttons = useMemo((): TableButtonDef[] => {
         return [
             {
+                id: "newInspirationModule",
                 label: t("Main.new"),
                 link: "/modules/inspiration/new",
             },

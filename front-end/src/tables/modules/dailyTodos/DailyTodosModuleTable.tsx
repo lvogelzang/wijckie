@@ -17,7 +17,11 @@ const DailyTodosModuleTable: FC = () => {
             columnHelper.display({
                 id: "name",
                 header: t("Main.name"),
-                cell: ({ row }) => <Link to={`/modules/daily-todos/${row.original.id}`}>{row.original.name}</Link>,
+                cell: ({ row }) => (
+                    <Link to={`/modules/daily-todos/${row.original.id}`} data-cy="dailyTodosModuleLink">
+                        {row.original.name}
+                    </Link>
+                ),
             }),
         ]
     }, [t])
@@ -25,6 +29,7 @@ const DailyTodosModuleTable: FC = () => {
     const buttons = useMemo((): TableButtonDef[] => {
         return [
             {
+                id: "newDailyTodosModule",
                 label: t("Main.new"),
                 link: "/modules/daily-todos/new",
             },

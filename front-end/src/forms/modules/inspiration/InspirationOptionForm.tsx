@@ -29,12 +29,20 @@ interface Props {
     option?: InspirationOption
 }
 
-const formSchema = z.object({
-    name: z.string().min(1).max(50),
-    type: z.enum(TypeEnum),
-    text: z.string(),
-    image: z.file(),
-})
+const formSchema = z
+    .object({
+        name: z.string().min(1).max(50),
+        type: z.enum(TypeEnum),
+        text: z.string().optional(),
+        image: z.file().optional(),
+    })
+    .superRefine((data, ctx) => {
+        if (data.type === "text" && (!data.text || data.text.length === 0)) {
+            ctx.addIssue({ path: ["text"], code: "custom" })
+        } else if (data.type === "image" && !data.image) {
+            ctx.addIssue({ path: ["image"], code: "custom" })
+        }
+    })
 
 const InspirationOptionForm = ({ mode, module, option }: Props) => {
     const { t } = useTranslation()
@@ -126,7 +134,7 @@ const InspirationOptionForm = ({ mode, module, option }: Props) => {
                         <FormItem>
                             <FormLabel>{t("Main.name")}</FormLabel>
                             <FormControl>
-                                <Input {...field} />
+                                <Input {...field} data-cy="nameInput" />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -137,16 +145,16 @@ const InspirationOptionForm = ({ mode, module, option }: Props) => {
                     name="type"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Email</FormLabel>
+                            <FormLabel>{t("Main.type")}</FormLabel>
                             <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                <FormControl>
+                                <FormControl data-cy="typeSelect">
                                     <SelectTrigger>
                                         <SelectValue placeholder="Select a verified email to display" />
                                     </SelectTrigger>
                                 </FormControl>
                                 <SelectContent>
                                     {typeOptions.map(({ id, label }) => (
-                                        <SelectItem key={id} value={id}>
+                                        <SelectItem key={id} value={id} data-cy={`${id}Option`}>
                                             {label}
                                         </SelectItem>
                                     ))}
@@ -164,7 +172,7 @@ const InspirationOptionForm = ({ mode, module, option }: Props) => {
                             <FormItem>
                                 <FormLabel>{t("Main.text")}</FormLabel>
                                 <FormControl>
-                                    <Input {...field} />
+                                    <Input {...field} data-cy="textInput" />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -179,7 +187,7 @@ const InspirationOptionForm = ({ mode, module, option }: Props) => {
                             <FormItem>
                                 <FormLabel>{t("Main.image")}</FormLabel>
                                 <FormControl>
-                                    <Input {...fieldProps} type="file" accept="image/*" onChange={(event) => onChange(event.target.files && event.target.files[0])} />
+                                    <Input {...fieldProps} type="file" accept="image/*" onChange={(event) => onChange(event.target.files && event.target.files[0])} data-cy="imageInput" />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>

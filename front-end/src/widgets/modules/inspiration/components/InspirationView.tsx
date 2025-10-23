@@ -10,7 +10,7 @@ const InspirationView = ({ item }: Props) => {
     const { data: inspirationOption } = useInspirationOptionsRetrieve(item.option)
 
     return (
-        <div>
+        <div data-cy="inspirationItem">
             {inspirationOption?.type === "image" ? <img src={inspirationOption.imageURL} className={styles.image} /> : null}
             {inspirationOption?.type === "text" ? <span>{inspirationOption.text}</span> : null}
         </div>

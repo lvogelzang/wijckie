@@ -18,7 +18,7 @@ class DailyTodosModule(models.Model):
     name = models.CharField(max_length=30, validators=[MinLengthValidator(1)])
 
     class Meta:
-        ordering = ["user", "name", "id"]
+        ordering = ["-created_at"]
 
 
 class DailyTodoOption(models.Model):

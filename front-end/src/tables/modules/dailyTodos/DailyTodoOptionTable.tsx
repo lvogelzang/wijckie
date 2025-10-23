@@ -20,7 +20,11 @@ const DailyTodoOptionTable = ({ module }: Props) => {
             {
                 id: "name",
                 header: t("Main.name"),
-                cell: ({ row }) => <Link to={`/modules/daily-todos/${module.id}/options/${row.original.id}`}>{row.original.name}</Link>,
+                cell: ({ row }) => (
+                    <Link to={`/modules/daily-todos/${module.id}/options/${row.original.id}`} data-cy="dailyTodosOptionLink">
+                        {row.original.name}
+                    </Link>
+                ),
             },
             {
                 id: "text",
@@ -33,6 +37,7 @@ const DailyTodoOptionTable = ({ module }: Props) => {
     const buttons = useMemo((): TableButtonDef[] => {
         return [
             {
+                id: "newDailyTodosOption",
                 label: t("Main.new"),
                 link: `/modules/daily-todos/${module.id}/options/new`,
             },

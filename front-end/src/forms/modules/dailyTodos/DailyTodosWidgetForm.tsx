@@ -94,7 +94,7 @@ const DailyTodosWidgetForm = ({ mode, module, widget }: Props) => {
                         <FormItem>
                             <FormLabel>{t("Main.name")}</FormLabel>
                             <FormControl>
-                                <Input {...field} />
+                                <Input {...field} data-cy="nameInput" />
                             </FormControl>
                             <FormMessage />
                         </FormItem>

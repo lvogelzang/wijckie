@@ -59,7 +59,7 @@ const DailyTodoView = ({ option, date, initialItem }: Props) => {
     const setStatusDone = useCallback(() => updateStatus("done"), [updateStatus])
 
     return (
-        <div>
+        <div data-cy="dailyTodoItem">
             {option.name}
             <div>
                 <Button onClick={setStatusTodo}>Todo</Button>
