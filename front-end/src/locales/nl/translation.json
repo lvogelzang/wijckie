@@ -3,6 +3,11 @@
     "title": "Fout",
     "ok": "Ok"
   },
+  "Theme": {
+    "light": "Light",
+    "dark": "Donker",
+    "auto": "Automatisch"
+  },
   "Main": {
     "something_went_wrong": "Er is iets misgegaan",
     "save": "Opslaan",
@@ -13,14 +18,13 @@
     "title_new": "Nieuw",
     "name": "Naam",
     "text": "Tekst",
+    "type": "Type",
     "image": "Afbeelding",
     "email": "E-mailadres",
-    "new": "Nieuw",
-    "type": "Type"
+    "new": "Nieuw"
   },
   "NavBar": {
     "settings": "Instellingen",
-    "language": "Taal",
     "dashboard": "Dashboard",
     "my_account": "Mijn account",
     "logout": "Uitloggen"
@@ -43,10 +47,6 @@
     "plural_title": "Opties",
     "plural_name": "opties"
   },
-  "AddEmailAddress": {
-    "title": "E-mailadres toevoegen",
-    "submit_button": "Toevoegen"
-  },
   "AuthenticateWebAuthn": {
     "title": "Login",
     "body": "Klik op login om in te loggen met een passkey.",
@@ -63,14 +63,39 @@
     "submit_button": "Inloggen",
     "back_to_login": "Already a passkey? Go back to <1>Login</1>."
   },
-  "CreatePasskey": {
-    "title": "Passkey toevoegen",
-    "submit_button": "Voeg toe"
-  },
   "CreateSignupPasskey": {
     "title": "Passkey aanmaken",
     "submit_button": "Opslaan",
     "already_an_account": "Already have an account? Go to <1>Login</1>."
+  },
+  "RequestLoginCodePage": {
+    "title": "Inlogcode aanvragen",
+    "body": "Je ontvangt een e-mail met een code om zonder wachtwoord in te loggen.",
+    "email_address": "E-mailadres",
+    "submit_button": "Aanvragen",
+    "back_to_login": "Heb je al een passkey? Ga terug naar <1>Inloggen</1>."
+  },
+  "SignUpPage": {
+    "title": "Account aanmaken",
+    "email_address": "E-mailadres",
+    "submit_button": "Account aanmaken",
+    "already_an_account": "Heb je al een account? Ga naar <1>Inloggen</1>."
+  },
+  "VerifyEmailPage": {
+    "title": "Verifieer je e-mailadres",
+    "code": "Code",
+    "submit_button": "Bevestig"
+  },
+  "VerifyEmailByCode": {
+    "already_an_account": "Heb je al een account? Ga naar <1>Inloggen</1>."
+  },
+  "AddEmailAddress": {
+    "title": "E-mailadres toevoegen",
+    "submit_button": "Toevoegen"
+  },
+  "CreatePasskey": {
+    "title": "Passkey toevoegen",
+    "submit_button": "Voeg toe"
   },
   "Dashboard": {
     "title": "Dashboard"
@@ -93,32 +118,11 @@
     "passkey_last_used_at": "Laatst gebruikt",
     "add_passkey": "Voeg passkey toe"
   },
-  "RequestLoginCodePage": {
-    "title": "Inlogcode aanvragen",
-    "body": "Je ontvangt een e-mail met een code om zonder wachtwoord in te loggen.",
-    "email_address": "E-mailadres",
-    "submit_button": "Aanvragen",
-    "back_to_login": "Heb je al een passkey? Ga terug naar <1>Inloggen</1>."
-  },
-  "SignUpPage": {
-    "title": "Account aanmaken",
-    "email_address": "E-mailadres",
-    "submit_button": "Account aanmaken",
-    "already_an_account": "Heb je al een account? Ga naar <1>Inloggen</1>."
-  },
   "UpdatePasskey": {
     "title": "Passkey bewerken",
     "name": "Naam",
     "submit_button": "Opslaan",
     "delete_button": "Verwijder"
-  },
-  "VerifyEmailPage": {
-    "title": "Verifieer je e-mailadres",
-    "code": "Code",
-    "submit_button": "Bevestig"
-  },
-  "VerifyEmailByCode": {
-    "already_an_account": "Heb je al een account? Ga naar <1>Inloggen</1>."
   },
   "DailyTodoOption": {
     "plural_title": "Todo's",

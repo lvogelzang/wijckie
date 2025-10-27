@@ -3,6 +3,11 @@
     "title": "Error",
     "ok": "OK"
   },
+  "Theme": {
+    "light": "Light",
+    "dark": "Dark",
+    "auto": "Auto"
+  },
   "Main": {
     "something_went_wrong": "Something went wrong...",
     "save": "Save",
@@ -13,14 +18,13 @@
     "title_new": "New",
     "name": "Name",
     "text": "Text",
+    "type": "Type",
     "image": "Image",
     "email": "E-mail address",
-    "new": "New",
-    "type": "Type"
+    "new": "New"
   },
   "NavBar": {
     "settings": "Settings",
-    "language": "Language",
     "dashboard": "Dashboard",
     "my_account": "My account",
     "logout": "Logout"
@@ -43,10 +47,6 @@
     "plural_title": "Options",
     "plural_name": "options"
   },
-  "AddEmailAddress": {
-    "title": "Add e-mail address",
-    "submit_button": "Add"
-  },
   "AuthenticateWebAuthn": {
     "title": "Login",
     "body": "Click login to log in using a passkey.",
@@ -63,14 +63,39 @@
     "submit_button": "Sign in",
     "back_to_login": "Already a passkey? Go back to <1>Login</1>."
   },
-  "CreatePasskey": {
-    "title": "Add passkey",
-    "submit_button": "Add"
-  },
   "CreateSignupPasskey": {
     "title": "Save Passkey",
     "submit_button": "Save",
     "already_an_account": "Already have an account? Go to <1>Login</1>."
+  },
+  "RequestLoginCodePage": {
+    "title": "Request sign-in code",
+    "body": "You will receive an email containing a special code for a password-free sign-in.",
+    "email_address": "E-mail address",
+    "submit_button": "Request code",
+    "back_to_login": "Already have a passkey? Go back to <1>Login</1>."
+  },
+  "SignUpPage": {
+    "title": "Create account",
+    "email_address": "Email address",
+    "submit_button": "Create account",
+    "already_an_account": "Already have an account? Go to <1>Login</1>."
+  },
+  "VerifyEmailPage": {
+    "title": "Verify e-mail address",
+    "code": "Code",
+    "submit_button": "Submit"
+  },
+  "VerifyEmailByCode": {
+    "already_an_account": "Already have an account? Go to <1>Login</1>."
+  },
+  "AddEmailAddress": {
+    "title": "Add e-mail address",
+    "submit_button": "Add"
+  },
+  "CreatePasskey": {
+    "title": "Add passkey",
+    "submit_button": "Add"
   },
   "Dashboard": {
     "title": "Dashboard"
@@ -93,32 +118,11 @@
     "passkey_last_used_at": "Last used",
     "add_passkey": "Add passkey"
   },
-  "RequestLoginCodePage": {
-    "title": "Request sign-in code",
-    "body": "You will receive an email containing a special code for a password-free sign-in.",
-    "email_address": "E-mail address",
-    "submit_button": "Request code",
-    "back_to_login": "Already have a passkey? Go back to <1>Login</1>."
-  },
-  "SignUpPage": {
-    "title": "Create account",
-    "email_address": "Email address",
-    "submit_button": "Create account",
-    "already_an_account": "Already have an account? Go to <1>Login</1>."
-  },
   "UpdatePasskey": {
     "title": "Update passkey",
     "name": "Name",
     "submit_button": "Save",
     "delete_button": "Delete"
-  },
-  "VerifyEmailPage": {
-    "title": "Verify e-mail address",
-    "code": "Code",
-    "submit_button": "Submit"
-  },
-  "VerifyEmailByCode": {
-    "already_an_account": "Already have an account? Go to <1>Login</1>."
   },
   "DailyTodoOption": {
     "plural_title": "Daily todo options",
