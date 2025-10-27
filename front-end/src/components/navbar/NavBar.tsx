@@ -2,7 +2,7 @@ import { useAuth } from "@/auth/useAuth"
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle } from "@/components/ui/navigation-menu"
 import { cn } from "@/lib/utils"
 import { languageOptions } from "@/types/UserLanguageType"
-import { GalleryVerticalEnd } from "lucide-react"
+import { GalleryVerticalEnd, Languages } from "lucide-react"
 import { useTranslation } from "react-i18next"
 import { Link } from "react-router-dom"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu"
@@ -105,7 +105,7 @@ const NavBar = () => {
                             <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
                                     <SidebarMenuButton size="lg" className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground">
-                                        <span className="font-medium">{t("NavBar.language")}</span>
+                                        <Languages className="size-4" />
                                     </SidebarMenuButton>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg" side={isMobile ? "bottom" : "right"} align="end" sideOffset={4}>
@@ -204,7 +204,9 @@ const NavBar = () => {
                         </Link>
                     </NavigationMenuItem>
                     <NavigationMenuItem>
-                        <NavigationMenuTrigger>{t("NavBar.language")}</NavigationMenuTrigger>
+                        <NavigationMenuTrigger>
+                            <Languages className="size-4" />
+                        </NavigationMenuTrigger>
                         <NavigationMenuContent>
                             <div className="grid p-2">
                                 {languageOptions.map((language) => (
