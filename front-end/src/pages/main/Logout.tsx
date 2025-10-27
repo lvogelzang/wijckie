@@ -1,6 +1,6 @@
 import { isAllauthResponse401 } from "@/helpers/AllauthHelper"
 import { useCallback } from "react"
-import { deleteAllauthClientV1AuthSession } from "../api/endpoints/allauth"
+import { deleteAllauthClientV1AuthSession } from "../../api/endpoints/allauth"
 
 const Logout = () => {
     const onSuccess = useCallback(() => console.log("Logged out succesfully"), [])

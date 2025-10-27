@@ -1,6 +1,5 @@
 import { useInspirationOptionsRetrieve } from "../../../../api/endpoints/api"
 import type { InspirationItem } from "../../../../api/models/api"
-import styles from "./InspirationView.module.scss"
 
 interface Props {
     item: InspirationItem
@@ -11,7 +10,7 @@ const InspirationView = ({ item }: Props) => {
 
     return (
         <div data-cy="inspirationItem">
-            {inspirationOption?.type === "image" ? <img src={inspirationOption.imageURL} className={styles.image} /> : null}
+            {inspirationOption?.type === "image" ? <img src={inspirationOption.imageURL} className="max-w-full max-h-40" /> : null}
             {inspirationOption?.type === "text" ? <span>{inspirationOption.text}</span> : null}
         </div>
     )

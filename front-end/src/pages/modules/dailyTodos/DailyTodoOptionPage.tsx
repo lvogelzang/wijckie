@@ -1,3 +1,4 @@
+import { Page } from "@/components/Page"
 import { useParams } from "react-router-dom"
 import { useDailyTodoOptionsRetrieve, useDailyTodosModulesRetrieve } from "../../../api/endpoints/api"
 import Loader from "../../../components/Loader"
@@ -20,9 +21,11 @@ const DailyTodoOptionPage = ({ mode }: Props) => {
     }
 
     return (
-        <div>
-            <DailyTodoOptionForm mode={mode} module={module!} option={option} />
-        </div>
+        <Page variant="configuration">
+            <div>
+                <DailyTodoOptionForm mode={mode} module={module!} option={option} />
+            </div>
+        </Page>
     )
 }
 

@@ -1,4 +1,5 @@
 import RootErrorMessage from "@/components/error/form/root-error-message"
+import { Page } from "@/components/Page"
 import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
@@ -8,10 +9,10 @@ import { useForm, type SubmitHandler } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { useLoaderData, useNavigate, useParams } from "react-router-dom"
 import { z } from "zod"
-import { deleteAllauthClientV1AccountAuthenticatorsWebauthn, putAllauthClientV1AccountAuthenticatorsWebauthn } from "../api/endpoints/allauth"
-import type { AuthenticatorList } from "../api/models/allauth"
-import { AuthenticatorTypes } from "../auth/allauth"
-import { useErrorHandler } from "../helpers/useErrorHandler"
+import { deleteAllauthClientV1AccountAuthenticatorsWebauthn, putAllauthClientV1AccountAuthenticatorsWebauthn } from "../../api/endpoints/allauth"
+import type { AuthenticatorList } from "../../api/models/allauth"
+import { AuthenticatorTypes } from "../../auth/allauth"
+import { useErrorHandler } from "../../helpers/useErrorHandler"
 
 const formSchema = z.object({
     name: z.string().min(1).max(50),
@@ -59,31 +60,33 @@ const UpdatePasskey: FC = () => {
     }, [passkey, onSuccess, onFailure])
 
     return (
-        <div>
-            <h1>{t("UpdatePasskey.title")}</h1>
-            <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-                    <FormField
-                        control={form.control}
-                        name="name"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>{t("UpdatePasskey.name")}</FormLabel>
-                                <FormControl>
-                                    <Input {...field} data-cy="nameInput" />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <Button type="submit">{t("UpdatePasskey.submit_button")}</Button>
-                    <Button type="button" variant="destructive" onClick={onDelete} data-cy="deleteButton">
-                        {t("UpdatePasskey.delete_button")}
-                    </Button>
-                    <RootErrorMessage errors={form.formState.errors} />
-                </form>
-            </Form>
-        </div>
+        <Page variant="configuration">
+            <div>
+                <h1>{t("UpdatePasskey.title")}</h1>
+                <Form {...form}>
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                        <FormField
+                            control={form.control}
+                            name="name"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>{t("UpdatePasskey.name")}</FormLabel>
+                                    <FormControl>
+                                        <Input {...field} data-cy="nameInput" />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <Button type="submit">{t("UpdatePasskey.submit_button")}</Button>
+                        <Button type="button" variant="destructive" onClick={onDelete} data-cy="deleteButton">
+                            {t("UpdatePasskey.delete_button")}
+                        </Button>
+                        <RootErrorMessage errors={form.formState.errors} />
+                    </form>
+                </Form>
+            </div>
+        </Page>
     )
 }
 

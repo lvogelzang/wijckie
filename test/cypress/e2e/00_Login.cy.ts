@@ -5,10 +5,12 @@ describe("login page", () => {
 
         // Go to start page
         cy.visit("/")
+        cy.get("h1").contains("Login")
         cy.screenshotForDocs()
 
         // Go to sign-in-by-code page
         cy.get('[data-cy="requestCode"]').click()
+        cy.get("h1").contains("Request sign-in code")
         cy.screenshotForDocs()
 
         // Front-end validation error

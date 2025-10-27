@@ -1,5 +1,6 @@
 import { useAuth } from "@/auth/useAuth"
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle } from "@/components/ui/navigation-menu"
+import { cn } from "@/lib/utils"
 import { languageOptions } from "@/types/UserLanguageType"
 import { GalleryVerticalEnd } from "lucide-react"
 import { useTranslation } from "react-i18next"
@@ -32,11 +33,11 @@ import LanguageButton from "./LanguageButton"
 // TODO: User avatar?
 const NavBar = () => {
     const { t } = useTranslation()
-    const { user } = useAuth()
+    const { user, isAuthenticated } = useAuth()
     const { isMobile } = useSidebar()
 
     return (
-        <header className="flex h-20 w-full shrink-0 items-center px-4 md:px-6">
+        <header className={cn("fixed top-0 flex h-20 w-full shrink-0 items-center px-4 md:px-6 z-[9999]", isAuthenticated && "backdrop-blur-sm bg-(--color-navbar-background)")}>
             <Sidebar>
                 <SidebarHeader>
                     <SidebarMenu>
@@ -163,19 +164,19 @@ const NavBar = () => {
             <div className="flex lg:hidden">
                 <SidebarTrigger />
             </div>
-            <div className="mr-6 hidden lg:flex">
+            <div className="mr-6 hidden lg:flex" hidden={!user}>
                 <Link to="/">
                     <span className="text-lg font-semibold">Wijckie</span>
                 </Link>
             </div>
             <NavigationMenu className="hidden lg:flex" viewport={false}>
                 <NavigationMenuList>
-                    <NavigationMenuLink asChild>
+                    <NavigationMenuLink asChild hidden={!user}>
                         <Link to="/dashboard" className="text-nowrap" data-cy="dashboardButton">
                             {t("NavBar.dashboard")}
                         </Link>
                     </NavigationMenuLink>
-                    <NavigationMenuItem>
+                    <NavigationMenuItem hidden={!user}>
                         <NavigationMenuTrigger>Modules</NavigationMenuTrigger>
                         <NavigationMenuContent>
                             <ul className="grid w-[200px] gap-4">
@@ -197,7 +198,7 @@ const NavBar = () => {
             </NavigationMenu>
             <NavigationMenu className="ml-auto hidden lg:flex" viewport={false}>
                 <NavigationMenuList>
-                    <NavigationMenuItem>
+                    <NavigationMenuItem hidden={!user}>
                         <Link to="/modules" className={navigationMenuTriggerStyle()}>
                             {t("NavBar.settings")}
                         </Link>

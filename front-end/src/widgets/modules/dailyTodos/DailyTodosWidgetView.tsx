@@ -3,7 +3,6 @@ import { useDailyTodoItemsList, useDailyTodoOptionsList } from "../../../api/end
 import type { DailyTodosWidget } from "../../../api/models/api"
 import DateSelector from "../../../components/DateSelector"
 import useDateTimeHelper from "../../../helpers/useDateTimeHelper"
-import styles from "./DailyTodosWidgetView.module.scss"
 import DailyTodoView from "./components/DailyTodoView"
 
 interface Props {
@@ -35,7 +34,7 @@ const DailyTodosWidgetView = ({ widget }: Props) => {
     }, [options, isFetchingOptions, items, isFetchingItems, date])
 
     return (
-        <div className={styles.card} data-cy="dailyTodosWidget">
+        <div className="bg-amber-50 relative z-10 break-inside-avoid" data-cy="dailyTodosWidget">
             <DateSelector date={date} setDate={setDate} />
             {widget.name}
             {data?.todos.map((todo) => <DailyTodoView key={`${data.date.toISODate()}_${todo.option.id}`} option={todo.option} date={data.date} initialItem={todo.item} />)}

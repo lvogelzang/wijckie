@@ -1,3 +1,4 @@
+import { Page } from "@/components/Page"
 import { useParams } from "react-router-dom"
 import { useInspirationModulesRetrieve, useInspirationOptionsRetrieve } from "../../../api/endpoints/api"
 import Loader from "../../../components/Loader"
@@ -20,9 +21,11 @@ const InspirationOptionPage = ({ mode }: Props) => {
     }
 
     return (
-        <div>
-            <InspirationOptionForm mode={mode} module={module!} option={option} />
-        </div>
+        <Page variant="configuration">
+            <div>
+                <InspirationOptionForm mode={mode} module={module!} option={option} />
+            </div>
+        </Page>
     )
 }
 

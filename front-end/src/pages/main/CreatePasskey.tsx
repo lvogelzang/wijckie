@@ -1,4 +1,5 @@
 import RootErrorMessage from "@/components/error/form/root-error-message"
+import { Page } from "@/components/Page"
 import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
@@ -9,9 +10,9 @@ import { useForm, type SubmitHandler } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { useNavigate } from "react-router-dom"
 import { z } from "zod"
-import { getAllauthClientV1AccountAuthenticatorsWebauthn, postAllauthClientV1AccountAuthenticatorsWebauthn } from "../api/endpoints/allauth"
-import type { AddWebAuthnAuthenticatorBody, StatusOK } from "../api/models/allauth"
-import { useErrorHandler } from "../helpers/useErrorHandler"
+import { getAllauthClientV1AccountAuthenticatorsWebauthn, postAllauthClientV1AccountAuthenticatorsWebauthn } from "../../api/endpoints/allauth"
+import type { AddWebAuthnAuthenticatorBody, StatusOK } from "../../api/models/allauth"
+import { useErrorHandler } from "../../helpers/useErrorHandler"
 
 const formSchema = z.object({
     name: z.string().min(1).max(50),
@@ -66,7 +67,7 @@ const CreatePasskey: FC = () => {
     )
 
     return (
-        <div>
+        <Page variant="configuration">
             <h1>{t("CreatePasskey.title")}</h1>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -87,7 +88,7 @@ const CreatePasskey: FC = () => {
                     <RootErrorMessage errors={form.formState.errors} />
                 </form>
             </Form>
-        </div>
+        </Page>
     )
 }
 

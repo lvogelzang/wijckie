@@ -1,4 +1,5 @@
 import { Outlet } from "react-router-dom"
+import Footer from "./components/footer/Footer"
 import NavBar from "./components/navbar/NavBar"
 import { SidebarProvider } from "./components/ui/sidebar"
 
@@ -9,9 +10,7 @@ export default function Root() {
             <main className="grow flex">
                 <Outlet />
             </main>
-            <footer className="text-center m-6">
-                <span className="text-muted-foreground">&copy; Studio Goes</span>
-            </footer>
+            <Footer />
         </SidebarProvider>
     )
 }

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="4000" viewBox="0 0 800 4000" xmlns="http://www.w3.org/2000/svg">
+    <linearGradient id="linearGradient1" x1="400" y1="0" x2="400" y2="4000"
+        gradientUnits="userSpaceOnUse">
+        <stop offset="0" stop-color="#8596FA" stop-opacity="1" />
+        <stop offset="0.25" stop-color="#71B0E3" stop-opacity="1" />
+        <stop offset="0.5" stop-color="#9571E3" stop-opacity="1" />
+        <stop offset="0.75" stop-color="#71B0E3" stop-opacity="1" />
+        <stop offset="1" stop-color="#8596FA" stop-opacity="1" />
+    </linearGradient>
+    <path id="Rectangle" fill="url(#linearGradient1)" fill-rule="evenodd" stroke="none"
+        d="M 0 4000 L 800 4000 L 800 0 L 0 0 Z" />
+</svg>

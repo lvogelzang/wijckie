@@ -1,3 +1,4 @@
+import { Page } from "@/components/Page"
 import { useParams } from "react-router-dom"
 import { useDailyTodosModulesRetrieve, useDailyTodosWidgetsRetrieve } from "../../../api/endpoints/api"
 import Loader from "../../../components/Loader"
@@ -20,9 +21,11 @@ const DailyTodosWidgetPage = ({ mode }: Props) => {
     }
 
     return (
-        <div>
-            <DailyTodosWidgetForm mode={mode} module={module!} widget={widget} />
-        </div>
+        <Page variant="configuration">
+            <div>
+                <DailyTodosWidgetForm mode={mode} module={module!} widget={widget} />
+            </div>
+        </Page>
     )
 }
 
