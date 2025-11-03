@@ -1,0 +1,11 @@
+{% for imp in imports %}{{ imp }}
+{% endfor %}
+
+{% for cls in classes %}class {{ cls.name }}(models.Model):
+    {% for field in cls.fields %}{{ field }}
+    {% endfor %}
+    class Meta:
+        {{ cls.ordering }}
+
+
+{% endfor %}

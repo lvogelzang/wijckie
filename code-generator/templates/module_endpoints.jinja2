@@ -1,0 +1,60 @@
+{% for imp in imports %}{{ imp }}
+{% endfor %}
+
+{% for cls in classes %}
+
+class {{ cls.name }}Serializer(serializers.ModelSerializer):
+    {% for field in cls.fields %}{{ field }}
+    {% endfor %}
+
+    class Meta:
+        model = {{cls.name}}
+        fields = [{{cls.fieldNames}}]
+
+class Create{{ cls.name}}Serializer(serializers.ModelSerializer):
+    {% for field in cls.createFields %}{{ field }}
+    {% endfor %}
+
+    {% if cls.addUserToCreate %}
+    def create(self, validated_data):
+        return {{cls.name}}.objects.create(
+            **validated_data, user=self.context["request"].user
+        )
+    {% endif %}
+
+    class Meta:
+        model = {{cls.name}}
+        fields = [{{cls.createFieldNames}}]
+
+class {{cls.name}}ViewSet(
+    mixins.CreateModelMixin,
+    mixins.RetrieveModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin,
+    mixins.ListModelMixin,
+    viewsets.GenericViewSet,
+):
+    filterset_fields = [{{cls.filtersetFields}}]
+
+    def get_serializer_class(self):
+        if self.request.method == "POST":
+            return Create{{cls.name}}Serializer
+        else:
+            return {{cls.name}}Serializer
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_anonymous:
+            return {{cls.name}}.objects.none()
+
+        queryset = {{cls.name}}.objects.filter({{cls.initialFilters}})
+
+        {% for filter in cls.optionalFilters %}
+        {{filter.pythonVarName}} = self.request.query_params.get("{{filter.arg}}")
+        if {{filter.pythonVarName}} is not None:
+            queryset = queryset.filter({{filter.modelPath}}={{filter.pythonVarName}})
+        {% endfor %}
+
+        return queryset
+
+{% endfor %}

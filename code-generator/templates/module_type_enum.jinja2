@@ -1,0 +1,6 @@
+from django.db import models
+
+
+class ModuleType(models.TextChoices):
+    {% for value in values %}{{ value.pythonic }} = "{{ value.string }}"
+    {% endfor %}
