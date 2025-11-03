@@ -1,6 +1,6 @@
-from decouple import config
 import logging
 
+from decouple import config
 from test_setup.setups.setupJohnny import setup_johnny
 
 logger = logging.getLogger(__name__)

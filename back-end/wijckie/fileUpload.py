@@ -1,12 +1,11 @@
+from django import forms
 from django.conf import settings
 from django.core.files.storage import default_storage
 from django.core.validators import RegexValidator
-from django import forms
 from django.views.decorators.csrf import csrf_exempt
-from drf_spectacular.utils import extend_schema_field
 from drf_spectacular.types import OpenApiTypes
+from drf_spectacular.utils import extend_schema_field
 from rest_framework import mixins, serializers, viewsets
-
 from wijckie.responses import response_form_errors, response_ok
 from wijckie_models.models import FileUpload
 

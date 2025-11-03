@@ -1,8 +1,9 @@
 from django.core.validators import MinLengthValidator
 from django.db import models
 from django.utils import timezone
-from ..user import User
+
 from ..module import ModuleType
+from ..user import User
 
 
 class DailyTodoItemStatus(models.TextChoices):

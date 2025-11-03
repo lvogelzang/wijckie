@@ -1,6 +1,5 @@
 from rest_framework import mixins, serializers, viewsets
-
-from wijckie_models.models import DailyTodosModule, DailyTodoOption, DailyTodosWidget
+from wijckie_models.models import DailyTodoOption, DailyTodosModule, DailyTodosWidget
 from wijckie_models.modules.dailyTodos import DailyTodoItem
 
 # --- Module ---

@@ -2,9 +2,10 @@ from django.core.validators import MinLengthValidator
 from django.db import models
 from django.db.models import Q
 from django.utils import timezone
+from wijckie_models.module import ModuleType
+
 from ..fileUpload import FileUpload
 from ..user import User
-from ..module import ModuleType
 
 
 class InspirationOptionType(models.TextChoices):

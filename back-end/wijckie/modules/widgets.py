@@ -1,6 +1,5 @@
 from rest_framework import serializers, viewsets
 from rest_framework.response import Response
-
 from wijckie.modules.dailyTodos import DailyTodosWidgetSerializer
 from wijckie.modules.inspiration import InspirationWidgetSerializer
 from wijckie_models.models import DailyTodosWidget, InspirationWidget

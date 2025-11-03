@@ -1,12 +1,12 @@
 import dataclasses
 from typing import Dict, Optional
+
 from allauth.account.adapter import DefaultAccountAdapter
 from allauth.account.models import EmailAddress
 from allauth.account.utils import user_display, user_username
 from allauth.headless.adapter import DefaultHeadlessAdapter
 from allauth.mfa.adapter import DefaultMFAAdapter
 from django.conf import settings
-
 from wijckie_models.models import Language, TimeZone
 
 

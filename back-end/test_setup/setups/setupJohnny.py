@@ -1,17 +1,17 @@
 import datetime
-from test_setup.factory.InspirationItemFactory import InspirationItemFactory
-from test_setup.factory.InspirationOptionFactory import InspirationOptionFactory
-from test_setup.factory.InspirationWidgetFactory import InspirationWidgetFactory
+
+from allauth.mfa.webauthn.internal import auth
 from test_setup.factory.dailyTodosItemFactory import DailyTodoItemFactory
 from test_setup.factory.dailyTodosModuleFactory import DailyTodosModuleFactory
 from test_setup.factory.dailyTodosOptionFactory import DailyTodosOptionFactory
 from test_setup.factory.dailyTodosWidgetFactory import DailyTodosWidgetFactory
 from test_setup.factory.emailAddressFactory import EmailAddressFactory
+from test_setup.factory.InspirationItemFactory import InspirationItemFactory
 from test_setup.factory.inspirationModuleFactory import InspirationModuleFactory
+from test_setup.factory.InspirationOptionFactory import InspirationOptionFactory
+from test_setup.factory.InspirationWidgetFactory import InspirationWidgetFactory
 from wijckie_models.modules.dailyTodos import DailyTodoItemStatus
 from wijckie_models.user import Language, TimeZone, User
-
-from allauth.mfa.webauthn.internal import auth
 
 
 def setup_johnny():

@@ -8,6 +8,7 @@ https://docs.djangoproject.com/en/5.2/howto/deployment/wsgi/
 """
 
 import os
+
 from decouple import config
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "wijckie.settings")

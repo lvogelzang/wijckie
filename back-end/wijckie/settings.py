@@ -1,6 +1,7 @@
+from pathlib import Path
+
 from configurations import Configuration
 from decouple import config
-from pathlib import Path
 from wijckie.utils import add_protocol
 
 

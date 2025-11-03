@@ -1,8 +1,7 @@
 from django.core.files.storage import default_storage
-from drf_spectacular.utils import extend_schema_field
 from drf_spectacular.types import OpenApiTypes
+from drf_spectacular.utils import extend_schema_field
 from rest_framework import mixins, serializers, viewsets
-
 from wijckie_models.models import (
     FileUpload,
     InspirationModule,

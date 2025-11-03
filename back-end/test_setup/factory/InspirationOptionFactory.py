@@ -1,5 +1,5 @@
 from test_setup.factory.uploadFactory import UploadFactory
-from wijckie_models.fileUpload import FieldReference, FileUpload
+from wijckie_models.fileUpload import FieldReference
 from wijckie_models.modules.inspiration import InspirationOption, InspirationOptionType
 
 

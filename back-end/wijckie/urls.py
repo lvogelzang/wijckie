@@ -3,7 +3,6 @@ from django.conf.urls.static import static
 from django.urls import include, path
 from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView
 from rest_framework import routers, serializers, viewsets
-
 from wijckie.csrf import csrf
 from wijckie.fileUpload import FileUploadViewSet, dev_file_upload
 from wijckie.modules.dailyTodos import (
