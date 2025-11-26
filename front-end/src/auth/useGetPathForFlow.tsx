@@ -1,4 +1,5 @@
-import useLinkTree, { makeUrl } from "@/hooks/UseLinkTree"
+import { makeUrl } from "@/helpers/LinkTreeHelper"
+import useLinkTree from "@/hooks/UseLinkTree"
 import { useCallback, useMemo } from "react"
 import { AuthenticatorTypes, Flows, type AuthenticatorType, type FlowId } from "./allauth"
 

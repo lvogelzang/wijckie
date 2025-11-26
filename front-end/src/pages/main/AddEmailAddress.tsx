@@ -1,18 +1,19 @@
+import { postAllauthClientV1AccountEmail } from "@/api/endpoints/allauth"
 import RootErrorMessage from "@/components/error/form/root-error-message"
 import { FormTitle } from "@/components/form/form-title"
 import { Page } from "@/components/Page"
 import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import useLinkTree, { makeUrl } from "@/hooks/UseLinkTree"
+import { makeUrl } from "@/helpers/LinkTreeHelper"
+import { useErrorHandler } from "@/helpers/useErrorHandler"
+import useLinkTree from "@/hooks/UseLinkTree"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useCallback } from "react"
 import { useForm, type SubmitHandler } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { useNavigate } from "react-router-dom"
 import { z } from "zod"
-import { postAllauthClientV1AccountEmail } from "../../api/endpoints/allauth"
-import { useErrorHandler } from "../../helpers/useErrorHandler"
 
 const formSchema = z.object({
     email: z.email(),

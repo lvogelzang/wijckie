@@ -1,7 +1,7 @@
 import { Page } from "@/components/Page"
+import DailyTodosModuleTable from "@/tables/modules/dailyTodos/DailyTodosModuleTable"
+import InspirationModuleTable from "@/tables/modules/inspiration/InspirationModuleTable"
 import { useTranslation } from "react-i18next"
-import DailyTodosModuleTable from "../../tables/modules/dailyTodos/DailyTodosModuleTable"
-import InspirationModuleTable from "../../tables/modules/inspiration/InspirationModuleTable"
 
 const Modules = () => {
     const { t } = useTranslation()

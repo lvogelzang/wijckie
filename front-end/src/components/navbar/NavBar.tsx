@@ -1,12 +1,7 @@
 import { useAuth } from "@/auth/useAuth"
+import LanguageButton from "@/components/navbar/LanguageButton"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle } from "@/components/ui/navigation-menu"
-import useLinkTree, { makeUrl } from "@/hooks/UseLinkTree"
-import { cn } from "@/lib/utils"
-import { languageOptions } from "@/types/UserLanguageType"
-import { GalleryVerticalEnd, Languages } from "lucide-react"
-import { useTranslation } from "react-i18next"
-import { Link } from "react-router-dom"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu"
 import {
     Sidebar,
     SidebarContent,
@@ -22,8 +17,14 @@ import {
     SidebarRail,
     SidebarTrigger,
     useSidebar,
-} from "../ui/sidebar"
-import LanguageButton from "./LanguageButton"
+} from "@/components/ui/sidebar"
+import { makeUrl } from "@/helpers/LinkTreeHelper"
+import useLinkTree from "@/hooks/UseLinkTree"
+import { cn } from "@/lib/utils"
+import { languageOptions } from "@/types/UserLanguageType"
+import { GalleryVerticalEnd, Languages } from "lucide-react"
+import { useTranslation } from "react-i18next"
+import { Link } from "react-router-dom"
 
 // TODO: Translations.
 // TODO: Consequent styling of buttons.

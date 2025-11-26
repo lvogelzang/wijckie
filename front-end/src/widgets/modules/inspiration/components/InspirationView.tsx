@@ -1,5 +1,5 @@
-import { useInspirationOptionsRetrieve } from "../../../../api/endpoints/api"
-import type { InspirationItem } from "../../../../api/models/api"
+import { useInspirationOptionsRetrieve } from "@/api/endpoints/api"
+import type { InspirationItem } from "@/api/models/api"
 
 interface Props {
     item: InspirationItem

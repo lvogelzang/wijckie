@@ -1,8 +1,8 @@
+import { useInspirationItemsCreate, useInspirationItemsList } from "@/api/endpoints/api"
+import type { InspirationItem, InspirationWidget } from "@/api/models/api"
+import useDateTimeHelper from "@/helpers/useDateTimeHelper"
+import InspirationView from "@/widgets/modules/inspiration/components/InspirationView"
 import { useEffect, useMemo, useState } from "react"
-import { useInspirationItemsCreate, useInspirationItemsList } from "../../../api/endpoints/api"
-import type { InspirationItem, InspirationWidget } from "../../../api/models/api"
-import useDateTimeHelper from "../../../helpers/useDateTimeHelper"
-import InspirationView from "./components/InspirationView"
 
 interface Props {
     widget: InspirationWidget

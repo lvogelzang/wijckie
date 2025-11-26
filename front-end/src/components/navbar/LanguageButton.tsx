@@ -1,7 +1,7 @@
+import type { UserLanguageType } from "@/types/UserLanguageType"
 import Cookies from "js-cookie"
 import { useCallback, useMemo } from "react"
 import { useTranslation } from "react-i18next"
-import type { UserLanguageType } from "../../types/UserLanguageType"
 
 interface Props {
     language: UserLanguageType

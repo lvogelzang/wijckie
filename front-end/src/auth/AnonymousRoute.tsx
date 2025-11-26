@@ -1,4 +1,5 @@
-import useLinkTree, { makeUrl } from "@/hooks/UseLinkTree"
+import { makeUrl } from "@/helpers/LinkTreeHelper"
+import useLinkTree from "@/hooks/UseLinkTree"
 import { useMemo, type ReactNode } from "react"
 import { Navigate } from "react-router-dom"
 import type { AuthenticatorType, FlowId } from "./allauth"

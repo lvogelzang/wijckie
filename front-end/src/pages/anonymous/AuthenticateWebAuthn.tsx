@@ -1,15 +1,16 @@
+import { getAllauthClientV1AuthWebauthnLogin, postAllauthClientV1AuthWebauthnLogin } from "@/api/endpoints/allauth"
+import type { AuthenticatedResponse, WebAuthnCredential } from "@/api/models/allauth"
 import ErrorMessage from "@/components/error/error-message"
 import { Page } from "@/components/Page"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import useLinkTree, { makeUrl } from "@/hooks/UseLinkTree"
+import { makeUrl } from "@/helpers/LinkTreeHelper"
+import { useErrorHandler, type ErrorMessageType } from "@/helpers/useErrorHandler"
+import useLinkTree from "@/hooks/UseLinkTree"
 import { get, parseRequestOptionsFromJSON, type AuthenticationPublicKeyCredential } from "@github/webauthn-json/browser-ponyfill"
 import { useCallback, useState } from "react"
 import { Trans, useTranslation } from "react-i18next"
 import { Link } from "react-router-dom"
-import { getAllauthClientV1AuthWebauthnLogin, postAllauthClientV1AuthWebauthnLogin } from "../../api/endpoints/allauth"
-import type { AuthenticatedResponse, WebAuthnCredential } from "../../api/models/allauth"
-import { useErrorHandler, type ErrorMessageType } from "../../helpers/useErrorHandler"
 
 const AuthenticateWebAuthn = () => {
     const { t } = useTranslation()

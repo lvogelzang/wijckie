@@ -1,7 +1,7 @@
+import { InlineErrorMessage } from "@/components/error/inline-error-message"
+import { useErrorHandler, type ErrorMessageType } from "@/helpers/useErrorHandler"
 import { useMemo } from "react"
 import type { Message } from "react-hook-form"
-import { useErrorHandler, type ErrorMessageType } from "../../../helpers/useErrorHandler"
-import { InlineErrorMessage } from "../inline-error-message"
 
 interface Props {
     error:

@@ -1,9 +1,9 @@
 import { useAuth } from "@/auth/useAuth"
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { applyTheme, type Theme } from "@/helpers/Theme"
 import { cn } from "@/lib/utils"
 import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
-import { ToggleGroup, ToggleGroupItem } from "../ui/toggle-group"
 
 const Footer = () => {
     const { t } = useTranslation()

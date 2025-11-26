@@ -1,4 +1,4 @@
-import type { Flow, User } from "../api/models/allauth"
+import type { Flow, User } from "@/api/models/allauth"
 
 export interface AuthInfo {
     isAuthenticated: boolean

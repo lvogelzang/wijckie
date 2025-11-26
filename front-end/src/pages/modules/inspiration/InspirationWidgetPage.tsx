@@ -1,8 +1,8 @@
+import { useInspirationModulesRetrieve, useInspirationWidgetsRetrieve } from "@/api/endpoints/api"
+import Loader from "@/components/Loader"
 import { Page } from "@/components/Page"
+import InspirationWidgetForm from "@/forms/modules/inspiration/InspirationWidgetForm"
 import { useParams } from "react-router-dom"
-import { useInspirationModulesRetrieve, useInspirationWidgetsRetrieve } from "../../../api/endpoints/api"
-import Loader from "../../../components/Loader"
-import InspirationWidgetForm from "../../../forms/modules/inspiration/InspirationWidgetForm"
 
 interface Props {
     mode: "Create" | "Update"

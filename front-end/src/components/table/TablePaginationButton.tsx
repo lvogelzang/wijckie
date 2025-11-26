@@ -1,6 +1,6 @@
+import { Button } from "@/components/ui/button"
+import { PaginationItem } from "@/components/ui/pagination"
 import { useCallback } from "react"
-import { Button } from "../ui/button"
-import { PaginationItem } from "../ui/pagination"
 
 interface Props {
     pageIndex: number

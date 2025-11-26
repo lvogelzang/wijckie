@@ -1,5 +1,5 @@
-import TableButton from "./TableButton"
-import type { TableButtonDef } from "./TableButtonDef"
+import TableButton from "@/components/table/TableButton"
+import type { TableButtonDef } from "@/components/table/TableButtonDef"
 
 interface Props {
     buttons?: TableButtonDef[]

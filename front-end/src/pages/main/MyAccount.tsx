@@ -1,14 +1,15 @@
+import { deleteAllauthClientV1AccountEmail, getAllauthClientV1AccountEmail, patchAllauthClientV1AccountEmail, putAllauthClientV1AccountEmail } from "@/api/endpoints/allauth"
+import { type AuthenticatorList, type EmailAddressesResponse } from "@/api/models/allauth"
+import { AuthenticatorTypes } from "@/auth/allauth"
 import ErrorDialog from "@/components/error/error-dialog"
 import { Page } from "@/components/Page"
 import { Button } from "@/components/ui/button"
-import useLinkTree, { makeUrl } from "@/hooks/UseLinkTree"
+import { makeUrl } from "@/helpers/LinkTreeHelper"
+import useLinkTree from "@/hooks/UseLinkTree"
 import { AxiosError } from "axios"
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { Link, useLoaderData, useNavigate } from "react-router-dom"
-import { deleteAllauthClientV1AccountEmail, getAllauthClientV1AccountEmail, patchAllauthClientV1AccountEmail, putAllauthClientV1AccountEmail } from "../../api/endpoints/allauth"
-import { type AuthenticatorList, type EmailAddressesResponse } from "../../api/models/allauth"
-import { AuthenticatorTypes } from "../../auth/allauth"
 
 interface EmailResponse {
     fetching: boolean

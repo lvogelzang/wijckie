@@ -1,8 +1,8 @@
+import translationEnGb from "@/locales/en-GB/translation.json"
+import translationNl from "@/locales/nl/translation.json"
 import i18n from "i18next"
 import Cookies from "js-cookie"
 import { initReactI18next } from "react-i18next"
-import translationEnGb from "./locales/en-GB/translation.json"
-import translationNl from "./locales/nl/translation.json"
 
 const getLocale = () => {
     const cookieLocale = Cookies.get("django_language")

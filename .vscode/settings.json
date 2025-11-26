@@ -1,5 +1,7 @@
 {
   "python.terminal.activateEnvironment": true,
   "python.defaultInterpreterPath": "back-end/venv/bin/python",
-  "python.analysis.extraPaths": ["back-end"]
+  "python.analysis.extraPaths": ["back-end"],
+  "javascript.preferences.importModuleSpecifier": "non-relative",
+  "typescript.preferences.importModuleSpecifier": "non-relative"
 }

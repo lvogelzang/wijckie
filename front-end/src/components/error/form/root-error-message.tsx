@@ -1,5 +1,5 @@
+import FormErrorMessage from "@/components/error/form/form-error-message"
 import type { FieldErrors } from "react-hook-form"
-import FormErrorMessage from "./form-error-message"
 
 interface Props {
     errors: FieldErrors

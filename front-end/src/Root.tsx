@@ -1,7 +1,7 @@
+import Footer from "@/components/footer/Footer"
+import NavBar from "@/components/navbar/NavBar"
+import { SidebarProvider } from "@/components/ui/sidebar"
 import { Outlet } from "react-router-dom"
-import Footer from "./components/footer/Footer"
-import NavBar from "./components/navbar/NavBar"
-import { SidebarProvider } from "./components/ui/sidebar"
 
 export default function Root() {
     return (

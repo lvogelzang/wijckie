@@ -1,9 +1,9 @@
+import { useDailyTodoItemsList, useDailyTodoOptionsList } from "@/api/endpoints/api"
+import type { DailyTodosWidget } from "@/api/models/api"
+import DateSelector from "@/components/DateSelector"
+import useDateTimeHelper from "@/helpers/useDateTimeHelper"
+import DailyTodoView from "@/widgets/modules/dailyTodos/components/DailyTodoView"
 import { useMemo, useState } from "react"
-import { useDailyTodoItemsList, useDailyTodoOptionsList } from "../../../api/endpoints/api"
-import type { DailyTodosWidget } from "../../../api/models/api"
-import DateSelector from "../../../components/DateSelector"
-import useDateTimeHelper from "../../../helpers/useDateTimeHelper"
-import DailyTodoView from "./components/DailyTodoView"
 
 interface Props {
     widget: DailyTodosWidget

@@ -1,4 +1,4 @@
-import type { TableLinkDef } from "./TableLinkDef"
+import type { TableLinkDef } from "@/components/table/TableLinkDef"
 
 interface Props {
     links?: TableLinkDef[]

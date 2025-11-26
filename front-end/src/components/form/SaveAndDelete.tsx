@@ -1,6 +1,4 @@
-import { useCallback, useState } from "react"
-import { useTranslation } from "react-i18next"
-import { InlineErrorMessage } from "../error/inline-error-message"
+import { InlineErrorMessage } from "@/components/error/inline-error-message"
 import {
     AlertDialog,
     AlertDialogAction,
@@ -11,8 +9,10 @@ import {
     AlertDialogHeader,
     AlertDialogTitle,
     AlertDialogTrigger,
-} from "../ui/alert-dialog"
-import { Button } from "../ui/button"
+} from "@/components/ui/alert-dialog"
+import { Button } from "@/components/ui/button"
+import { useCallback, useState } from "react"
+import { useTranslation } from "react-i18next"
 
 interface Props {
     mode: "Create" | "Update"

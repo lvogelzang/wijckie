@@ -1,7 +1,7 @@
+import TablePaginationButton from "@/components/table/TablePaginationButton"
+import { Pagination, PaginationContent } from "@/components/ui/pagination"
 import { useCallback, useMemo, type ChangeEvent } from "react"
 import { useTranslation } from "react-i18next"
-import { Pagination, PaginationContent } from "../ui/pagination"
-import TablePaginationButton from "./TablePaginationButton"
 
 interface Props {
     pagination: {

@@ -1,7 +1,7 @@
+import { fileUploadsCreate } from "@/api/endpoints/api"
+import type { FileUpload } from "@/api/models/api"
+import { UPLOAD_SIZE_LIMIT } from "@/helpers/constants"
 import axios from "axios"
-import { fileUploadsCreate } from "../api/endpoints/api"
-import type { FileUpload } from "../api/models/api"
-import { UPLOAD_SIZE_LIMIT } from "./constants"
 
 const doUpload = <Type>(fileUpload: FileUpload, file: File, object: Type, onSuccess: (fileUpload: FileUpload, object: Type) => void, onError: (error: unknown) => void) => {
     const url = fileUpload.fileUploadURL

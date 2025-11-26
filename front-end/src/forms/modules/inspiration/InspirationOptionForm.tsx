@@ -1,16 +1,3 @@
-import RootErrorMessage from "@/components/error/form/root-error-message"
-import { FormTitle } from "@/components/form/form-title"
-import SaveAndDelete from "@/components/form/SaveAndDelete"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import useLinkTree, { makeUrl } from "@/hooks/UseLinkTree"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useCallback } from "react"
-import { useForm, type SubmitHandler } from "react-hook-form"
-import { useTranslation } from "react-i18next"
-import { useNavigate } from "react-router-dom"
-import { z } from "zod"
 import {
     useInspirationOptionsCreate,
     useInspirationOptionsDestroy,
@@ -18,11 +5,25 @@ import {
     useInspirationOptionsUpdate,
     type InspirationOptionsCreateMutationResult,
     type InspirationOptionsUpdateMutationResult,
-} from "../../../api/endpoints/api"
-import { TypeEnum, type FileUpload, type InspirationModule, type InspirationOption } from "../../../api/models/api"
-import { handleUpload } from "../../../helpers/uploadHelper"
-import { useErrorHandler } from "../../../helpers/useErrorHandler"
-import useInspirationOptionTypeOptions from "../../../helpers/useInspirationOptionTypeOptions"
+} from "@/api/endpoints/api"
+import { TypeEnum, type FileUpload, type InspirationModule, type InspirationOption } from "@/api/models/api"
+import RootErrorMessage from "@/components/error/form/root-error-message"
+import { FormTitle } from "@/components/form/form-title"
+import SaveAndDelete from "@/components/form/SaveAndDelete"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { makeUrl } from "@/helpers/LinkTreeHelper"
+import { handleUpload } from "@/helpers/uploadHelper"
+import { useErrorHandler } from "@/helpers/useErrorHandler"
+import useInspirationOptionTypeOptions from "@/helpers/useInspirationOptionTypeOptions"
+import useLinkTree from "@/hooks/UseLinkTree"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useCallback } from "react"
+import { useForm, type SubmitHandler } from "react-hook-form"
+import { useTranslation } from "react-i18next"
+import { useNavigate } from "react-router-dom"
+import { z } from "zod"
 
 interface Props {
     mode: "Create" | "Update"

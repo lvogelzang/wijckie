@@ -1,6 +1,6 @@
+import { useAuth } from "@/auth/useAuth"
 import type { PaginationState } from "@tanstack/react-table"
 import { useCallback } from "react"
-import { useAuth } from "../auth/useAuth"
 
 export const useGetPaginationCacheKey = () => {
     const { user } = useAuth()

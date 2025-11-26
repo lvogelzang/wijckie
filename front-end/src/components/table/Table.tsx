@@ -1,14 +1,14 @@
+import type { TableButtonDef } from "@/components/table/TableButtonDef"
+import TableButtons from "@/components/table/TableButtons"
+import type { TableLinkDef } from "@/components/table/TableLinkDef"
+import TableLinks from "@/components/table/TableLinks"
+import TablePagination from "@/components/table/TablePagination"
+import { useGetPaginationCacheKey, useGetPaginationValue } from "@/helpers/useCache"
 import type { TitleStyle } from "@/types/TitleStyle"
 import type { UseQueryResult } from "@tanstack/react-query"
 import { flexRender, getCoreRowModel, useReactTable, type ColumnDef, type PaginationState } from "@tanstack/react-table"
 import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
-import { useGetPaginationCacheKey, useGetPaginationValue } from "../../helpers/useCache"
-import type { TableButtonDef } from "./TableButtonDef"
-import TableButtons from "./TableButtons"
-import type { TableLinkDef } from "./TableLinkDef"
-import TableLinks from "./TableLinks"
-import TablePagination from "./TablePagination"
 
 interface PageResponseType<Type> {
     pageCount: number

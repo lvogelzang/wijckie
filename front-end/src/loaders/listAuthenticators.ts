@@ -1,4 +1,4 @@
-import { getAllauthClientV1AccountAuthenticators } from "../api/endpoints/allauth"
+import { getAllauthClientV1AccountAuthenticators } from "@/api/endpoints/allauth"
 
 export const listAuthenticators = () => {
     return new Promise((resolve, reject) => {

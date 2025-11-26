@@ -1,8 +1,8 @@
+import { fileUploadsCreate } from "@/api/endpoints/api"
+import type { FileUpload } from "@/api/models/api"
+import { UPLOAD_SIZE_LIMIT } from "@/helpers/constants"
 import axios from "axios"
 import { useCallback } from "react"
-import { fileUploadsCreate } from "../api/endpoints/api"
-import type { FileUpload } from "../api/models/api"
-import { UPLOAD_SIZE_LIMIT } from "./constants"
 
 const useUploadHandler = <Type>() => {
     const doUpload = useCallback((fileUpload: FileUpload, file: File, object: Type, onSuccess: (fileUpload: FileUpload, object: Type) => void, onError: (error: unknown) => void) => {

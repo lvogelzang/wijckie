@@ -1,4 +1,4 @@
-import type { FileUpload } from "../api/models/api"
+import type { FileUpload } from "@/api/models/api"
 
 export interface UploadJob<Type> {
     fileUpload: FileUpload

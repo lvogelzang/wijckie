@@ -1,9 +1,9 @@
+import { useWidgetsRetrieve } from "@/api/endpoints/api"
 import Loader from "@/components/Loader"
 import { Page } from "@/components/Page"
 import DailyTodosWidgetView from "@/widgets/modules/dailyTodos/DailyTodosWidgetView"
 import InspirationWidgetView from "@/widgets/modules/inspiration/InspirationWidgetView"
 import { useTranslation } from "react-i18next"
-import { useWidgetsRetrieve } from "../../api/endpoints/api"
 
 const Dashboard = () => {
     const { t } = useTranslation()
