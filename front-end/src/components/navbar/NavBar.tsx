@@ -1,5 +1,6 @@
 import { useAuth } from "@/auth/useAuth"
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle } from "@/components/ui/navigation-menu"
+import useLinkTree, { makeUrl } from "@/hooks/UseLinkTree"
 import { cn } from "@/lib/utils"
 import { languageOptions } from "@/types/UserLanguageType"
 import { GalleryVerticalEnd, Languages } from "lucide-react"
@@ -33,6 +34,7 @@ import LanguageButton from "./LanguageButton"
 // TODO: User avatar?
 const NavBar = () => {
     const { t } = useTranslation()
+    const l = useLinkTree()
     const { user, isAuthenticated } = useAuth()
     const { isMobile } = useSidebar()
 
@@ -60,14 +62,14 @@ const NavBar = () => {
                         <SidebarMenu>
                             <SidebarMenuItem>
                                 <SidebarMenuButton asChild>
-                                    <Link to="/dashboard" className="font-medium">
+                                    <Link to={makeUrl(l.DASHBOARD, [])} className="font-medium">
                                         Dashboard
                                     </Link>
                                 </SidebarMenuButton>
                             </SidebarMenuItem>
                             <SidebarMenuItem>
                                 <SidebarMenuButton asChild>
-                                    <Link to="/dashboard" className="font-medium">
+                                    <Link to={makeUrl(l.DASHBOARD, [])} className="font-medium">
                                         Modules
                                     </Link>
                                 </SidebarMenuButton>
@@ -96,7 +98,7 @@ const NavBar = () => {
                     <SidebarMenu>
                         <SidebarMenuItem>
                             <SidebarMenuButton asChild>
-                                <Link to="/modules" className="font-medium">
+                                <Link to={makeUrl(l.MODULES, [])} className="font-medium">
                                     {t("NavBar.settings")}
                                 </Link>
                             </SidebarMenuButton>
@@ -148,7 +150,7 @@ const NavBar = () => {
                                     <DropdownMenuSeparator />
                                     <DropdownMenuGroup>
                                         <DropdownMenuItem>
-                                            <Link to="/account/my">Account</Link>
+                                            <Link to={makeUrl(l.MY_ACCOUNT, [])}>Account</Link>
                                         </DropdownMenuItem>
                                         <DropdownMenuItem>Notifications</DropdownMenuItem>
                                     </DropdownMenuGroup>
@@ -165,14 +167,14 @@ const NavBar = () => {
                 <SidebarTrigger />
             </div>
             <div className="mr-6 hidden lg:flex" hidden={!user}>
-                <Link to="/">
+                <Link to={makeUrl(l.DASHBOARD, [])}>
                     <span className="text-lg font-semibold">Wijckie</span>
                 </Link>
             </div>
             <NavigationMenu className="hidden lg:flex" viewport={false}>
                 <NavigationMenuList>
                     <NavigationMenuLink asChild hidden={!user}>
-                        <Link to="/dashboard" className="text-nowrap" data-cy="dashboardButton">
+                        <Link to={makeUrl(l.DASHBOARD, [])} className="text-nowrap" data-cy="dashboardButton">
                             {t("NavBar.dashboard")}
                         </Link>
                     </NavigationMenuLink>
@@ -199,7 +201,7 @@ const NavBar = () => {
             <NavigationMenu className="ml-auto hidden lg:flex" viewport={false}>
                 <NavigationMenuList>
                     <NavigationMenuItem hidden={!user}>
-                        <Link to="/modules" className={navigationMenuTriggerStyle()}>
+                        <Link to={makeUrl(l.MODULES, [])} className={navigationMenuTriggerStyle()}>
                             {t("NavBar.settings")}
                         </Link>
                     </NavigationMenuItem>
@@ -223,12 +225,12 @@ const NavBar = () => {
                             <NavigationMenuContent>
                                 <div className="grid p-2">
                                     <NavigationMenuLink asChild>
-                                        <Link to="/account/my" className="text-nowrap" data-cy="myAccountButton">
-                                            {t("NavBar.my_account")}
+                                        <Link to={makeUrl(l.MY_ACCOUNT, [])} className="text-nowrap" data-cy="myAccountButton">
+                                            {t("MyAccount.title")}
                                         </Link>
                                     </NavigationMenuLink>
                                     <NavigationMenuLink asChild>
-                                        <Link to="/account/logout" className="text-nowrap" data-cy="logoutButton">
+                                        <Link to={makeUrl(l.LOGOUT, [])} className="text-nowrap" data-cy="logoutButton">
                                             {t("NavBar.logout")}
                                         </Link>
                                     </NavigationMenuLink>

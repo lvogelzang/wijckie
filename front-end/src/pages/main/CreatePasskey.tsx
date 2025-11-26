@@ -3,9 +3,10 @@ import { Page } from "@/components/Page"
 import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import useLinkTree, { makeUrl } from "@/hooks/UseLinkTree"
 import { create, parseCreationOptionsFromJSON, type CredentialCreationOptionsJSON, type RegistrationPublicKeyCredential } from "@github/webauthn-json/browser-ponyfill"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useCallback, type FC } from "react"
+import { useCallback } from "react"
 import { useForm, type SubmitHandler } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { useNavigate } from "react-router-dom"
@@ -18,8 +19,9 @@ const formSchema = z.object({
     name: z.string().min(1).max(50),
 })
 
-const CreatePasskey: FC = () => {
+const CreatePasskey = () => {
     const { t } = useTranslation()
+    const l = useLinkTree()
     const navigate = useNavigate()
     const { handleFormErrors } = useErrorHandler()
 
@@ -31,8 +33,8 @@ const CreatePasskey: FC = () => {
     })
 
     const onSuccess = useCallback(() => {
-        navigate("/account/my")
-    }, [navigate])
+        navigate(makeUrl(l.MY_ACCOUNT, []))
+    }, [navigate, l])
 
     const onFailure = useCallback(
         (error: unknown) => {

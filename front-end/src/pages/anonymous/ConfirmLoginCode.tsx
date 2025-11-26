@@ -4,8 +4,9 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import useLinkTree, { makeUrl } from "@/hooks/UseLinkTree"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useCallback, type FC } from "react"
+import { useCallback } from "react"
 import { useForm, type SubmitHandler } from "react-hook-form"
 import { Trans, useTranslation } from "react-i18next"
 import { Link } from "react-router-dom"
@@ -18,8 +19,9 @@ const formSchema = z.object({
     code: z.string().length(6),
 })
 
-const ConfirmLoginCode: FC = () => {
+const ConfirmLoginCode = () => {
     const { t } = useTranslation()
+    const l = useLinkTree()
     const { handleFormErrors } = useErrorHandler()
 
     const form = useForm<z.infer<typeof formSchema>>({
@@ -74,7 +76,7 @@ const ConfirmLoginCode: FC = () => {
                             <p>
                                 <Trans i18nKey="ConfirmLoginCode.back_to_login">
                                     Already a passkey? Go back to
-                                    <Link to="/account/logout">Login</Link>.
+                                    <Link to={makeUrl(l.LOGOUT, [])}>Login</Link>.
                                 </Trans>
                             </p>
                         </form>

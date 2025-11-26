@@ -23,8 +23,8 @@ const DailyTodosModulePage = ({ mode }: Props) => {
         <Page variant="configuration">
             <div>
                 <DailyTodosModuleForm mode={mode} module={module} />
-                {mode === "Update" ? <DailyTodoOptionTable module={module!} /> : null}
-                {mode === "Update" ? <DailyTodoWidgetTable module={module!} /> : null}
+                {mode === "Update" ? <DailyTodoOptionTable titleStyle="Section" module={module!} /> : null}
+                {mode === "Update" ? <DailyTodoWidgetTable titleStyle="Section" module={module!} /> : null}
             </div>
         </Page>
     )

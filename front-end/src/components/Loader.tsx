@@ -1,6 +1,4 @@
-import type { FC } from "react"
-
-const Loader: FC = () => {
+const Loader = () => {
     return <span>...</span>
 }
 

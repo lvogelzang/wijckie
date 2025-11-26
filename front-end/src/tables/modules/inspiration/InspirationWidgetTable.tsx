@@ -1,3 +1,5 @@
+import useLinkTree, { makeUrl } from "@/hooks/UseLinkTree"
+import type { TitleStyle } from "@/types/TitleStyle"
 import type { ColumnDef } from "@tanstack/react-table"
 import { useMemo } from "react"
 import { useTranslation } from "react-i18next"
@@ -8,11 +10,13 @@ import Table from "../../../components/table/Table"
 import type { TableButtonDef } from "../../../components/table/TableButtonDef"
 
 interface Props {
+    titleStyle: TitleStyle
     module: InspirationModule
 }
 
-const InspirationWidgetTable = ({ module }: Props) => {
+const InspirationWidgetTable = ({ titleStyle, module }: Props) => {
     const { t } = useTranslation()
+    const l = useLinkTree()
     const dataQuery = useInspirationWidgetsList({ module: module.id })
 
     const columns = useMemo((): ColumnDef<InspirationWidget>[] => {
@@ -21,25 +25,35 @@ const InspirationWidgetTable = ({ module }: Props) => {
                 id: "name",
                 header: t("Main.name"),
                 cell: ({ row }) => (
-                    <Link to={`/modules/inspiration/${module.id}/widgets/${row.original.id}`} data-cy="inspirationWidgetLink">
+                    <Link to={makeUrl(l.MODULES__INSPIRATION__ID__WIDGETS__ID, [module, row.original])} data-cy="inspirationWidgetLink">
                         {row.original.name}
                     </Link>
                 ),
             },
         ]
-    }, [t, module])
+    }, [t, l, module])
 
     const buttons = useMemo((): TableButtonDef[] => {
         return [
             {
                 id: "newInspirationWidget",
                 label: t("Main.new"),
-                link: `/modules/inspiration/${module.id}/widgets/new`,
+                link: makeUrl(l.MODULES__INSPIRATION__ID__WIDGETS__NEW, [module]),
             },
         ]
-    }, [t, module])
+    }, [t, l, module])
 
-    return <Table id="InspirationWidgets" title={t("InspirationWidget.plural_title")} columns={columns} buttons={buttons} subject={t("InspirationWidget.plural_name")} dataQuery={dataQuery} />
+    return (
+        <Table
+            id="InspirationWidgets"
+            title={t("InspirationWidget.plural_title")}
+            titleStyle={titleStyle}
+            columns={columns}
+            buttons={buttons}
+            subject={t("InspirationWidget.plural_name")}
+            dataQuery={dataQuery}
+        />
+    )
 }
 
 export default InspirationWidgetTable

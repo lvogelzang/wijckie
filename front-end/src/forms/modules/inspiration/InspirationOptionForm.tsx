@@ -4,6 +4,7 @@ import SaveAndDelete from "@/components/form/SaveAndDelete"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import useLinkTree, { makeUrl } from "@/hooks/UseLinkTree"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useCallback } from "react"
 import { useForm, type SubmitHandler } from "react-hook-form"
@@ -46,6 +47,7 @@ const formSchema = z
 
 const InspirationOptionForm = ({ mode, module, option }: Props) => {
     const { t } = useTranslation()
+    const l = useLinkTree()
     const navigate = useNavigate()
     const typeOptions = useInspirationOptionTypeOptions()
     const { handleFormErrors } = useErrorHandler()
@@ -64,8 +66,8 @@ const InspirationOptionForm = ({ mode, module, option }: Props) => {
     })
 
     const navigateToParent = useCallback(() => {
-        navigate(`/modules/inspiration/${module.id}`)
-    }, [navigate, module])
+        navigate(makeUrl(l.MODULES__INSPIRATION__ID, [module]))
+    }, [navigate, l, module])
 
     const onError = useCallback(
         (error: unknown) => {

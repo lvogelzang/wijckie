@@ -4,9 +4,10 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import useLinkTree, { makeUrl } from "@/hooks/UseLinkTree"
 import { create, parseCreationOptionsFromJSON, type CredentialCreationOptionsJSON, type RegistrationPublicKeyCredential } from "@github/webauthn-json/browser-ponyfill"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useCallback, type FC } from "react"
+import { useCallback } from "react"
 import { useForm, type SubmitHandler } from "react-hook-form"
 import { Trans, useTranslation } from "react-i18next"
 import { Link } from "react-router-dom"
@@ -19,8 +20,9 @@ const formSchema = z.object({
     name: z.string().min(1).max(50),
 })
 
-const CreateSignupPasskey: FC = () => {
+const CreateSignupPasskey = () => {
     const { t } = useTranslation()
+    const l = useLinkTree()
     const { handleFormErrors } = useErrorHandler()
 
     const form = useForm<z.infer<typeof formSchema>>({
@@ -96,7 +98,7 @@ const CreateSignupPasskey: FC = () => {
                     <p>
                         <Trans i18nKey="CreateSignupPasskey.already_an_account">
                             Already have an account? Go to
-                            <Link to="/account/authenticate/webauthn">Login</Link>.
+                            <Link to={makeUrl(l.ACCOUNT_LOGIN_WEBAUTHN, [])}>Login</Link>.
                         </Trans>
                     </p>
                 </div>

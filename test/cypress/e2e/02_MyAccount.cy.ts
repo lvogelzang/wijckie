@@ -80,7 +80,7 @@ describe("my account page", () => {
         // Go to page to add new e-mail address
         cy.deleteExistingEmails().then(() => {
             cy.get('[data-cy="addEmailLink"]').click()
-            cy.expectPath("/account/my/email-addresses/add")
+            cy.expectPath("/account/my/email-addresses/new")
             cy.get("h1").contains("Add e-mail address")
             cy.screenshotForDocs()
 
@@ -131,7 +131,7 @@ describe("my account page", () => {
         // Go to page to add new e-mail address
         cy.deleteExistingEmails().then(() => {
             cy.get('[data-cy="addEmailLink"]').click()
-            cy.expectPath("/account/my/email-addresses/add")
+            cy.expectPath("/account/my/email-addresses/new")
             cy.get("h1").contains("Add e-mail address")
 
             // Add new e-mail address
@@ -182,7 +182,7 @@ describe("my account page", () => {
 
         // Go to passkey addition page
         cy.get('[data-cy="addPasskeyLink"]').click()
-        cy.url().should("include", "/account/my/passkeys/add")
+        cy.url().should("include", "/account/my/passkeys/new")
     })
 
     it("allows registering a new passkey", () => {
@@ -191,7 +191,7 @@ describe("my account page", () => {
         cy.loginByHttpCalls("j.test@wijckie.com")
 
         // Go to passkey addition page
-        cy.visit("/account/my/passkeys/add")
+        cy.visit("/account/my/passkeys/new")
         cy.get("h1").contains("Add passkey")
         cy.screenshotForDocs()
 

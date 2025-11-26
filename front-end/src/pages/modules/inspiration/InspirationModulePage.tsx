@@ -23,8 +23,8 @@ const InspirationModulePage = ({ mode }: Props) => {
         <Page variant="configuration">
             <div>
                 <InspirationModuleForm mode={mode} module={module} />
-                {mode === "Update" ? <InspirationOptionTable module={module!} /> : null}
-                {mode === "Update" ? <InspirationWidgetTable module={module!} /> : null}
+                {mode === "Update" ? <InspirationOptionTable titleStyle="Section" module={module!} /> : null}
+                {mode === "Update" ? <InspirationWidgetTable titleStyle="Section" module={module!} /> : null}
             </div>
         </Page>
     )

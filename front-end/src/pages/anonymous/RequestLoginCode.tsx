@@ -4,8 +4,9 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import useLinkTree, { makeUrl } from "@/hooks/UseLinkTree"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useCallback, type FC } from "react"
+import { useCallback } from "react"
 import { useForm, type SubmitHandler } from "react-hook-form"
 import { Trans, useTranslation } from "react-i18next"
 import { Link, useNavigate } from "react-router-dom"
@@ -18,8 +19,9 @@ const formSchema = z.object({
     email: z.email(),
 })
 
-const RequestLoginCode: FC = () => {
+const RequestLoginCode = () => {
     const { t } = useTranslation()
+    const l = useLinkTree()
     const navigate = useNavigate()
     const { handleFormErrors } = useErrorHandler()
 
@@ -31,8 +33,8 @@ const RequestLoginCode: FC = () => {
     })
 
     const onSuccess = useCallback(() => {
-        navigate("/account/login/code/confirm")
-    }, [navigate])
+        navigate(makeUrl(l.ACCOUNT_LOGIN_CODE_CONFIRM, []))
+    }, [navigate, l])
 
     const onFailure = useCallback(
         (error: unknown) => {
@@ -80,7 +82,7 @@ const RequestLoginCode: FC = () => {
                             <p>
                                 <Trans i18nKey="RequestLoginCodePage.back_to_login">
                                     Already a passkey? Go back to
-                                    <Link to="/account/logout">Login</Link>.
+                                    <Link to={makeUrl(l.LOGOUT, [])}>Login</Link>.
                                 </Trans>
                             </p>
                         </form>

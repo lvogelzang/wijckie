@@ -2,16 +2,18 @@ import ErrorMessage from "@/components/error/error-message"
 import { Page } from "@/components/Page"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
+import useLinkTree, { makeUrl } from "@/hooks/UseLinkTree"
 import { get, parseRequestOptionsFromJSON, type AuthenticationPublicKeyCredential } from "@github/webauthn-json/browser-ponyfill"
-import { useCallback, useState, type FC } from "react"
+import { useCallback, useState } from "react"
 import { Trans, useTranslation } from "react-i18next"
 import { Link } from "react-router-dom"
 import { getAllauthClientV1AuthWebauthnLogin, postAllauthClientV1AuthWebauthnLogin } from "../../api/endpoints/allauth"
 import type { AuthenticatedResponse, WebAuthnCredential } from "../../api/models/allauth"
 import { useErrorHandler, type ErrorMessageType } from "../../helpers/useErrorHandler"
 
-const AuthenticateWebAuthn: FC = () => {
+const AuthenticateWebAuthn = () => {
     const { t } = useTranslation()
+    const l = useLinkTree()
     const { resolveError } = useErrorHandler()
     const [error, setError] = useState<{ type: ErrorMessageType }>()
 
@@ -55,7 +57,7 @@ const AuthenticateWebAuthn: FC = () => {
                     <p>
                         <Trans i18nKey="AuthenticateWebAuthn.no_passkey_yet">
                             No passkey on this device yet? Go to
-                            <Link to="/account/login/code" data-cy="requestCode">
+                            <Link to={makeUrl(l.ACCOUNT_LOGIN_CODE, [])} data-cy="requestCode">
                                 Request a sign-in code
                             </Link>
                             .
@@ -64,7 +66,7 @@ const AuthenticateWebAuthn: FC = () => {
                     <p>
                         <Trans i18nKey="AuthenticateWebAuthn.no_account_yet">
                             No account yet? Go to the
-                            <Link to="/account/signup/passkey" data-cy="signUp">
+                            <Link to={makeUrl(l.ACCOUNT_SIGNUP_PASSKEY, [])} data-cy="signUp">
                                 Sign-up page
                             </Link>
                             .

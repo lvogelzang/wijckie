@@ -4,8 +4,9 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import useLinkTree, { makeUrl } from "@/hooks/UseLinkTree"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useCallback, type FC } from "react"
+import { useCallback } from "react"
 import { useForm, type SubmitHandler } from "react-hook-form"
 import { Trans, useTranslation } from "react-i18next"
 import { Link, useNavigate } from "react-router-dom"
@@ -18,8 +19,9 @@ const formSchema = z.object({
     email: z.email(),
 })
 
-const SignupByPasskey: FC = () => {
+const SignupByPasskey = () => {
     const { t } = useTranslation()
+    const l = useLinkTree()
     const navigate = useNavigate()
     const { handleFormErrors } = useErrorHandler()
 
@@ -31,8 +33,8 @@ const SignupByPasskey: FC = () => {
     })
 
     const onSuccess = useCallback(() => {
-        navigate("/account/verify-email")
-    }, [navigate])
+        navigate(makeUrl(l.ACCOUNT_VERIFY_EMAIL, []))
+    }, [navigate, l])
 
     const onFailure = useCallback(
         (error: unknown) => {
@@ -81,7 +83,7 @@ const SignupByPasskey: FC = () => {
                     <p>
                         <Trans i18nKey="SignUpPage.already_an_account">
                             Already have an account? Go to
-                            <Link to="/account/authenticate/webauthn" data-cy="toLoginLink">
+                            <Link to={makeUrl(l.ACCOUNT_LOGIN_WEBAUTHN, [])} data-cy="toLoginLink">
                                 Login
                             </Link>
                             .

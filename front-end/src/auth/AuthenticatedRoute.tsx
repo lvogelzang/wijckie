@@ -1,3 +1,4 @@
+import useLinkTree, { makeUrl } from "@/hooks/UseLinkTree"
 import type { ReactNode } from "react"
 import { Navigate, useLocation } from "react-router-dom"
 import { useAuth } from "./useAuth"
@@ -9,8 +10,10 @@ interface Props {
 const AuthenticatedRoute = ({ children }: Props) => {
     const location = useLocation()
     const { isAuthenticated } = useAuth()
-    let url = "/account/authenticate/webauthn"
-    if (!location.pathname.includes("logout")) {
+    const l = useLinkTree()
+
+    let url = makeUrl(l.ACCOUNT_LOGIN_WEBAUTHN, [])
+    if (!location.pathname.includes(l.LOGOUT.slug)) {
         url += `?next=${encodeURIComponent(location.pathname + location.search)}`
     }
 

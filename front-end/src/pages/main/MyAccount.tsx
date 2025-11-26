@@ -1,8 +1,9 @@
 import ErrorDialog from "@/components/error/error-dialog"
 import { Page } from "@/components/Page"
 import { Button } from "@/components/ui/button"
+import useLinkTree, { makeUrl } from "@/hooks/UseLinkTree"
 import { AxiosError } from "axios"
-import { useCallback, useEffect, useMemo, useState, type FC } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { Link, useLoaderData, useNavigate } from "react-router-dom"
 import { deleteAllauthClientV1AccountEmail, getAllauthClientV1AccountEmail, patchAllauthClientV1AccountEmail, putAllauthClientV1AccountEmail } from "../../api/endpoints/allauth"
@@ -14,8 +15,9 @@ interface EmailResponse {
     content: EmailAddressesResponse | undefined
 }
 
-const MyAccount: FC = () => {
+const MyAccount = () => {
     const { t } = useTranslation()
+    const l = useLinkTree()
     const navigate = useNavigate()
     const authenticators = useLoaderData<AuthenticatorList>()
 
@@ -46,13 +48,13 @@ const MyAccount: FC = () => {
                 .catch((error: unknown) => {
                     if (error instanceof AxiosError && error.response?.status === 403) {
                         // Too many email verification emails were already sent.
-                        navigate("/account/verify-email")
+                        navigate(makeUrl(l.ACCOUNT_VERIFY_EMAIL, []))
                         return
                     }
                     onEmailFailure()
                 })
         },
-        [navigate, onEmailFailure]
+        [navigate, l, onEmailFailure]
     )
 
     const deleteEmail = useCallback(
@@ -107,7 +109,7 @@ const MyAccount: FC = () => {
                         })}
                     </tbody>
                 </table>
-                <Link to="/account/my/email-addresses/add" data-cy="addEmailLink">
+                <Link to={makeUrl(l.MY_ACCOUNT__EMAIL_ADDRESSES__NEW, [])} data-cy="addEmailLink">
                     {t("MyAccount.add_email_address")}
                 </Link>
                 <h2>{t("MyAccount.passkeys")}</h2>
@@ -124,7 +126,7 @@ const MyAccount: FC = () => {
                             return (
                                 <tr key={key.id}>
                                     <td>
-                                        <Link to={`/account/my/passkeys/${key.id}`} data-cy="passkeyLink">
+                                        <Link to={makeUrl(l.MY_ACCOUNT__PASSKEYS__ID, [key])} data-cy="passkeyLink">
                                             {key.name}
                                         </Link>
                                     </td>
@@ -135,7 +137,7 @@ const MyAccount: FC = () => {
                         })}
                     </tbody>
                 </table>
-                <Link to="/account/my/passkeys/add" data-cy="addPasskeyLink">
+                <Link to={makeUrl(l.MY_ACCOUNT__PASSKEYS__NEW, [])} data-cy="addPasskeyLink">
                     {t("MyAccount.add_passkey")}
                 </Link>
             </div>

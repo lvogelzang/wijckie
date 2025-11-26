@@ -26,8 +26,22 @@
   "NavBar": {
     "settings": "Settings",
     "dashboard": "Dashboard",
-    "my_account": "My account",
     "logout": "Logout"
+  },
+  "MyAccount": {
+    "title": "My account",
+    "email_addresses": "E-mail addresses",
+    "passkeys": "Passkeys",
+    "email_address": "E-mail address",
+    "email_verified": "Verified",
+    "email_primary": "Primary",
+    "email_verify": "Verify",
+    "email_delete": "Delete",
+    "add_email_address": "Add e-mail address",
+    "passkey_name": "Name",
+    "passkey_created_at": "Created",
+    "passkey_last_used_at": "Last used",
+    "add_passkey": "Add passkey"
   },
   "Table": {
     "no_items_in_table": "No {{subject}}",
@@ -46,6 +60,35 @@
     "type_image": "Image",
     "plural_title": "Options",
     "plural_name": "options"
+  },
+  "Breadcrumbs": {
+    "new": "New"
+  },
+  "Dashboard": {
+    "title": "Dashboard"
+  },
+  "Modules": {
+    "title": "Modules"
+  },
+  "DailyTodosModule": {
+    "plural_title": "Daily todo's modules",
+    "plural_name": "daily todo's modules"
+  },
+  "DailyTodoOption": {
+    "plural_title": "Daily todo options",
+    "plural_name": "daily todo options"
+  },
+  "DailyTodoWidget": {
+    "plural_title": "Daily todo's widgets",
+    "plural_name": "daily todo's widgets"
+  },
+  "InspirationModule": {
+    "plural_title": "Inspiration modules",
+    "plural_name": "inspiration modules"
+  },
+  "InspirationWidget": {
+    "plural_title": "Inspiration widgets",
+    "plural_name": "inspiration widgets"
   },
   "AuthenticateWebAuthn": {
     "title": "Login",
@@ -97,51 +140,10 @@
     "title": "Add passkey",
     "submit_button": "Add"
   },
-  "Dashboard": {
-    "title": "Dashboard"
-  },
-  "Modules": {
-    "title": "Modules"
-  },
-  "MyAccount": {
-    "title": "My account",
-    "email_addresses": "E-mail addresses",
-    "email_address": "E-mail address",
-    "email_verified": "Verified",
-    "email_primary": "Primary",
-    "email_verify": "Verify",
-    "email_delete": "Delete",
-    "add_email_address": "Add e-mail address",
-    "passkeys": "Passkeys",
-    "passkey_name": "Name",
-    "passkey_created_at": "Created",
-    "passkey_last_used_at": "Last used",
-    "add_passkey": "Add passkey"
-  },
   "UpdatePasskey": {
     "title": "Update passkey",
     "name": "Name",
     "submit_button": "Save",
     "delete_button": "Delete"
-  },
-  "DailyTodoOption": {
-    "plural_title": "Daily todo options",
-    "plural_name": "daily todo options"
-  },
-  "DailyTodosModule": {
-    "plural_title": "Daily todo's modules",
-    "plural_name": "daily todo's modules"
-  },
-  "DailyTodoWidget": {
-    "plural_title": "Daily todo's widgets",
-    "plural_name": "daily todo's widgets"
-  },
-  "InspirationModule": {
-    "plural_title": "Inspiration modules",
-    "plural_name": "inspiration modules"
-  },
-  "InspirationWidget": {
-    "plural_title": "Inspiration widgets",
-    "plural_name": "inspiration widgets"
   }
 }

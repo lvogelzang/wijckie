@@ -26,8 +26,22 @@
   "NavBar": {
     "settings": "Instellingen",
     "dashboard": "Dashboard",
-    "my_account": "Mijn account",
     "logout": "Uitloggen"
+  },
+  "MyAccount": {
+    "title": "Mijn account",
+    "email_addresses": "E-mailadressen",
+    "passkeys": "Passkeys",
+    "email_address": "E-mailadres",
+    "email_verified": "Geverifieerd",
+    "email_primary": "Primair",
+    "email_verify": "Verifieer",
+    "email_delete": "Verwijder",
+    "add_email_address": "Voeg e-mailadres toe",
+    "passkey_name": "Naam",
+    "passkey_created_at": "Aangemaakt",
+    "passkey_last_used_at": "Laatst gebruikt",
+    "add_passkey": "Voeg passkey toe"
   },
   "Table": {
     "no_items_in_table": "Geen {{subject}}",
@@ -46,6 +60,35 @@
     "type_image": "Afbeelding",
     "plural_title": "Opties",
     "plural_name": "opties"
+  },
+  "Breadcrumbs": {
+    "new": "New"
+  },
+  "Dashboard": {
+    "title": "Dashboard"
+  },
+  "Modules": {
+    "title": "Modules"
+  },
+  "DailyTodosModule": {
+    "plural_title": "Dagelijkse todo's modules",
+    "plural_name": "dagelijkse todo's modules"
+  },
+  "DailyTodoOption": {
+    "plural_title": "Todo's",
+    "plural_name": "todo's"
+  },
+  "DailyTodoWidget": {
+    "plural_title": "Dagelijkse todo's widgets",
+    "plural_name": "dagelijkse todo's widgets"
+  },
+  "InspirationModule": {
+    "plural_title": "Inspiratiemodules",
+    "plural_name": "inspiratiemodules"
+  },
+  "InspirationWidget": {
+    "plural_title": "Inspiratiewidgets",
+    "plural_name": "inspiratiewidgets"
   },
   "AuthenticateWebAuthn": {
     "title": "Login",
@@ -97,51 +140,10 @@
     "title": "Passkey toevoegen",
     "submit_button": "Voeg toe"
   },
-  "Dashboard": {
-    "title": "Dashboard"
-  },
-  "Modules": {
-    "title": "Modules"
-  },
-  "MyAccount": {
-    "title": "Mijn account",
-    "email_addresses": "E-mailadressen",
-    "email_address": "E-mailadres",
-    "email_verified": "Geverifieerd",
-    "email_primary": "Primair",
-    "email_verify": "Verifieer",
-    "email_delete": "Verwijder",
-    "add_email_address": "Voeg e-mailadres toe",
-    "passkeys": "Passkeys",
-    "passkey_name": "Naam",
-    "passkey_created_at": "Aangemaakt",
-    "passkey_last_used_at": "Laatst gebruikt",
-    "add_passkey": "Voeg passkey toe"
-  },
   "UpdatePasskey": {
     "title": "Passkey bewerken",
     "name": "Naam",
     "submit_button": "Opslaan",
     "delete_button": "Verwijder"
-  },
-  "DailyTodoOption": {
-    "plural_title": "Todo's",
-    "plural_name": "todo's"
-  },
-  "DailyTodosModule": {
-    "plural_title": "Dagelijkse todo's modules",
-    "plural_name": "dagelijkse todo's modules"
-  },
-  "DailyTodoWidget": {
-    "plural_title": "Dagelijkse todo's widgets",
-    "plural_name": "dagelijkse todo's widgets"
-  },
-  "InspirationModule": {
-    "plural_title": "Inspiratiemodules",
-    "plural_name": "inspiratiemodules"
-  },
-  "InspirationWidget": {
-    "plural_title": "Inspiratiewidgets",
-    "plural_name": "inspiratiewidgets"
   }
 }

@@ -1,3 +1,4 @@
+import useLinkTree, { makeUrl } from "@/hooks/UseLinkTree"
 import { useMemo, type ReactNode } from "react"
 import { Navigate } from "react-router-dom"
 import type { AuthenticatorType, FlowId } from "./allauth"
@@ -13,6 +14,7 @@ interface Props {
 
 const AnonymousRoute = ({ flowId, authenticatorType, children }: Props) => {
     const { isAuthenticated, pendingFlow } = useAuth()
+    const l = useLinkTree()
 
     const getPathForFlow = useGetPathForFlow()
     const getFlowDetails = useGetFlowDetails()
@@ -22,7 +24,7 @@ const AnonymousRoute = ({ flowId, authenticatorType, children }: Props) => {
     const pendingFlowAuthenticatorId = useMemo(() => pendingFlowDetails?.authenticatorType, [pendingFlowDetails])
 
     if (isAuthenticated) {
-        return <Navigate to="/dashboard" />
+        return <Navigate to={makeUrl(l.DASHBOARD, [])} />
     } else if (pendingFlowId && (pendingFlowId !== flowId || (pendingFlowAuthenticatorId && pendingFlowAuthenticatorId !== authenticatorType))) {
         return <Navigate to={getPathForFlow(pendingFlowId, pendingFlowAuthenticatorId)} />
     } else {

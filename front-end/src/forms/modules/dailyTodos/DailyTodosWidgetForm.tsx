@@ -3,6 +3,7 @@ import { FormTitle } from "@/components/form/form-title"
 import SaveAndDelete from "@/components/form/SaveAndDelete"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import useLinkTree, { makeUrl } from "@/hooks/UseLinkTree"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useCallback } from "react"
 import { useForm, type SubmitHandler } from "react-hook-form"
@@ -25,6 +26,7 @@ const formSchema = z.object({
 
 const DailyTodosWidgetForm = ({ mode, module, widget }: Props) => {
     const { t } = useTranslation()
+    const l = useLinkTree()
     const navigate = useNavigate()
     const { handleFormErrors } = useErrorHandler()
     const create = useDailyTodosWidgetsCreate()
@@ -39,8 +41,8 @@ const DailyTodosWidgetForm = ({ mode, module, widget }: Props) => {
     })
 
     const onSuccess = useCallback(() => {
-        navigate(`/modules/daily-todos/${module.id}`)
-    }, [navigate, module])
+        navigate(makeUrl(l.MODULES__DAILY_TODOS__ID, [module]))
+    }, [navigate, l, module])
 
     const onError = useCallback(
         (error: unknown) => {

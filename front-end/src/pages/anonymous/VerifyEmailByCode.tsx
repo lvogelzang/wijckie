@@ -4,8 +4,9 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import useLinkTree, { makeUrl } from "@/hooks/UseLinkTree"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useCallback, type FC } from "react"
+import { useCallback } from "react"
 import { useForm, type SubmitHandler } from "react-hook-form"
 import { Trans, useTranslation } from "react-i18next"
 import { Link, useNavigate } from "react-router-dom"
@@ -18,8 +19,9 @@ const formSchema = z.object({
     key: z.string().length(6),
 })
 
-const VerifyEmailByCode: FC = () => {
+const VerifyEmailByCode = () => {
     const { t } = useTranslation()
+    const l = useLinkTree()
     const navigate = useNavigate()
     const { handleFormErrors } = useErrorHandler()
 
@@ -31,8 +33,8 @@ const VerifyEmailByCode: FC = () => {
     })
 
     const onSuccess = useCallback(() => {
-        navigate("/account/signup/passkey/create")
-    }, [navigate])
+        navigate(makeUrl(l.ACCOUNT_SIGNUP_PASSKEY_CREATE, []))
+    }, [navigate, l])
 
     const onFailure = useCallback(
         (error: unknown) => {
@@ -79,7 +81,7 @@ const VerifyEmailByCode: FC = () => {
                     <p>
                         <Trans i18nKey="VerifyEmailByCode.already_an_account">
                             Already have an account? Go to
-                            <Link to="/account/logout">Login</Link>.
+                            <Link to={makeUrl(l.LOGOUT, [])}>Login</Link>.
                         </Trans>
                     </p>
                 </div>

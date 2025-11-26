@@ -1,3 +1,5 @@
+import useLinkTree, { makeUrl } from "@/hooks/UseLinkTree"
+import type { TitleStyle } from "@/types/TitleStyle"
 import type { ColumnDef } from "@tanstack/react-table"
 import { useMemo } from "react"
 import { useTranslation } from "react-i18next"
@@ -8,11 +10,13 @@ import Table from "../../../components/table/Table"
 import type { TableButtonDef } from "../../../components/table/TableButtonDef"
 
 interface Props {
+    titleStyle: TitleStyle
     module: DailyTodosModule
 }
 
-const DailyTodoOptionTable = ({ module }: Props) => {
+const DailyTodoOptionTable = ({ titleStyle, module }: Props) => {
     const { t } = useTranslation()
+    const l = useLinkTree()
     const dataQuery = useDailyTodoOptionsList({ module: module.id })
 
     const columns = useMemo((): ColumnDef<DailyTodoOption>[] => {
@@ -21,7 +25,7 @@ const DailyTodoOptionTable = ({ module }: Props) => {
                 id: "name",
                 header: t("Main.name"),
                 cell: ({ row }) => (
-                    <Link to={`/modules/daily-todos/${module.id}/options/${row.original.id}`} data-cy="dailyTodosOptionLink">
+                    <Link to={makeUrl(l.MODULES__DAILY_TODOS__ID__OPTIONS__ID, [module, row.original])} data-cy="dailyTodosOptionLink">
                         {row.original.name}
                     </Link>
                 ),
@@ -32,19 +36,29 @@ const DailyTodoOptionTable = ({ module }: Props) => {
                 cell: ({ row }) => <div>{row.original.text}</div>,
             },
         ]
-    }, [t, module])
+    }, [t, l, module])
 
     const buttons = useMemo((): TableButtonDef[] => {
         return [
             {
                 id: "newDailyTodosOption",
                 label: t("Main.new"),
-                link: `/modules/daily-todos/${module.id}/options/new`,
+                link: makeUrl(l.MODULES__DAILY_TODOS__ID__OPTIONS__NEW, [module]),
             },
         ]
-    }, [t, module])
+    }, [t, l, module])
 
-    return <Table id="DailyTodoOptions" title={t("DailyTodoOption.plural_title")} columns={columns} buttons={buttons} subject={t("DailyTodoOption.plural_name")} dataQuery={dataQuery} />
+    return (
+        <Table
+            id="DailyTodoOptions"
+            title={t("DailyTodoOption.plural_title")}
+            titleStyle={titleStyle}
+            columns={columns}
+            buttons={buttons}
+            subject={t("DailyTodoOption.plural_name")}
+            dataQuery={dataQuery}
+        />
+    )
 }
 
 export default DailyTodoOptionTable

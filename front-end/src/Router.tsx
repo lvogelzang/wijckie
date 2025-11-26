@@ -1,9 +1,10 @@
-import { useContext, useEffect, useState, type FC } from "react"
+import { useContext, useEffect, useState } from "react"
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom"
 import { AuthenticatorTypes, Flows } from "./auth/allauth"
 import AnonymousRoute from "./auth/AnonymousRoute"
 import { AuthContext } from "./auth/AuthContext"
 import AuthenticatedRoute from "./auth/AuthenticatedRoute"
+import useLinkTree, { makePath } from "./hooks/UseLinkTree"
 import { listAuthenticators } from "./loaders/listAuthenticators"
 import AuthenticateWebAuthn from "./pages/anonymous/AuthenticateWebAuthn"
 import ConfirmLoginCode from "./pages/anonymous/ConfirmLoginCode"
@@ -26,7 +27,7 @@ import InspirationOptionPage from "./pages/modules/inspiration/InspirationOption
 import InspirationWidgetPage from "./pages/modules/inspiration/InspirationWidgetPage"
 import Root from "./Root"
 
-const createRouter = () => {
+const createRouter = (l: ReturnType<typeof useLinkTree>) => {
     return createBrowserRouter([
         {
             path: "/",
@@ -35,10 +36,10 @@ const createRouter = () => {
                 {
                     path: "",
                     index: true,
-                    element: <Navigate to="/dashboard" />,
+                    element: <Navigate to={makePath(l.DASHBOARD)} />,
                 },
                 {
-                    path: "/account/authenticate/webauthn",
+                    path: makePath(l.ACCOUNT_LOGIN_WEBAUTHN),
                     element: (
                         <AnonymousRoute flowId={Flows.MFA_AUTHENTICATE} authenticatorType={AuthenticatorTypes.WEBAUTHN}>
                             <AuthenticateWebAuthn />
@@ -46,7 +47,7 @@ const createRouter = () => {
                     ),
                 },
                 {
-                    path: "/account/login/code",
+                    path: makePath(l.ACCOUNT_LOGIN_CODE),
                     element: (
                         <AnonymousRoute flowId={Flows.LOGIN_BY_CODE}>
                             <RequestLoginCode />
@@ -54,7 +55,7 @@ const createRouter = () => {
                     ),
                 },
                 {
-                    path: "/account/login/code/confirm",
+                    path: makePath(l.ACCOUNT_LOGIN_CODE_CONFIRM),
                     element: (
                         <AnonymousRoute flowId={Flows.LOGIN_BY_CODE}>
                             <ConfirmLoginCode />
@@ -62,7 +63,7 @@ const createRouter = () => {
                     ),
                 },
                 {
-                    path: "/account/signup/passkey",
+                    path: makePath(l.ACCOUNT_SIGNUP_PASSKEY),
                     element: (
                         <AnonymousRoute>
                             <SignupByPasskey />
@@ -70,7 +71,7 @@ const createRouter = () => {
                     ),
                 },
                 {
-                    path: "/account/signup/passkey/create",
+                    path: makePath(l.ACCOUNT_SIGNUP_PASSKEY_CREATE),
                     element: (
                         <AnonymousRoute flowId={Flows.MFA_WEBAUTHN_SIGNUP} authenticatorType={AuthenticatorTypes.WEBAUTHN}>
                             <CreateSignupPasskey />
@@ -78,11 +79,11 @@ const createRouter = () => {
                     ),
                 },
                 {
-                    path: "/account/verify-email",
+                    path: makePath(l.ACCOUNT_VERIFY_EMAIL),
                     element: <VerifyEmailByCode />,
                 },
                 {
-                    path: "/account/my",
+                    path: makePath(l.MY_ACCOUNT),
                     element: (
                         <AuthenticatedRoute>
                             <MyAccount />
@@ -91,7 +92,7 @@ const createRouter = () => {
                     loader: listAuthenticators,
                 },
                 {
-                    path: "/account/my/email-addresses/add",
+                    path: makePath(l.MY_ACCOUNT__EMAIL_ADDRESSES__NEW),
                     element: (
                         <AuthenticatedRoute>
                             <AddEmailAddress />
@@ -99,7 +100,7 @@ const createRouter = () => {
                     ),
                 },
                 {
-                    path: "/account/my/passkeys/add",
+                    path: makePath(l.MY_ACCOUNT__PASSKEYS__NEW),
                     element: (
                         <AuthenticatedRoute>
                             <CreatePasskey />
@@ -107,7 +108,7 @@ const createRouter = () => {
                     ),
                 },
                 {
-                    path: "/account/my/passkeys/:id",
+                    path: makePath(l.MY_ACCOUNT__PASSKEYS__ID),
                     element: (
                         <AuthenticatedRoute>
                             <UpdatePasskey />
@@ -116,7 +117,7 @@ const createRouter = () => {
                     loader: listAuthenticators,
                 },
                 {
-                    path: "/account/logout",
+                    path: makePath(l.LOGOUT),
                     element: (
                         <AuthenticatedRoute>
                             <Logout />
@@ -124,7 +125,7 @@ const createRouter = () => {
                     ),
                 },
                 {
-                    path: "/dashboard",
+                    path: makePath(l.DASHBOARD),
                     element: (
                         <AuthenticatedRoute>
                             <Dashboard />
@@ -132,7 +133,7 @@ const createRouter = () => {
                     ),
                 },
                 {
-                    path: "/modules",
+                    path: makePath(l.MODULES),
                     element: (
                         <AuthenticatedRoute>
                             <Modules />
@@ -140,7 +141,7 @@ const createRouter = () => {
                     ),
                 },
                 {
-                    path: "/modules/daily-todos/new",
+                    path: makePath(l.MODULES__DAILY_TODOS__NEW),
                     element: (
                         <AuthenticatedRoute>
                             <DailyTodosModulePage mode="Create" />
@@ -148,7 +149,7 @@ const createRouter = () => {
                     ),
                 },
                 {
-                    path: "/modules/daily-todos/:moduleId",
+                    path: makePath(l.MODULES__DAILY_TODOS__ID),
                     element: (
                         <AuthenticatedRoute>
                             <DailyTodosModulePage mode="Update" />
@@ -156,7 +157,7 @@ const createRouter = () => {
                     ),
                 },
                 {
-                    path: "/modules/daily-todos/:moduleId/options/new",
+                    path: makePath(l.MODULES__DAILY_TODOS__ID__OPTIONS__NEW),
                     element: (
                         <AuthenticatedRoute>
                             <DailyTodoOptionPage mode="Create" />
@@ -164,7 +165,7 @@ const createRouter = () => {
                     ),
                 },
                 {
-                    path: "/modules/daily-todos/:moduleId/options/:optionId",
+                    path: makePath(l.MODULES__DAILY_TODOS__ID__OPTIONS__ID),
                     element: (
                         <AuthenticatedRoute>
                             <DailyTodoOptionPage mode="Update" />
@@ -172,7 +173,7 @@ const createRouter = () => {
                     ),
                 },
                 {
-                    path: "/modules/daily-todos/:moduleId/widgets/new",
+                    path: makePath(l.MODULES__DAILY_TODOS__ID__WIDGETS__NEW),
                     element: (
                         <AuthenticatedRoute>
                             <DailyTodosWidgetPage mode="Create" />
@@ -180,7 +181,7 @@ const createRouter = () => {
                     ),
                 },
                 {
-                    path: "/modules/daily-todos/:moduleId/widgets/:widgetId",
+                    path: makePath(l.MODULES__DAILY_TODOS__ID__WIDGETS__ID),
                     element: (
                         <AuthenticatedRoute>
                             <DailyTodosWidgetPage mode="Update" />
@@ -188,7 +189,7 @@ const createRouter = () => {
                     ),
                 },
                 {
-                    path: "/modules/inspiration/new",
+                    path: makePath(l.MODULES__INSPIRATION__NEW),
                     element: (
                         <AuthenticatedRoute>
                             <InspirationModulePage mode="Create" />
@@ -196,7 +197,7 @@ const createRouter = () => {
                     ),
                 },
                 {
-                    path: "/modules/inspiration/:moduleId",
+                    path: makePath(l.MODULES__INSPIRATION__ID),
                     element: (
                         <AuthenticatedRoute>
                             <InspirationModulePage mode="Update" />
@@ -204,7 +205,7 @@ const createRouter = () => {
                     ),
                 },
                 {
-                    path: "/modules/inspiration/:moduleId/options/new",
+                    path: makePath(l.MODULES__INSPIRATION__ID__OPTIONS__NEW),
                     element: (
                         <AuthenticatedRoute>
                             <InspirationOptionPage mode="Create" />
@@ -212,7 +213,7 @@ const createRouter = () => {
                     ),
                 },
                 {
-                    path: "/modules/inspiration/:moduleId/options/:optionId",
+                    path: makePath(l.MODULES__INSPIRATION__ID__OPTIONS__ID),
                     element: (
                         <AuthenticatedRoute>
                             <InspirationOptionPage mode="Update" />
@@ -220,7 +221,7 @@ const createRouter = () => {
                     ),
                 },
                 {
-                    path: "/modules/inspiration/:moduleId/widgets/new",
+                    path: makePath(l.MODULES__INSPIRATION__ID__WIDGETS__NEW),
                     element: (
                         <AuthenticatedRoute>
                             <InspirationWidgetPage mode="Create" />
@@ -228,7 +229,7 @@ const createRouter = () => {
                     ),
                 },
                 {
-                    path: "/modules/inspiration/:moduleId/widgets/:widgetId",
+                    path: makePath(l.MODULES__INSPIRATION__ID__WIDGETS__ID),
                     element: (
                         <AuthenticatedRoute>
                             <InspirationWidgetPage mode="Update" />
@@ -237,22 +238,23 @@ const createRouter = () => {
                 },
                 {
                     path: "*",
-                    element: <Navigate to="/dashboard" />,
+                    element: <Navigate to={makePath(l.DASHBOARD)} />,
                 },
             ],
         },
     ])
 }
 
-const Router: FC = () => {
+const Router = () => {
     // If we create the router globally, the loaders of the routes already trigger
     // even before the <AuthContext/> trigger the initial loading of the auth state.
     const [router, setRouter] = useState<ReturnType<typeof createBrowserRouter>>()
     const authContext = useContext(AuthContext)
+    const l = useLinkTree()
 
     useEffect(() => {
         if (authContext) {
-            setRouter(createRouter())
+            setRouter(createRouter(l))
         }
     }, [authContext])
 

@@ -1,3 +1,4 @@
+import type { TitleStyle } from "@/types/TitleStyle"
 import type { UseQueryResult } from "@tanstack/react-query"
 import { flexRender, getCoreRowModel, useReactTable, type ColumnDef, type PaginationState } from "@tanstack/react-table"
 import { useEffect, useState } from "react"
@@ -17,6 +18,7 @@ interface PageResponseType<Type> {
 interface Props<Type> {
     id: string
     title: string
+    titleStyle: TitleStyle
     columns: ColumnDef<Type, unknown>[]
     links?: TableLinkDef[]
     buttons?: TableButtonDef[]
@@ -25,7 +27,7 @@ interface Props<Type> {
     defaultPageSize?: number
 }
 
-const Table = <Type,>({ id, title, columns, links, buttons, dataQuery, subject, defaultPageSize }: Props<Type>) => {
+const Table = <Type,>({ id, title, titleStyle, columns, links, buttons, dataQuery, subject, defaultPageSize }: Props<Type>) => {
     const { t } = useTranslation()
     const getPaginationValue = useGetPaginationValue()
     const getPaginationCacheKey = useGetPaginationCacheKey()
@@ -56,7 +58,7 @@ const Table = <Type,>({ id, title, columns, links, buttons, dataQuery, subject, 
     return (
         <div>
             <div>
-                <h2>{title}</h2>
+                {titleStyle === "Page" ? <h2 className="mb-0">{title}</h2> : <h4 className="mb-0">{title}</h4>}
                 <TableLinks links={links} />
                 <TableButtons buttons={buttons} />
             </div>
