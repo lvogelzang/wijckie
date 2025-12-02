@@ -5,6 +5,7 @@ from generate.utils.naming import strip_path, to_camel, to_snake
 class BaseModelField:
     type = "Not implemented!"
     editing_mode = "Not implemented!"
+    optional = "Not implemented!"
 
     def refers_to_parent(self):
         return False
@@ -35,7 +36,10 @@ class BaseModelField:
         return imports
 
     def get_args(self):
-        return []
+        args = []
+        if self.optional:
+            args.append("null=True")
+        return args
 
     def get_validators(self):
         return []
@@ -64,6 +68,9 @@ class BaseModelField:
             args.append("read_only=True")
         elif self.editing_mode == EditingMode.READ_WRITE_ONCE and not for_create:
             args.append("read_only=True")
+
+        if self.optional:
+            args.append("required=False")
 
         return f"{to_camel(self.name)} = {strip_path(self.django_serializer_class)}({", ".join(args)})"
 

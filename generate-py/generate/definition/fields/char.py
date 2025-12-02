@@ -10,6 +10,7 @@ class Char(BaseModelField):
         self,
         name,
         editing_mode,
+        optional,
         min_length,
         max_length,
         in_table,
@@ -17,6 +18,7 @@ class Char(BaseModelField):
     ):
         self.name = name
         self.editing_mode = editing_mode
+        self.optional = optional
         self.min_length = min_length
         self.max_length = max_length
         self.in_table = in_table
@@ -24,12 +26,18 @@ class Char(BaseModelField):
 
     # Generate definitions
 
-    def generate(name, _):
+    def generate(name, suggestions):
         editing_mode = input('   Enter editing mode ("read write"): ')
         editing_mode = (
             EditingMode(editing_mode)
             if len(editing_mode) > 0
             else EditingMode.READ_WRITE
+        )
+
+        suggested_optional = suggestions.get("optional", "false")
+        optional = input('   Enter optional ("{suggested_optional}"): ')
+        optional = (
+            optional == "true" if len(optional) > 0 else suggested_optional == "true"
         )
 
         min_length = input('   Enter min length (""): ')
@@ -54,6 +62,7 @@ class Char(BaseModelField):
         return Char(
             name,
             editing_mode,
+            optional,
             min_length,
             max_length,
             in_table,
@@ -66,6 +75,7 @@ class Char(BaseModelField):
         return Char(
             dict.get("name"),
             EditingMode(dict.get("editingMode")),
+            dict.get("optional"),
             dict.get("minLength", None),
             dict.get("maxLength", None),
             dict.get("inTable"),
@@ -77,6 +87,7 @@ class Char(BaseModelField):
             "name": self.name,
             "type": self.type.value,
             "editingMode": self.editing_mode.value,
+            "optional": self.optional,
             "inTable": self.in_table,
             "isObjectLinkInTable": self.is_object_link_in_table,
         }
@@ -97,7 +108,7 @@ class Char(BaseModelField):
         return super().get_imports()
 
     def get_args(self):
-        args = []
+        args = super().get_args()
         if self.max_length is not None:
             args.append(f"max_length = {self.max_length}")
         return args

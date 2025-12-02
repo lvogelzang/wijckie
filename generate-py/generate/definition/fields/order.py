@@ -9,6 +9,7 @@ class Order(BaseModelField):
     def __init__(self, name):
         self.name = name
         self.editing_mode = EditingMode.READ_WRITE
+        self.optional = False
 
     # Generate definitions
 
@@ -31,7 +32,9 @@ class Order(BaseModelField):
         return super().get_imports()
 
     def get_args(self):
-        return ["default=0"]
+        args = super().get_args()
+        args.append("default=0")
+        return args
 
     def get_validators(self):
         return []

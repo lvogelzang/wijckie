@@ -1,10 +1,10 @@
 import fs from "fs";
+import { writeForm } from "./utils/formGeneration";
 import { getModels, ModelDefinitions } from "./utils/modelDefinitions";
 import { toCamel, toPascal } from "./utils/naming";
-import { writeTable } from "./utils/tableGeneration";
 import { getUrlMap } from "./utils/urlMap";
 
-const tablesDirectory = `/Users/lodewijckvogelzang/git/wijckie/front-end/src/tables/modules`;
+const formsDirectory = `/Users/lodewijckvogelzang/git/wijckie/front-end/src/forms/modules`;
 const directory = "/Users/lodewijckvogelzang/git/wijckie/generate/modules";
 fs.readdirSync(directory).forEach((file) => {
   const moduleName = file.substring(0, file.indexOf("."));
@@ -13,13 +13,13 @@ fs.readdirSync(directory).forEach((file) => {
 
   const urlMap = getUrlMap(moduleName, content);
 
-  const moduleTablesDirectory = `${tablesDirectory}/${toCamel(moduleName)}`;
-  if (!fs.existsSync(moduleTablesDirectory)) {
-    fs.mkdirSync(moduleTablesDirectory);
+  const moduleFormsDirectory = `${formsDirectory}/${toCamel(moduleName)}`;
+  if (!fs.existsSync(moduleFormsDirectory)) {
+    fs.mkdirSync(moduleFormsDirectory);
   }
   for (const model of getModels(content)) {
-    const output = writeTable(urlMap, model);
-    const path = `${moduleTablesDirectory}/${toPascal(model.name)}Table.tsx`;
+    const output = writeForm(urlMap, moduleName, model);
+    const path = `${moduleFormsDirectory}/${toPascal(model.name)}Form.tsx`;
     fs.writeFileSync(path, output);
   }
 });

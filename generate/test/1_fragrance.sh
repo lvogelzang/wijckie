@@ -8,6 +8,9 @@ send "fragrance\r"
 expect -exact {Enter the name of the module model ("fragrance module"): }
 send "\r"
 
+expect -exact {Enter the short name ("module"): }
+send "\r"
+
 expect -exact {Enter the plural name ("fragrance modules"): }
 send "\r"
 
@@ -27,6 +30,9 @@ expect -exact { Enter optional filters space-separated (""): }
 send "\r"
 
 expect -exact {Enter the name of the widget model ("fragrance widget"): }
+send "\r"
+
+expect -exact {Enter the short name ("widget"): }
 send "\r"
 
 expect -exact {Enter the plural name ("fragrance widgets"): }
@@ -50,6 +56,9 @@ send "\r"
 expect -exact {Enter the name of the an extra class (""): }
 send "fragrance item\r"
 
+expect -exact {Enter the short name ("item"): }
+send "\r"
+
 expect -exact {Enter the plural name ("fragrance items"): }
 send "\r"
 
@@ -59,10 +68,13 @@ send "\r"
 expect -exact { Enter the name of the next field (""): }
 send "module\r"
 
-expect -exact {  Enter the type ["char", "text", "foreign key", "created at", "date time", "fixed enum value", "integer", "order"] ("foreign key"): }
+expect -exact {  Enter the type ["char", "text", "foreign key", "created at", "date time", "date", "fixed enum value", "integer", "order", "file"] ("foreign key"): }
 send "foreign key\r"
 
 expect -exact {   Enter editing mode ("read write once"): }
+send "\r"
+
+expect -exact {   Enter optional ("false"): }
 send "\r"
 
 expect -exact {   Enter to ("wijckie_models.modules.fragrance.FragranceModule"): }
@@ -80,10 +92,13 @@ send "\r"
 expect -exact { Enter the name of the next field (""): }
 send "name\r"
 
-expect -exact {  Enter the type ["char", "text", "foreign key", "created at", "date time", "fixed enum value", "integer", "order"]: }
+expect -exact {  Enter the type ["char", "text", "foreign key", "created at", "date time", "date", "fixed enum value", "integer", "order", "file"]: }
 send "char\r"
 
 expect -exact {   Enter editing mode ("read write"): }
+send "\r"
+
+expect -exact {   Enter optional ("false"): }
 send "\r"
 
 expect -exact {   Enter min length (""): }
@@ -101,10 +116,13 @@ send "\r"
 expect -exact { Enter the name of the next field (""): }
 send "brand\r"
 
-expect -exact {  Enter the type ["char", "text", "foreign key", "created at", "date time", "fixed enum value", "integer", "order"]: }
+expect -exact {  Enter the type ["char", "text", "foreign key", "created at", "date time", "date", "fixed enum value", "integer", "order", "file"]: }
 send "char\r"
 
 expect -exact {   Enter editing mode ("read write"): }
+send "\r"
+
+expect -exact {   Enter optional ("false"): }
 send "\r"
 
 expect -exact {   Enter min length (""): }
@@ -122,10 +140,13 @@ send "\r"
 expect -exact { Enter the name of the next field (""): }
 send "price\r"
 
-expect -exact {  Enter the type ["char", "text", "foreign key", "created at", "date time", "fixed enum value", "integer", "order"]: }
+expect -exact {  Enter the type ["char", "text", "foreign key", "created at", "date time", "date", "fixed enum value", "integer", "order", "file"]: }
 send "integer\r"
 
 expect -exact {   Enter editing mode ("read write"): }
+send "\r"
+
+expect -exact {   Enter optional ("false"): }
 send "\r"
 
 expect -exact {   Enter min value (""): }
@@ -140,10 +161,13 @@ send "false\r"
 expect -exact { Enter the name of the next field (""): }
 send "volume in cl\r"
 
-expect -exact {  Enter the type ["char", "text", "foreign key", "created at", "date time", "fixed enum value", "integer", "order"]: }
+expect -exact {  Enter the type ["char", "text", "foreign key", "created at", "date time", "date", "fixed enum value", "integer", "order", "file"]: }
 send "integer\r"
 
 expect -exact {   Enter editing mode ("read write"): }
+send "\r"
+
+expect -exact {   Enter optional ("false"): }
 send "\r"
 
 expect -exact {   Enter min value (""): }
@@ -158,10 +182,13 @@ send "false\r"
 expect -exact { Enter the name of the next field (""): }
 send "first tried at\r"
 
-expect -exact {  Enter the type ["char", "text", "foreign key", "created at", "date time", "fixed enum value", "integer", "order"]: }
+expect -exact {  Enter the type ["char", "text", "foreign key", "created at", "date time", "date", "fixed enum value", "integer", "order", "file"]: }
 send "date time\r"
 
 expect -exact {   Enter editing mode ("read write"): }
+send "\r"
+
+expect -exact {   Enter optional ("false"): }
 send "\r"
 
 expect -exact {   Enter show in front-end tables ("true"): }
@@ -170,10 +197,13 @@ send "false\r"
 expect -exact { Enter the name of the next field (""): }
 send "rating\r"
 
-expect -exact {  Enter the type ["char", "text", "foreign key", "created at", "date time", "fixed enum value", "integer", "order"]: }
+expect -exact {  Enter the type ["char", "text", "foreign key", "created at", "date time", "date", "fixed enum value", "integer", "order", "file"]: }
 send "integer\r"
 
 expect -exact {   Enter editing mode ("read write"): }
+send "\r"
+
+expect -exact {   Enter optional ("false"): }
 send "\r"
 
 expect -exact {   Enter min value (""): }

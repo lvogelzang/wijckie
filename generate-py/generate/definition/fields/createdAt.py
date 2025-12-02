@@ -9,6 +9,7 @@ class CreatedAt(BaseModelField):
     def __init__(self, name, in_table):
         self.name = name
         self.editing_mode = EditingMode.READ_ONLY
+        self.optional = False
         self.in_table = in_table
 
     # Generate definitions
@@ -40,7 +41,9 @@ class CreatedAt(BaseModelField):
         return imports
 
     def get_args(self):
-        return ["default=timezone.now"]
+        args = super().get_args()
+        args.append("default=timezone.now")
+        return args
 
     def get_validators(self):
         return []

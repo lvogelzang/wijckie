@@ -6,6 +6,7 @@ class Id(BaseModelField):
     def __init__(self):
         self.name = "id"
         self.editing_mode = EditingMode.READ_ONLY
+        self.optional = False
 
     # Django serializer
 

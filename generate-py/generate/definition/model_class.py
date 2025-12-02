@@ -7,6 +7,7 @@ class ModelClass:
     def __init__(
         self,
         name,
+        short_name,
         plural_name,
         short_plural_name,
         fields,
@@ -15,6 +16,7 @@ class ModelClass:
         optional_query_filters,
     ):
         self.name = name
+        self.short_name = short_name
         self.plural_name = plural_name
         self.short_plural_name = short_plural_name
         self.fields = fields
@@ -27,6 +29,7 @@ class ModelClass:
     def from_dict(dict):
         return ModelClass(
             name=dict["name"],
+            short_name=dict["shortName"],
             plural_name=dict["pluralName"],
             short_plural_name=dict["shortPluralName"],
             fields=list(map(lambda d: ModelFieldFactory.from_dict(d), dict["fields"])),
@@ -38,6 +41,7 @@ class ModelClass:
     def to_dict(self):
         return {
             "name": self.name,
+            "shortName": self.short_name,
             "pluralName": self.plural_name,
             "shortPluralName": self.short_plural_name,
             "fields": list(map(lambda f: f.to_dict(), self.fields)),

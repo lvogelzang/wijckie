@@ -10,3 +10,5 @@ class ModelFieldType(Enum):
     FIXED_ENUM_VALUE = "fixed enum value"
     CREATED_AT = "created at"
     ORDER = "order"
+    DATE = "date"
+    FILE = "file"

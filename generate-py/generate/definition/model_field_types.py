@@ -1,6 +1,8 @@
 from generate.definition.fields.char import Char
 from generate.definition.fields.createdAt import CreatedAt
+from generate.definition.fields.date import Date
 from generate.definition.fields.dateTime import DateTime
+from generate.definition.fields.file import File
 from generate.definition.fields.fixedEnumValue import FixedEnumValue
 from generate.definition.fields.foreignKey import ForeignKey
 from generate.definition.fields.integer import Integer
@@ -20,9 +22,11 @@ ALL_MODEL_FIELD_TYPES = [
     ForeignKey,
     CreatedAt,
     DateTime,
+    Date,
     FixedEnumValue,
     Integer,
     Order,
+    File,
 ]
 ALL_MODEL_FIELD_TYPE_VALUES = list(map(lambda c: c.type.value, ALL_MODEL_FIELD_TYPES))
 

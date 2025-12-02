@@ -9,7 +9,7 @@ interface ExtractedConst {
   fields: Record<string, string | number | boolean | FunctionField | null>;
 }
 
-export function generateLinkTreeFile(items: ExtractedConst[]): string {
+export function writeLinkTree(items: ExtractedConst[]): string {
   const IMPORTS = [
     `import type { StaticUrlItem, VariableUrlItem } from "@/helpers/LinkTreeHelper"`,
     `import { useMemo } from "react"`,

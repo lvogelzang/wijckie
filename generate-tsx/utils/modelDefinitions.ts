@@ -1,6 +1,16 @@
-export type ModelFieldType = "";
+export type ModelFieldType =
+  | "char"
+  | "text"
+  | "integer"
+  | "foreign key"
+  | "date"
+  | "date time"
+  | "fixed enum value"
+  | "created at"
+  | "order"
+  | "file";
 
-export type EditingMode = "read only";
+export type EditingMode = "read only" | "read write" | "read write once";
 
 export interface ModelField {
   name: string;
@@ -11,10 +21,15 @@ export interface ModelField {
   isParent?: boolean;
   inTable?: boolean;
   isObjectLinkInTable?: boolean;
+  minLength?: number;
+  maxLength?: number;
+  minValue?: number;
+  maxValue?: number;
 }
 
 export interface ModelClass {
   name: string;
+  shortName: string;
   pluralName: string;
   shortPluralName: string;
   fields: ModelField[];
@@ -28,3 +43,11 @@ export interface ModelDefinitions {
   widgets: ModelClass[];
   extraClasses: ModelClass[];
 }
+
+export const getModels = (definitions: ModelDefinitions) => {
+  return [
+    definitions.module,
+    ...definitions.widgets,
+    ...definitions.extraClasses,
+  ];
+};

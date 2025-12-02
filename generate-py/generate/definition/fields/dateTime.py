@@ -6,14 +6,15 @@ from generate.definition.model_field_type import ModelFieldType
 class DateTime(BaseModelField):
     type = ModelFieldType.DATE_TIME
 
-    def __init__(self, name, editing_mode, in_table):
+    def __init__(self, name, editing_mode, optional, in_table):
         self.name = name
         self.editing_mode = editing_mode
+        self.optional = optional
         self.in_table = in_table
 
     # Generate definitions
 
-    def generate(name, _):
+    def generate(name, suggestions):
         editing_mode = input('   Enter editing mode ("read write"): ')
         editing_mode = (
             EditingMode(editing_mode)
@@ -21,10 +22,16 @@ class DateTime(BaseModelField):
             else EditingMode.READ_WRITE
         )
 
+        suggested_optional = suggestions.get("optional", "false")
+        optional = input('   Enter optional ("{suggested_optional}"): ')
+        optional = (
+            optional == "true" if len(optional) > 0 else suggested_optional == "true"
+        )
+
         in_table = input('   Enter show in front-end tables ("true"): ')
         in_table = in_table == "true" if len(in_table) > 0 else True
 
-        return DateTime(name, editing_mode, in_table)
+        return DateTime(name, editing_mode, optional, in_table)
 
     # Serialize
 
@@ -32,6 +39,7 @@ class DateTime(BaseModelField):
         return DateTime(
             dict.get("name"),
             EditingMode(dict.get("editingMode")),
+            dict.get("optional"),
             dict.get("inTable"),
         )
 
@@ -40,6 +48,7 @@ class DateTime(BaseModelField):
             "name": self.name,
             "type": self.type.value,
             "editingMode": self.editing_mode.value,
+            "optional": self.optional,
             "inTable": self.in_table,
         }
 
@@ -51,7 +60,7 @@ class DateTime(BaseModelField):
         return super().get_imports()
 
     def get_args(self):
-        return []
+        return super().get_args()
 
     def get_validators(self):
         return []

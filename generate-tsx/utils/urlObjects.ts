@@ -1,4 +1,4 @@
-import { ExtractedConst } from "../extractLinkTree";
+import { ExtractedConst } from "./extractLinkTree";
 import { ModelClass } from "./modelDefinitions";
 import {
   strip_module_name,

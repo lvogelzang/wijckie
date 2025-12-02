@@ -1,31 +1,15 @@
-from enum import Enum
-
 from generate.definition.editing_mode import EditingMode
 from generate.definition.fields.base import BaseModelField
 from generate.definition.model_field_type import ModelFieldType
-from generate.utils.naming import strip_path, strip_path_except_last
 
 
-class OnDelete(Enum):
-    CASCADE = "django.db.models.CASCADE"
+class File(BaseModelField):
+    type = ModelFieldType.FILE
 
-
-class ForeignKey(BaseModelField):
-    type = ModelFieldType.FOREIGN_KEY
-
-    def __init__(
-        self, name, editing_mode, optional, to, on_delete, is_parent, in_table
-    ):
+    def __init__(self, name, editing_mode, in_table):
         self.name = name
         self.editing_mode = editing_mode
-        self.optional = optional
-        self.foreign_key_to = to  # path relative from wijckie_models (e.g: User or modules.dailyTodos.DailyTodosModule)
-        self.on_delete = on_delete
-        self.is_parent = is_parent
         self.in_table = in_table
-
-    def refers_to_parent(self):
-        return self.is_parent
 
     # Generate definitions
 
@@ -38,46 +22,20 @@ class ForeignKey(BaseModelField):
             else EditingMode(suggested_editing_mode)
         )
 
-        suggested_optional = suggestions.get("optional", "false")
-        optional = input('   Enter optional ("{suggested_optional}"): ')
-        optional = (
-            optional == "true" if len(optional) > 0 else suggested_optional == "true"
-        )
-
-        suggested_to = suggestions.get("to", None)
-        to = input(
-            '   Enter to (e.g: "wijckie_models.modules.dailyTodos.DailyTodosModule"): '
-            if suggested_to is None
-            else f'   Enter to ("{suggested_to}"): '
-        )
-        to = suggested_to if len(to) == 0 else to
-
-        on_delete = input('   Enter on_delete ("cascade"): ')
-        on_delete = OnDelete(on_delete) if len(on_delete) > 0 else OnDelete.CASCADE
-
-        is_parent = input('   Enter is_parent ("true"): ')
-        is_parent = is_parent == "true" if len(is_parent) > 0 else True
-
         suggested_in_table = name not in ["module", "widget"]
         in_table = input(
             f'   Enter show in front-end tables ("{"true" if suggested_in_table else "false"}"): '
         )
         in_table = in_table == "true" if len(in_table) > 0 else suggested_in_table
 
-        return ForeignKey(
-            name, editing_mode, optional, to, on_delete, is_parent, in_table
-        )
+        return File(name, editing_mode, in_table)
 
     # Serialize
 
     def from_dict(dict):
-        return ForeignKey(
+        return File(
             dict.get("name"),
             EditingMode(dict.get("editingMode")),
-            dict.get("optional"),
-            dict.get("to", None),
-            OnDelete(dict.get("onDelete")),
-            dict.get("isParent", False),
             dict.get("inTable"),
         )
 
@@ -86,10 +44,6 @@ class ForeignKey(BaseModelField):
             "name": self.name,
             "type": self.type.value,
             "editingMode": self.editing_mode.value,
-            "optional": self.optional,
-            "to": self.foreign_key_to,
-            "onDelete": self.on_delete.value,
-            "isParent": self.is_parent,
             "inTable": self.in_table,
         }
 
@@ -98,15 +52,16 @@ class ForeignKey(BaseModelField):
     django_model_class = "django.db.models.ForeignKey"
 
     def get_imports(self):
-        imports = [self.foreign_key_to]
+        imports = ["wijckie_models.fileUpload.FileUpload"]
         imports.extend(super().get_imports())
         return imports
 
     def get_args(self):
-        args = [strip_path(self.foreign_key_to)]
-        args.extend(super().get_args())
-        args.append(f"on_delete={strip_path_except_last(self.on_delete.value)}")
-        return args
+        return [
+            "FileUpload",
+            "null=True",
+            "on_delete=models.CASCADE",
+        ]
 
     def get_validators(self):
         return []
@@ -121,9 +76,9 @@ class ForeignKey(BaseModelField):
     def get_django_serializer_args(self, for_create):
         args = []
         if self.editing_mode == EditingMode.READ_WRITE:
-            args.append(f"queryset={strip_path(self.foreign_key_to)}.objects.all()")
+            args.append(f"queryset=FileUpload.objects.all()")
         elif self.editing_mode == EditingMode.READ_WRITE_ONCE and for_create:
-            args.append(f"queryset={strip_path(self.foreign_key_to)}.objects.all()")
+            args.append(f"queryset=FileUpload.objects.all()")
 
         return args
 

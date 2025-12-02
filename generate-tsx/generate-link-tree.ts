@@ -1,16 +1,14 @@
 import fs from "fs";
-import { ExtractedConst, extractUrlObjects } from "./extractLinkTree";
-import { generateLinkTreeFile } from "./generateLinkTree";
+import { writeLinkTree } from "./utils/LinkTreeGeneration";
+import { ExtractedConst, extractUrlObjects } from "./utils/extractLinkTree";
 import { ModelDefinitions } from "./utils/modelDefinitions";
 import { getUrlMap } from "./utils/urlMap";
 import { toUrlObjects } from "./utils/urlObjects";
 
 const path =
   "/Users/lodewijckvogelzang/git/wijckie/front-end/src/hooks/UseLinkTree.ts";
-
 const code = fs.readFileSync(path, "utf8");
 const urlObjects = extractUrlObjects(code);
-
 const addUrlObjects = (newUrlObjects: ExtractedConst[]) => {
   for (const newUrlObject of newUrlObjects) {
     if (urlObjects.find((o) => o.name === newUrlObject.name) === undefined) {
@@ -36,6 +34,5 @@ fs.readdirSync(directory).forEach((file) => {
 });
 
 urlObjects.sort((a, b) => a.name.localeCompare(b.name));
-const output = generateLinkTreeFile(urlObjects);
-
+const output = writeLinkTree(urlObjects);
 fs.writeFileSync(path, output);

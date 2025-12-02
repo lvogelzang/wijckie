@@ -23,16 +23,20 @@ def create_models(module_name):
 
 
 def _create_module(module_name):
-    name, plural_name, short_plural_name = _model_names(module_name, "module")
+    name, short_name, plural_name, short_plural_name = _model_names(
+        module_name, "module"
+    )
     return _create_model(
         module_name,
         name,
+        short_name,
         plural_name,
         short_plural_name,
         [
             ForeignKey(
                 name="user",
                 editing_mode=EditingMode.READ_ONLY,
+                optional=False,
                 to="wijckie_models.user.User",
                 on_delete=OnDelete.CASCADE,
                 is_parent=False,
@@ -46,6 +50,7 @@ def _create_module(module_name):
             Char(
                 name="name",
                 editing_mode=EditingMode.READ_WRITE,
+                optional=False,
                 min_length=1,
                 max_length=30,
                 in_table=True,
@@ -57,17 +62,21 @@ def _create_module(module_name):
 
 
 def _create_widgets(module_name, module_model):
-    name, plural_name, short_plural_name = _model_names(module_name, "widget")
+    name, short_name, plural_name, short_plural_name = _model_names(
+        module_name, "widget"
+    )
     return [
         _create_model(
             module_name,
             name,
+            short_name,
             plural_name,
             short_plural_name,
             [
                 ForeignKey(
                     name="module",
                     editing_mode=EditingMode.READ_WRITE_ONCE,
+                    optional=False,
                     to=f"wijckie_models.modules.{to_camel(module_name)}.{to_pascal(module_model.name)}",
                     on_delete=OnDelete.CASCADE,
                     is_parent=True,
@@ -77,6 +86,7 @@ def _create_widgets(module_name, module_model):
                 Char(
                     name="name",
                     editing_mode=EditingMode.READ_WRITE,
+                    optional=False,
                     min_length=1,
                     max_length=30,
                     in_table=True,
@@ -94,8 +104,13 @@ def _create_extra_classes(module_name, module, widgets):
         name = input('Enter the name of the an extra class (""): ')
         if len(name) == 0:
             break
+
+        short_name = input(f'Enter the short name ("{name.split(" ")[-1]}"): ')
+        short_name = short_name if len(short_name) > 0 else name.split(" ")[-1]
+
         plural_name = input(f'Enter the plural name ("{name}s"): ')
         plural_name = plural_name if len(plural_name) > 0 else f"{name}s"
+
         short_plural_name = input(
             f'Enter the short plural name ("{plural_name.split(" ")[-1]}"): '
         )
@@ -104,10 +119,12 @@ def _create_extra_classes(module_name, module, widgets):
             if len(short_plural_name) > 0
             else plural_name.split(" ")[-1]
         )
+
         extra_classes.append(
             _create_model(
                 module_name,
                 name,
+                short_name,
                 plural_name,
                 short_plural_name,
                 [],
@@ -119,14 +136,17 @@ def _create_extra_classes(module_name, module, widgets):
 
 
 def _model_names(module_name, model_type):
-    model_name_suggestion = f"{module_name} {model_type}"
-    model_name = input(
-        f"Enter the name of the {model_type} model {f'("{model_name_suggestion}")' if model_name_suggestion is not None else ""}: "
+    name_suggestion = f"{module_name} {model_type}"
+    name = input(
+        f"Enter the name of the {model_type} model {f'("{name_suggestion}")' if name_suggestion is not None else ""}: "
     )
-    model_name = model_name if len(model_name) > 0 else model_name_suggestion
+    name = name if len(name) > 0 else name_suggestion
 
-    plural_name = input(f'Enter the plural name ("{model_name}s"): ')
-    plural_name = plural_name if len(plural_name) > 0 else f"{model_name}s"
+    short_name = input(f'Enter the short name ("{name.split(" ")[-1]}"): ')
+    short_name = short_name if len(short_name) > 0 else name.split(" ")[-1]
+
+    plural_name = input(f'Enter the plural name ("{name}s"): ')
+    plural_name = plural_name if len(plural_name) > 0 else f"{name}s"
 
     short_plural_name = input(
         f'Enter the short plural name ("{plural_name.split(" ")[-1]}"): '
@@ -135,12 +155,13 @@ def _model_names(module_name, model_type):
         short_plural_name if len(short_plural_name) > 0 else plural_name.split(" ")[-1]
     )
 
-    return model_name, plural_name, short_plural_name
+    return name, short_name, plural_name, short_plural_name
 
 
 def _create_model(
     module_name,
     name,
+    short_name,
     plural_name,
     short_plural_name,
     default_fields,
@@ -185,6 +206,7 @@ def _create_model(
     optional_query_filters = _get_optional_query_filters(default_optional_query_filters)
     return ModelClass(
         name,
+        short_name,
         plural_name,
         short_plural_name,
         fields,
@@ -204,15 +226,18 @@ def _create_fields(module_name, module, widgets):
         suggested_type = None
         suggested_editing_mode = None
         suggested_to = None
+        suggested_optional = None
         if field_name == "module" and module is not None:
             suggested_type = "foreign key"
             suggested_editing_mode = "read write once"
             suggested_to = f"wijckie_models.modules.{to_camel(module_name)}.{to_pascal(module.name)}"
+            suggested_optional = "false"
         elif field_name == "widget" and widgets is not None and len(widgets) > 0:
             widget = widgets[0]
             suggested_type = "foreign key"
             suggested_editing_mode = "read write once"
             suggested_to = f"wijckie_models.modules.{to_camel(module_name)}.{to_pascal(widget.name)}"
+            suggested_optional = "false"
 
         input_text = f"  Enter the type [{", ".join(list(map(lambda v: f'"{v}"', ALL_MODEL_FIELD_TYPE_VALUES)))}]"
         if suggested_type is not None:
@@ -225,7 +250,11 @@ def _create_fields(module_name, module, widgets):
         cls = resolve_model_field_class(field_type)
         field = cls.generate(
             field_name,
-            {"editing_mode": suggested_editing_mode, "to": suggested_to},
+            {
+                "editing_mode": suggested_editing_mode,
+                "to": suggested_to,
+                "suggested_optional": suggested_optional,
+            },
         )
         fields.append(field)
     return fields
