@@ -4,8 +4,7 @@ applications:
       phases:
         preBuild:
           commands:
-            - nvm use 20
-            - yarn install
+            - corepack enable && yarn install
         build:
           commands:
             - GENERATE_SOURCEMAP=false yarn run build

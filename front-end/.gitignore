@@ -27,3 +27,6 @@ translation_old.json
 .eslintcache
 
 !src/lib/
+
+# Yarn
+.yarn
