@@ -22,9 +22,7 @@ const InspirationWidgetPage = ({ mode }: Props) => {
 
     return (
         <Page variant="configuration">
-            <div>
-                <InspirationWidgetForm mode={mode} module={module!} widget={widget} />
-            </div>
+            <InspirationWidgetForm mode={mode} module={module!} widget={widget} />
         </Page>
     )
 }

@@ -21,11 +21,9 @@ const DailyTodosModulePage = ({ mode }: Props) => {
 
     return (
         <Page variant="configuration">
-            <div>
-                <DailyTodosModuleForm mode={mode} module={module} />
-                {mode === "Update" ? <DailyTodoOptionTable titleStyle="Section" module={module!} /> : null}
-                {mode === "Update" ? <DailyTodoWidgetTable titleStyle="Section" module={module!} /> : null}
-            </div>
+            <DailyTodosModuleForm mode={mode} module={module} />
+            {mode === "Update" ? <DailyTodoOptionTable titleStyle="Section" module={module!} /> : null}
+            {mode === "Update" ? <DailyTodoWidgetTable titleStyle="Section" module={module!} /> : null}
         </Page>
     )
 }

@@ -22,9 +22,7 @@ const InspirationOptionPage = ({ mode }: Props) => {
 
     return (
         <Page variant="configuration">
-            <div>
-                <InspirationOptionForm mode={mode} module={module!} option={option} />
-            </div>
+            <InspirationOptionForm mode={mode} module={module!} option={option} />
         </Page>
     )
 }

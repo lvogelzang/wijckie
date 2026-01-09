@@ -22,9 +22,7 @@ const DailyTodosWidgetPage = ({ mode }: Props) => {
 
     return (
         <Page variant="configuration">
-            <div>
-                <DailyTodosWidgetForm mode={mode} module={module!} widget={widget} />
-            </div>
+            <DailyTodosWidgetForm mode={mode} module={module!} widget={widget} />
         </Page>
     )
 }

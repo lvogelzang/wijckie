@@ -22,9 +22,7 @@ const DailyTodoOptionPage = ({ mode }: Props) => {
 
     return (
         <Page variant="configuration">
-            <div>
-                <DailyTodoOptionForm mode={mode} module={module!} option={option} />
-            </div>
+            <DailyTodoOptionForm mode={mode} module={module!} option={option} />
         </Page>
     )
 }
