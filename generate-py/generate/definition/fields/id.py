@@ -1,5 +1,6 @@
 from generate.definition.editing_mode import EditingMode
 from generate.definition.fields.base import BaseModelField
+from generate.definition.translation_utils import get_predefined_field_translations
 
 
 class Id(BaseModelField):

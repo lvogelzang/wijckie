@@ -1,10 +1,10 @@
 import fs from "fs";
 import { getClassMap } from "./utils/classMap";
-import { writeForm } from "./utils/formGeneration";
 import { getModels, ModelDefinitions } from "./utils/modelDefinitions";
 import { toCamel, toPascal } from "./utils/naming";
+import { writePage } from "./utils/pageGeneration";
 
-const formsDirectory = `/Users/lodewijckvogelzang/git/wijckie/front-end/src/forms/modules`;
+const pagesDirectory = `/Users/lodewijckvogelzang/git/wijckie/front-end/src/pages/modules`;
 const directory = "/Users/lodewijckvogelzang/git/wijckie/generate/modules";
 fs.readdirSync(directory).forEach((file) => {
   const moduleName = file.substring(0, file.indexOf("."));
@@ -13,13 +13,13 @@ fs.readdirSync(directory).forEach((file) => {
 
   const classMap = getClassMap(moduleName, content);
 
-  const moduleFormsDirectory = `${formsDirectory}/${toCamel(moduleName)}`;
-  if (!fs.existsSync(moduleFormsDirectory)) {
-    fs.mkdirSync(moduleFormsDirectory);
+  const modulePagesDirectory = `${pagesDirectory}/${toCamel(moduleName)}`;
+  if (!fs.existsSync(modulePagesDirectory)) {
+    fs.mkdirSync(modulePagesDirectory);
   }
   for (const model of getModels(content)) {
-    const output = writeForm(classMap, moduleName, model);
-    const path = `${moduleFormsDirectory}/${toPascal(model.name)}Form.tsx`;
+    const output = writePage(classMap, moduleName, model);
+    const path = `${modulePagesDirectory}/${toPascal(model.name)}Page.tsx`;
     fs.writeFileSync(path, output);
   }
 });

@@ -6,6 +6,7 @@ class BaseModelField:
     type = "Not implemented!"
     editing_mode = "Not implemented!"
     optional = "Not implemented!"
+    translations = "Not implemented!"
 
     def refers_to_parent(self):
         return False
@@ -73,9 +74,6 @@ class BaseModelField:
             args.append("required=False")
 
         return f"{to_camel(self.name)} = {strip_path(self.django_serializer_class)}({", ".join(args)})"
-
-    def include_in_create(self):
-        return self.editing_mode != EditingMode.READ_ONLY
 
     def get_django_serializer_imports(self):
         imports = []

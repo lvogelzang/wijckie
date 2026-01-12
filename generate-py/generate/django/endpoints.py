@@ -65,11 +65,6 @@ def _get_classes(module_name, models):
         )
         filterset_fields = list(filter(lambda f: f != "user", filterset_fields))
 
-        create_fields = list(
-            filter(
-                lambda f: f.include_in_create(), model.get_django_serializer_fields()
-            )
-        )
         classes.append(
             {
                 "name": f"{to_pascal(model.name)}",
@@ -80,10 +75,10 @@ def _get_classes(module_name, models):
                     map(lambda f: f.to_django_serializer_field(False), fields)
                 ),
                 "createFieldNames": ", ".join(
-                    list(map(lambda f: f'"{to_camel(f.name)}"', create_fields))
+                    list(map(lambda f: f'"{to_camel(f.name)}"', fields))
                 ),
                 "createFields": list(
-                    map(lambda f: f.to_django_serializer_field(True), create_fields)
+                    map(lambda f: f.to_django_serializer_field(True), fields)
                 ),
                 "addUserToCreate": any(f.name == "user" for f in fields),
                 "filtersetFields": ", ".join(

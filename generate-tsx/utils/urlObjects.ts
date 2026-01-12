@@ -1,3 +1,4 @@
+import { ClassMap } from "./classMap";
 import { ExtractedConst } from "./extractLinkTree";
 import { ModelClass } from "./modelDefinitions";
 import {
@@ -10,24 +11,23 @@ import {
 } from "./naming";
 
 export const toUrlObjects = (
-  urlMap: Map<
-    string,
-    { idName: string; newName: string; parentArgs: string[] }
-  >,
+  classMap: ClassMap,
   moduleName: string,
   input: ModelClass
 ) => {
   const parentField = input.fields.find((f) => !!f.isParent);
   return !parentField
     ? toModuleUrlObjects(moduleName, input)
-    : toChildUrlObjects(urlMap, moduleName, input, stripPath(parentField.to!));
+    : toChildUrlObjects(
+        classMap,
+        moduleName,
+        input,
+        stripPath(parentField.to!)
+      );
 };
 
 const toChildUrlObjects = (
-  urlMap: Map<
-    string,
-    { idName: string; newName: string; parentArgs: string[] }
-  >,
+  classMap: ClassMap,
   moduleName: string,
   input: ModelClass,
   parentClass: string
@@ -39,31 +39,33 @@ const toChildUrlObjects = (
 
   return [
     {
-      name: `${urlMap.get(parentClass)!.idName}__${upperSnakePluralName}`,
+      name: `${classMap.get(parentClass)!.idName}__${upperSnakePluralName}`,
       tsType: "StaticUrlItem",
       fields: {
         slug: toKebab(strip_module_name(moduleName, input.pluralName)),
-        parent: urlMap.get(parentClass)!.idName,
-        title: `t("${pascalModelName}.plural_title")`,
+        parent: classMap.get(parentClass)!.idName,
+        title: `t("${pascalModelName}.plural_name")`,
         hasPage: false,
       },
     },
     {
-      name: `${urlMap.get(parentClass)!.idName}__${upperSnakePluralName}__NEW`,
+      name: `${
+        classMap.get(parentClass)!.idName
+      }__${upperSnakePluralName}__NEW`,
       tsType: "StaticUrlItem",
       fields: {
         slug: "new",
-        parent: `${urlMap.get(parentClass)!.idName}__${upperSnakePluralName}`,
+        parent: `${classMap.get(parentClass)!.idName}__${upperSnakePluralName}`,
         title: 't("Breadcrumbs.new")',
         hasPage: true,
       },
     },
     {
-      name: `${urlMap.get(parentClass)!.idName}__${upperSnakePluralName}__ID`,
+      name: `${classMap.get(parentClass)!.idName}__${upperSnakePluralName}__ID`,
       tsType: "VariableUrlItem",
       fields: {
         variable: `${toCamel(input.name)}Id`,
-        parent: `${urlMap.get(parentClass)!.idName}__${upperSnakePluralName}`,
+        parent: `${classMap.get(parentClass)!.idName}__${upperSnakePluralName}`,
         toTitle: {
           params: ["item"],
           body: `(item as ${pascalModelName})?.name ?? ""`,
@@ -90,7 +92,7 @@ const toModuleUrlObjects = (moduleName: string, input: ModelClass) => {
       fields: {
         slug: toKebab(moduleName),
         parent: "MODULES",
-        title: `t("${pascalModelName}.plural_title")`,
+        title: `t("${pascalModelName}.plural_name")`,
         hasPage: false,
       },
     },

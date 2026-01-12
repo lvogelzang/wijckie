@@ -4,6 +4,7 @@ from generate.definition.fields.createdAt import CreatedAt
 from generate.definition.fields.fixedEnumValue import FixedEnumValue
 from generate.definition.fields.foreignKey import ForeignKey, OnDelete
 from generate.definition.fields.order import Order
+from generate.definition.inputs.translationsInput import model_translations_input
 from generate.definition.model_class import ModelClass
 from generate.definition.model_definitions import ModelDefinitions
 from generate.definition.model_field_type import ModelFieldType
@@ -11,6 +12,7 @@ from generate.definition.model_field_types import (
     ALL_MODEL_FIELD_TYPE_VALUES,
     resolve_model_field_class,
 )
+from generate.definition.translation_utils import get_predefined_field_translations
 from generate.utils.naming import to_camel, to_pascal, to_snake, to_upper_snake
 
 
@@ -23,7 +25,7 @@ def create_models(module_name):
 
 
 def _create_module(module_name):
-    name, short_name, plural_name, short_plural_name = _model_names(
+    name, short_name, plural_name, short_plural_name, translations = _model_names(
         module_name, "module"
     )
     return _create_model(
@@ -32,9 +34,11 @@ def _create_module(module_name):
         short_name,
         plural_name,
         short_plural_name,
+        translations,
         [
             ForeignKey(
                 name="user",
+                translations=get_predefined_field_translations("user"),
                 editing_mode=EditingMode.READ_ONLY,
                 optional=False,
                 to="wijckie_models.user.User",
@@ -42,13 +46,18 @@ def _create_module(module_name):
                 is_parent=False,
                 in_table=False,
             ),
-            CreatedAt("created at", in_table=False),
+            CreatedAt(
+                "created at",
+                get_predefined_field_translations("created at"),
+                in_table=False,
+            ),
             FixedEnumValue(
                 "type",
                 f"wijckie_models.module.ModuleType.{to_upper_snake(module_name)}",
             ),
             Char(
                 name="name",
+                translations=get_predefined_field_translations("name"),
                 editing_mode=EditingMode.READ_WRITE,
                 optional=False,
                 min_length=1,
@@ -62,7 +71,7 @@ def _create_module(module_name):
 
 
 def _create_widgets(module_name, module_model):
-    name, short_name, plural_name, short_plural_name = _model_names(
+    name, short_name, plural_name, short_plural_name, translations = _model_names(
         module_name, "widget"
     )
     return [
@@ -72,9 +81,11 @@ def _create_widgets(module_name, module_model):
             short_name,
             plural_name,
             short_plural_name,
+            translations,
             [
                 ForeignKey(
                     name="module",
+                    translations=get_predefined_field_translations("module"),
                     editing_mode=EditingMode.READ_WRITE_ONCE,
                     optional=False,
                     to=f"wijckie_models.modules.{to_camel(module_name)}.{to_pascal(module_model.name)}",
@@ -82,9 +93,14 @@ def _create_widgets(module_name, module_model):
                     is_parent=True,
                     in_table=False,
                 ),
-                CreatedAt("created at", in_table=False),
+                CreatedAt(
+                    "created at",
+                    get_predefined_field_translations("created at"),
+                    in_table=False,
+                ),
                 Char(
                     name="name",
+                    translations=get_predefined_field_translations("name"),
                     editing_mode=EditingMode.READ_WRITE,
                     optional=False,
                     min_length=1,
@@ -120,6 +136,8 @@ def _create_extra_classes(module_name, module, widgets):
             else plural_name.split(" ")[-1]
         )
 
+        translations = model_translations_input(name, plural_name)
+
         extra_classes.append(
             _create_model(
                 module_name,
@@ -127,6 +145,7 @@ def _create_extra_classes(module_name, module, widgets):
                 short_name,
                 plural_name,
                 short_plural_name,
+                translations,
                 [],
                 module=module,
                 widgets=widgets,
@@ -155,7 +174,9 @@ def _model_names(module_name, model_type):
         short_plural_name if len(short_plural_name) > 0 else plural_name.split(" ")[-1]
     )
 
-    return name, short_name, plural_name, short_plural_name
+    translations = model_translations_input(name, plural_name)
+
+    return name, short_name, plural_name, short_plural_name, translations
 
 
 def _create_model(
@@ -164,6 +185,7 @@ def _create_model(
     short_name,
     plural_name,
     short_plural_name,
+    translations,
     default_fields,
     default_ordering=None,
     default_initial_query_filters=None,
@@ -209,6 +231,7 @@ def _create_model(
         short_name,
         plural_name,
         short_plural_name,
+        translations,
         fields,
         ordering,
         initial_query_filters,
@@ -223,39 +246,53 @@ def _create_fields(module_name, module, widgets):
         if len(field_name) == 0:
             break
 
-        suggested_type = None
-        suggested_editing_mode = None
-        suggested_to = None
-        suggested_optional = None
         if field_name == "module" and module is not None:
-            suggested_type = "foreign key"
-            suggested_editing_mode = "read write once"
-            suggested_to = f"wijckie_models.modules.{to_camel(module_name)}.{to_pascal(module.name)}"
-            suggested_optional = "false"
+            suggestion = {
+                "type": "foreign key",
+                "translations": get_predefined_field_translations("module"),
+                "editing_mode": "read write once",
+                "optional": False,
+                "to": f"wijckie_models.modules.{to_camel(module_name)}.{to_pascal(module.name)}",
+                "on_delete": "django.db.models.CASCADE",
+                "is_parent": True,
+                "in_table": False,
+            }
         elif field_name == "widget" and widgets is not None and len(widgets) > 0:
             widget = widgets[0]
-            suggested_type = "foreign key"
-            suggested_editing_mode = "read write once"
-            suggested_to = f"wijckie_models.modules.{to_camel(module_name)}.{to_pascal(widget.name)}"
-            suggested_optional = "false"
+            suggestion = {
+                "type": "foreign key",
+                "translations": get_predefined_field_translations("widget"),
+                "editing_mode": "read write once",
+                "optional": False,
+                "to": f"wijckie_models.modules.{to_camel(module_name)}.{to_pascal(widget.name)}",
+                "on_delete": "django.db.models.CASCADE",
+                "is_parent": True,
+                "in_table": False,
+            }
+        elif field_name == "name":
+            suggestion = {
+                "type": "char",
+                "translations": get_predefined_field_translations("name"),
+                "editing_mode": "read write",
+                "optional": False,
+                "in_table": True,
+                "is_object_link_in_table": True,
+                "min_length": 1,
+                "max_length": 30,
+            }
+        else:
+            suggestion = {}
 
         input_text = f"  Enter the type [{", ".join(list(map(lambda v: f'"{v}"', ALL_MODEL_FIELD_TYPE_VALUES)))}]"
-        if suggested_type is not None:
-            input_text += f' ("{suggested_type}")'
+        if suggestion.get("type", None) is not None:
+            input_text += f' ("{suggestion.get("type")}")'
         input_text += ": "
 
         field_type = input(input_text)
-        field_type = suggested_type if len(field_type) == 0 else field_type
+        field_type = suggestion.get("type") if len(field_type) == 0 else field_type
 
         cls = resolve_model_field_class(field_type)
-        field = cls.generate(
-            field_name,
-            {
-                "editing_mode": suggested_editing_mode,
-                "to": suggested_to,
-                "suggested_optional": suggested_optional,
-            },
-        )
+        field = cls.generate(field_name, suggestion)
         fields.append(field)
     return fields
 

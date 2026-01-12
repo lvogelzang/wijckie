@@ -1,8 +1,8 @@
 import fs from "fs";
 import { writeLinkTree } from "./utils/LinkTreeGeneration";
+import { getClassMap } from "./utils/classMap";
 import { ExtractedConst, extractUrlObjects } from "./utils/extractLinkTree";
 import { ModelDefinitions } from "./utils/modelDefinitions";
-import { getUrlMap } from "./utils/urlMap";
 import { toUrlObjects } from "./utils/urlObjects";
 
 const path =
@@ -23,13 +23,13 @@ fs.readdirSync(directory).forEach((file) => {
   const moduleDefinition = fs.readFileSync(`${directory}/${file}`, "utf8");
   const content = JSON.parse(moduleDefinition) as ModelDefinitions;
 
-  const urlMap = getUrlMap(moduleName, content);
-  addUrlObjects(toUrlObjects(urlMap, moduleName, content.module));
+  const classMap = getClassMap(moduleName, content);
+  addUrlObjects(toUrlObjects(classMap, moduleName, content.module));
   for (const widget of content.widgets) {
-    addUrlObjects(toUrlObjects(urlMap, moduleName, widget));
+    addUrlObjects(toUrlObjects(classMap, moduleName, widget));
   }
   for (const extraClass of content.extraClasses) {
-    addUrlObjects(toUrlObjects(urlMap, moduleName, extraClass));
+    addUrlObjects(toUrlObjects(classMap, moduleName, extraClass));
   }
 });
 

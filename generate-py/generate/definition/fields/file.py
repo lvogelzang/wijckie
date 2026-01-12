@@ -1,40 +1,35 @@
 from generate.definition.editing_mode import EditingMode
 from generate.definition.fields.base import BaseModelField
+from generate.definition.inputs.booleanInput import boolean_input
+from generate.definition.inputs.enumInput import editing_mode_input
+from generate.definition.inputs.translationsInput import field_translations_input
 from generate.definition.model_field_type import ModelFieldType
 
 
 class File(BaseModelField):
     type = ModelFieldType.FILE
 
-    def __init__(self, name, editing_mode, in_table):
+    def __init__(self, name, translations, editing_mode, in_table):
         self.name = name
+        self.translations = translations
         self.editing_mode = editing_mode
         self.in_table = in_table
 
     # Generate definitions
 
     def generate(name, suggestions):
-        suggested_editing_mode = suggestions.get("editing_mode", "read write")
-        editing_mode = input(f'   Enter editing mode ("{suggested_editing_mode}"): ')
-        editing_mode = (
-            EditingMode(editing_mode)
-            if len(editing_mode) > 0
-            else EditingMode(suggested_editing_mode)
-        )
+        translations = field_translations_input(name, suggestions)
+        editing_mode = editing_mode_input(suggestions)
+        in_table = boolean_input("in_table", suggestions)
 
-        suggested_in_table = name not in ["module", "widget"]
-        in_table = input(
-            f'   Enter show in front-end tables ("{"true" if suggested_in_table else "false"}"): '
-        )
-        in_table = in_table == "true" if len(in_table) > 0 else suggested_in_table
-
-        return File(name, editing_mode, in_table)
+        return File(name, translations, editing_mode, in_table)
 
     # Serialize
 
     def from_dict(dict):
         return File(
             dict.get("name"),
+            dict.get("translations"),
             EditingMode(dict.get("editingMode")),
             dict.get("inTable"),
         )
@@ -42,6 +37,7 @@ class File(BaseModelField):
     def to_dict(self):
         return {
             "name": self.name,
+            "translations": self.translations,
             "type": self.type.value,
             "editingMode": self.editing_mode.value,
             "inTable": self.in_table,

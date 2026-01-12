@@ -1,35 +1,45 @@
 from generate.definition.editing_mode import EditingMode
 from generate.definition.fields.base import BaseModelField
+from generate.definition.inputs.booleanInput import boolean_input
 from generate.definition.model_field_type import ModelFieldType
+from generate.definition.translation_utils import get_predefined_field_translations
 
 
 class CreatedAt(BaseModelField):
     type = ModelFieldType.CREATED_AT
 
-    def __init__(self, name, in_table):
+    def __init__(self, name, translations, in_table):
         self.name = name
+        self.translations = translations
         self.editing_mode = EditingMode.READ_ONLY
         self.optional = False
         self.in_table = in_table
 
     # Generate definitions
 
-    def generate(name, _):
-        in_table = input('   Enter show in front-end tables ("false"): ')
-        in_table = in_table == "true" if len(in_table) > 0 else False
+    def generate(name, suggestions):
+        in_table = boolean_input("in_table", suggestions)
 
-        return CreatedAt(name, in_table)
+        return CreatedAt(
+            name, get_predefined_field_translations("created at"), in_table
+        )
 
     # Serialize
 
     def from_dict(dict):
         return CreatedAt(
             dict.get("name"),
+            dict.get("translations"),
             dict.get("inTable"),
         )
 
     def to_dict(self):
-        return {"name": self.name, "type": self.type.value, "inTable": self.in_table}
+        return {
+            "name": self.name,
+            "translations": self.translations,
+            "type": self.type.value,
+            "inTable": self.in_table,
+        }
 
     # Django model
 

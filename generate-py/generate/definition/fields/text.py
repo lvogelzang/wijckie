@@ -1,13 +1,27 @@
 from generate.definition.editing_mode import EditingMode
 from generate.definition.fields.base import BaseModelField
+from generate.definition.inputs.booleanInput import boolean_input, optional_input
+from generate.definition.inputs.enumInput import editing_mode_input
+from generate.definition.inputs.numberInput import number_input
+from generate.definition.inputs.translationsInput import field_translations_input
 from generate.definition.model_field_type import ModelFieldType
 
 
 class Text(BaseModelField):
     type = ModelFieldType.TEXT
 
-    def __init__(self, name, editing_mode, optional, min_length, max_length, in_table):
+    def __init__(
+        self,
+        name,
+        translations,
+        editing_mode,
+        optional,
+        min_length,
+        max_length,
+        in_table,
+    ):
         self.name = name
+        self.translations = translations
         self.editing_mode = editing_mode
         self.optional = optional
         self.min_length = min_length
@@ -17,35 +31,23 @@ class Text(BaseModelField):
     # Generate definitions
 
     def generate(name, suggestions):
-        editing_mode = input('   Enter editing mode ("read write"): ')
-        editing_mode = (
-            EditingMode(editing_mode)
-            if len(editing_mode) > 0
-            else EditingMode.READ_WRITE
+        translations = field_translations_input(name, suggestions)
+        editing_mode = editing_mode_input(suggestions)
+        optional = optional_input(suggestions)
+        min_length = number_input("min_length", suggestions, None)
+        max_length = number_input("max_length", suggestions, None)
+        in_table = boolean_input("in_table", suggestions)
+
+        return Text(
+            name, translations, editing_mode, optional, min_length, max_length, in_table
         )
-
-        suggested_optional = suggestions.get("optional", "false")
-        optional = input('   Enter optional ("{suggested_optional}"): ')
-        optional = (
-            optional == "true" if len(optional) > 0 else suggested_optional == "true"
-        )
-
-        min_length = input('   Enter min length (""): ')
-        min_length = int(min_length) if len(min_length) > 0 else None
-
-        max_length = input('   Enter max length (""): ')
-        max_length = int(max_length) if len(max_length) > 0 else None
-
-        in_table = input('   Enter show in front-end tables ("true"): ')
-        in_table = in_table == "true" if len(in_table) > 0 else True
-
-        return Text(name, editing_mode, optional, min_length, max_length, in_table)
 
     # Serialize
 
     def from_dict(dict):
         return Text(
             dict.get("name"),
+            dict.get("translations"),
             EditingMode(dict.get("editingMode")),
             dict.get("optional"),
             dict.get("minLength", None),
@@ -56,6 +58,7 @@ class Text(BaseModelField):
     def to_dict(self):
         dict = {
             "name": self.name,
+            "translations": self.translations,
             "type": self.type.value,
             "editingMode": self.editing_mode.value,
             "optional": self.optional,

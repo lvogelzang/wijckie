@@ -1,6 +1,7 @@
 from generate.definition.editing_mode import EditingMode
 from generate.definition.fields.base import BaseModelField
 from generate.definition.model_field_type import ModelFieldType
+from generate.definition.translation_utils import get_predefined_field_translations
 
 
 class Order(BaseModelField):
@@ -19,10 +20,15 @@ class Order(BaseModelField):
     # Serialize
 
     def from_dict(dict):
-        return Order(dict.get("name"))
+        return Order(
+            dict.get("name"),
+        )
 
     def to_dict(self):
-        return {"name": self.name, "type": self.type.value}
+        return {
+            "name": self.name,
+            "type": self.type.value,
+        }
 
     # Django model
 

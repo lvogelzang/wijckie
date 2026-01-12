@@ -1,11 +1,13 @@
+import { ClassMap } from "./classMap";
 import { ModelClass, ModelField } from "./modelDefinitions";
 import { stripPath, toCamel, toPascal } from "./naming";
+import { getFieldTranslationKey } from "./translationUtils";
 
 const inForm = (field: ModelField) => {
   if (field.editingMode === "read only") {
     return false;
   }
-  if (field.type === "created at") {
+  if (["fixed enum value", "created at"].includes(field.type)) {
     return false;
   }
   if (field.isParent) {
@@ -118,19 +120,24 @@ const getFormFieldDefinitions = (item: ModelClass) => {
       case "char":
       case "text":
         def += ".string()";
+        def += field.optional === true ? ".optional()" : "";
         break;
       case "integer":
       case "order":
-        def += ".number()";
+        def += ".preprocess(Number, z.number())";
+        def += field.optional === true ? ".optional()" : "";
         break;
       case "foreign key":
         def += ".string()";
+        def += field.optional === true ? ".optional()" : "";
         break;
       case "date time":
         def += ".iso.datetime()";
+        def += field.optional === true ? ".optional()" : "";
         break;
       case "date":
         def += ".iso.date()";
+        def += field.optional === true ? ".optional()" : "";
         break;
     }
 
@@ -138,7 +145,7 @@ const getFormFieldDefinitions = (item: ModelClass) => {
       def += `.min(${field.minLength})`;
     }
     if (field.maxLength !== undefined) {
-      def += `.max(${field.minLength})`;
+      def += `.max(${field.maxLength})`;
     }
     def += ",";
     definitions.push(def);
@@ -189,44 +196,34 @@ const getDefaultValues = (item: ModelClass) => {
   return values;
 };
 
-const getNavigateToObject = (
-  urlMap: Map<
-    string,
-    { idName: string; newName: string; parentArgs: string[] }
-  >,
-  item: ModelClass
-) => {
+const getNavigateToObject = (classMap: ClassMap, item: ModelClass) => {
   return `    const navigateToObject = useCallback(
         (object: ${toPascal(item.name)}) => {
-            navigate(makeUrl(l.${urlMap.get(toPascal(item.name)).idName}, [${[
-    ...urlMap.get(toPascal(item.name)).parentArgs,
+            navigate(makeUrl(l.${classMap.get(toPascal(item.name)).idName}, [${[
+    ...classMap.get(toPascal(item.name)).parentArgs,
     "object",
   ].join(", ")}]))
         },
         [${[
           "navigate",
           "l",
-          ...urlMap.get(toPascal(item.name)).parentArgs,
+          ...classMap.get(toPascal(item.name)).parentArgs,
         ].join(", ")}]
     )`;
 };
 
-const getNavigateToParent = (
-  urlMap: Map<
-    string,
-    { idName: string; newName: string; parentArgs: string[] }
-  >,
-  item: ModelClass
-) => {
+const getNavigateToParent = (classMap: ClassMap, item: ModelClass) => {
   const parentField = item.fields.find((f) => f.isParent);
   return parentField
     ? `    const navigateToParent = useCallback(() => {
         navigate(makeUrl(l.${
-          urlMap.get(stripPath(parentField.to)).idName
-        }, [${urlMap.get(stripPath(parentField.to)).parentArgs.join(", ")}]))
-    }, [${["navigate", "l", ...urlMap.get(toPascal(item.name)).parentArgs].join(
-      ", "
-    )}])`
+          classMap.get(stripPath(parentField.to)).idName
+        }, [${classMap.get(stripPath(parentField.to)).parentArgs.join(", ")}]))
+    }, [${[
+      "navigate",
+      "l",
+      ...classMap.get(toPascal(item.name)).parentArgs,
+    ].join(", ")}])`
     : `    const navigateToParent = useCallback(() => {
         navigate(makeUrl(l.MODULES, []))
     }, [navigate, l])`;
@@ -247,10 +244,13 @@ const getOnSuccess = (item: ModelClass) => {
 };
 
 const getControl = (field: ModelField) => {
+  const type = ["order", "integer"].includes(field.type)
+    ? `type="number" `
+    : "";
   return `                            <FormControl>
-                                <Input {...field} data-cy="${toCamel(
-                                  field.name
-                                )}Input" />
+                                <Input ${type}{...field} data-cy="${toCamel(
+    field.name
+  )}Input" />
                             </FormControl>`;
 };
 const getFormGroups = (item: ModelClass) => {
@@ -264,9 +264,10 @@ const getFormGroups = (item: ModelClass) => {
                     name="${toCamel(field.name)}"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>{t("${toPascal(item.name)}.${toCamel(
-      field.name
-    )}")}</FormLabel>
+                            <FormLabel>{t("${getFieldTranslationKey(
+                              item,
+                              field
+                            )}")}</FormLabel>
 ${getControl(field)}
                             <FormMessage />
                         </FormItem>
@@ -277,10 +278,7 @@ ${getControl(field)}
 };
 
 export const writeForm = (
-  urlMap: Map<
-    string,
-    { idName: string; newName: string; parentArgs: string[] }
-  >,
+  classMap: ClassMap,
   moduleName: string,
   item: ModelClass
 ) => {
@@ -311,9 +309,9 @@ ${getDefaultValues(item).join(",\n")}
         },
     })
 
-${getNavigateToObject(urlMap, item)}
+${getNavigateToObject(classMap, item)}
 
-${getNavigateToParent(urlMap, item)}
+${getNavigateToParent(classMap, item)}
 
 ${getOnSuccess(item)}
 

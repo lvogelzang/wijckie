@@ -2,6 +2,10 @@ from enum import Enum
 
 from generate.definition.editing_mode import EditingMode
 from generate.definition.fields.base import BaseModelField
+from generate.definition.inputs.booleanInput import boolean_input, optional_input
+from generate.definition.inputs.charInput import char_input
+from generate.definition.inputs.enumInput import editing_mode_input, enum_input
+from generate.definition.inputs.translationsInput import field_translations_input
 from generate.definition.model_field_type import ModelFieldType
 from generate.utils.naming import strip_path, strip_path_except_last
 
@@ -14,9 +18,18 @@ class ForeignKey(BaseModelField):
     type = ModelFieldType.FOREIGN_KEY
 
     def __init__(
-        self, name, editing_mode, optional, to, on_delete, is_parent, in_table
+        self,
+        name,
+        translations,
+        editing_mode,
+        optional,
+        to,
+        on_delete,
+        is_parent,
+        in_table,
     ):
         self.name = name
+        self.translations = translations
         self.editing_mode = editing_mode
         self.optional = optional
         self.foreign_key_to = to  # path relative from wijckie_models (e.g: User or modules.dailyTodos.DailyTodosModule)
@@ -30,42 +43,25 @@ class ForeignKey(BaseModelField):
     # Generate definitions
 
     def generate(name, suggestions):
-        suggested_editing_mode = suggestions.get("editing_mode", "read write")
-        editing_mode = input(f'   Enter editing mode ("{suggested_editing_mode}"): ')
-        editing_mode = (
-            EditingMode(editing_mode)
-            if len(editing_mode) > 0
-            else EditingMode(suggested_editing_mode)
+        translations = field_translations_input(name, suggestions)
+        editing_mode = editing_mode_input(suggestions)
+        optional = optional_input(suggestions)
+        to = char_input(
+            "to", suggestions, "wijckie_models.modules.dailyTodos.DailyTodosModule"
         )
-
-        suggested_optional = suggestions.get("optional", "false")
-        optional = input('   Enter optional ("{suggested_optional}"): ')
-        optional = (
-            optional == "true" if len(optional) > 0 else suggested_optional == "true"
-        )
-
-        suggested_to = suggestions.get("to", None)
-        to = input(
-            '   Enter to (e.g: "wijckie_models.modules.dailyTodos.DailyTodosModule"): '
-            if suggested_to is None
-            else f'   Enter to ("{suggested_to}"): '
-        )
-        to = suggested_to if len(to) == 0 else to
-
-        on_delete = input('   Enter on_delete ("cascade"): ')
-        on_delete = OnDelete(on_delete) if len(on_delete) > 0 else OnDelete.CASCADE
-
-        is_parent = input('   Enter is_parent ("true"): ')
-        is_parent = is_parent == "true" if len(is_parent) > 0 else True
-
-        suggested_in_table = name not in ["module", "widget"]
-        in_table = input(
-            f'   Enter show in front-end tables ("{"true" if suggested_in_table else "false"}"): '
-        )
-        in_table = in_table == "true" if len(in_table) > 0 else suggested_in_table
+        on_delete = enum_input("on_delete", OnDelete, suggestions)
+        is_parent = boolean_input("is_parent", suggestions)
+        in_table = boolean_input("in_table", suggestions)
 
         return ForeignKey(
-            name, editing_mode, optional, to, on_delete, is_parent, in_table
+            name,
+            translations,
+            editing_mode,
+            optional,
+            to,
+            on_delete,
+            is_parent,
+            in_table,
         )
 
     # Serialize
@@ -73,6 +69,7 @@ class ForeignKey(BaseModelField):
     def from_dict(dict):
         return ForeignKey(
             dict.get("name"),
+            dict.get("translations"),
             EditingMode(dict.get("editingMode")),
             dict.get("optional"),
             dict.get("to", None),
@@ -84,6 +81,7 @@ class ForeignKey(BaseModelField):
     def to_dict(self):
         return {
             "name": self.name,
+            "translations": self.translations,
             "type": self.type.value,
             "editingMode": self.editing_mode.value,
             "optional": self.optional,

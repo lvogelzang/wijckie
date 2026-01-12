@@ -1,5 +1,7 @@
+import { ClassMap } from "./classMap";
 import { ModelClass } from "./modelDefinitions";
-import { stripPath, toCamel, toPascal, toSnake } from "./naming";
+import { stripPath, toCamel, toPascal } from "./naming";
+import { getFieldTranslationKey } from "./translationUtils";
 
 const getTypeImports = (item: ModelClass) => {
   const classes = [toPascal(item.name)];
@@ -43,21 +45,15 @@ const getQueryArgs = (item: ModelClass) => {
   return args;
 };
 
-const getColumns = (
-  urlMap: Map<
-    string,
-    { idName: string; newName: string; parentArgs: string[] }
-  >,
-  item: ModelClass
-) => {
+const getColumns = (classMap: ClassMap, item: ModelClass) => {
   const columns = [];
   for (const field of item.fields) {
     if (field.inTable) {
       if (field.isObjectLinkInTable) {
-        const urlItem = urlMap.get(toPascal(item.name));
+        const urlItem = classMap.get(toPascal(item.name));
         columns.push(`            {
                 id: "${toCamel(field.name)}",
-                header: t("${toCamel(item.name)}.${toSnake(field.name)}"),
+                header: t("${getFieldTranslationKey(item, field)}"),
                 cell: ({ row }) => (
                     <Link to={makeUrl(l.${urlItem.idName}, [${[
           ...urlItem.parentArgs,
@@ -70,7 +66,7 @@ const getColumns = (
       } else {
         columns.push(`{
                 id: "${toCamel(field.name)}",
-                header: t("${toCamel(item.name)}.${toSnake(field.name)}"),
+                header: t("${getFieldTranslationKey(item, field)}"),
                 cell: ({ row }) => <div>{row.original.${toCamel(
                   field.name
                 )}}</div>,
@@ -105,13 +101,7 @@ const getButtonDependencies = (item: ModelClass) => {
   return deps;
 };
 
-export const writeTable = (
-  urlMap: Map<
-    string,
-    { idName: string; newName: string; parentArgs: string[] }
-  >,
-  item: ModelClass
-) => {
+export const writeTable = (classMap: ClassMap, item: ModelClass) => {
   const IMPORTS = [
     `import { use${toPascal(item.pluralName)}List } from "@/api/endpoints/api"`,
     getTypeImports(item),
@@ -144,7 +134,7 @@ const ${toPascal(item.name)}Table = ({ ${PROP_LIST} }: Props) => {
 
     const columns = useMemo((): ColumnDef<${toPascal(item.name)}>[] => {
         return [
-            ${getColumns(urlMap, item)}
+            ${getColumns(classMap, item)}
         ]
     }, [${getColumnDeps(item).join(", ")}])
 
@@ -154,8 +144,10 @@ const ${toPascal(item.name)}Table = ({ ${PROP_LIST} }: Props) => {
                 id: "new${toPascal(item.name)}",
                 label: t("Main.new"),
                 link: makeUrl(l.${
-                  urlMap.get(toPascal(item.name)).newName
-                }, [${urlMap.get(toPascal(item.name)).parentArgs.join(", ")}]),
+                  classMap.get(toPascal(item.name)).newName
+                }, [${classMap
+    .get(toPascal(item.name))
+    .parentArgs.join(", ")}]),
             },
         ]
     }, [${getButtonDependencies(item).join(", ")}])
@@ -163,7 +155,7 @@ const ${toPascal(item.name)}Table = ({ ${PROP_LIST} }: Props) => {
     return (
         <Table
             id="${toPascal(item.pluralName)}Table"
-            title={t("${toPascal(item.name)}.plural_title")}
+            title={t("${toPascal(item.name)}.plural_name")}
             titleStyle={titleStyle}
             columns={columns}
             buttons={buttons}

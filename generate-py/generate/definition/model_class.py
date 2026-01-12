@@ -10,6 +10,7 @@ class ModelClass:
         short_name,
         plural_name,
         short_plural_name,
+        translations,
         fields,
         ordering,
         initial_query_filters,
@@ -19,6 +20,7 @@ class ModelClass:
         self.short_name = short_name
         self.plural_name = plural_name
         self.short_plural_name = short_plural_name
+        self.translations = translations
         self.fields = fields
         self.ordering = ordering
         self.initial_query_filters = initial_query_filters
@@ -32,6 +34,7 @@ class ModelClass:
             short_name=dict["shortName"],
             plural_name=dict["pluralName"],
             short_plural_name=dict["shortPluralName"],
+            translations=dict["translations"],
             fields=list(map(lambda d: ModelFieldFactory.from_dict(d), dict["fields"])),
             ordering=dict["ordering"],
             initial_query_filters=dict["initialQueryFilters"],
@@ -44,6 +47,7 @@ class ModelClass:
             "shortName": self.short_name,
             "pluralName": self.plural_name,
             "shortPluralName": self.short_plural_name,
+            "translations": self.translations,
             "fields": list(map(lambda f: f.to_dict(), self.fields)),
             "ordering": self.ordering,
             "initialQueryFilters": self.initial_query_filters,

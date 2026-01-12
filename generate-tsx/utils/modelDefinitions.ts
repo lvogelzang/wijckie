@@ -14,8 +14,10 @@ export type EditingMode = "read only" | "read write" | "read write once";
 
 export interface ModelField {
   name: string;
+  translations?: {};
   type: ModelFieldType;
   editingMode?: EditingMode;
+  optional?: boolean;
   to?: string;
   onDelete?: string;
   isParent?: boolean;
@@ -32,6 +34,7 @@ export interface ModelClass {
   shortName: string;
   pluralName: string;
   shortPluralName: string;
+  translations?: {};
   fields: ModelField[];
   ordering: string[];
   initialQueryFilters: string[];
