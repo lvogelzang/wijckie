@@ -10,7 +10,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^7.1.0",
+    "@fortawesome/pro-light-svg-icons": "^7.1.0",
+    "@fortawesome/react-fontawesome": "^3.1.1",
+    "@fortawesome/sharp-regular-svg-icons": "^7.1.0",
+    "@fortawesome/sharp-solid-svg-icons": "^7.1.0",
     "@github/webauthn-json": "^2.1.1",
+    "@headlessui/react": "^2.2.9",
     "@hookform/resolvers": "^5.2.2",
     "@popperjs/core": "^2.11.8",
     "@radix-ui/react-alert-dialog": "^1.1.15",
@@ -32,7 +38,6 @@
     "clsx": "^2.1.1",
     "i18next": "^25.2.1",
     "js-cookie": "^3.0.5",
-    "lucide-react": "^0.544.0",
     "luxon": "^3.7.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",

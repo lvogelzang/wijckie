@@ -1,8 +1,9 @@
 import * as SelectPrimitive from "@radix-ui/react-select"
-import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from "lucide-react"
 import * as React from "react"
 
 import { cn } from "@/lib/utils"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faCheck, faChevronDoubleDown, faChevronDown, faChevronUp } from "@fortawesome/sharp-solid-svg-icons"
 
 function Select({ ...props }: React.ComponentProps<typeof SelectPrimitive.Root>) {
     return <SelectPrimitive.Root data-slot="select" {...props} />
@@ -36,7 +37,7 @@ function SelectTrigger({
         >
             {children}
             <SelectPrimitive.Icon asChild>
-                <ChevronDownIcon className="size-4 opacity-50" />
+                <FontAwesomeIcon icon={faChevronDown} />
             </SelectPrimitive.Icon>
         </SelectPrimitive.Trigger>
     )
@@ -81,7 +82,7 @@ function SelectItem({ className, children, ...props }: React.ComponentProps<type
         >
             <span className="absolute right-2 flex size-3.5 items-center justify-center">
                 <SelectPrimitive.ItemIndicator>
-                    <CheckIcon className="size-4" />
+                    <FontAwesomeIcon icon={faCheck} />
                 </SelectPrimitive.ItemIndicator>
             </span>
             <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
@@ -96,7 +97,7 @@ function SelectSeparator({ className, ...props }: React.ComponentProps<typeof Se
 function SelectScrollUpButton({ className, ...props }: React.ComponentProps<typeof SelectPrimitive.ScrollUpButton>) {
     return (
         <SelectPrimitive.ScrollUpButton data-slot="select-scroll-up-button" className={cn("flex cursor-default items-center justify-center py-1", className)} {...props}>
-            <ChevronUpIcon className="size-4" />
+            <FontAwesomeIcon icon={faChevronUp} />
         </SelectPrimitive.ScrollUpButton>
     )
 }
@@ -104,7 +105,7 @@ function SelectScrollUpButton({ className, ...props }: React.ComponentProps<type
 function SelectScrollDownButton({ className, ...props }: React.ComponentProps<typeof SelectPrimitive.ScrollDownButton>) {
     return (
         <SelectPrimitive.ScrollDownButton data-slot="select-scroll-down-button" className={cn("flex cursor-default items-center justify-center py-1", className)} {...props}>
-            <ChevronDownIcon className="size-4" />
+            <FontAwesomeIcon icon={faChevronDoubleDown} />
         </SelectPrimitive.ScrollDownButton>
     )
 }

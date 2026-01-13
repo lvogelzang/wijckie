@@ -1,5 +1,4 @@
 import { useAuth } from "@/auth/useAuth"
-import LanguageButton from "@/components/navbar/LanguageButton"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle } from "@/components/ui/navigation-menu"
 import {
@@ -21,8 +20,8 @@ import {
 import { makeUrl } from "@/helpers/LinkTreeHelper"
 import useLinkTree from "@/hooks/UseLinkTree"
 import { cn } from "@/lib/utils"
-import { languageOptions } from "@/types/UserLanguageType"
-import { GalleryVerticalEnd, Languages } from "lucide-react"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faRocketLaunch } from "@fortawesome/sharp-solid-svg-icons"
 import { useTranslation } from "react-i18next"
 import { Link } from "react-router-dom"
 
@@ -48,7 +47,7 @@ const NavBar = () => {
                             <SidebarMenuButton size="lg" asChild>
                                 <a href="#">
                                     <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-                                        <GalleryVerticalEnd className="size-4" />
+                                        <FontAwesomeIcon icon={faRocketLaunch} />
                                     </div>
                                     <div className="flex flex-col gap-0.5 leading-none">
                                         <span className="font-medium">Wijckie</span>
@@ -103,22 +102,6 @@ const NavBar = () => {
                                     {t("NavBar.settings")}
                                 </Link>
                             </SidebarMenuButton>
-                        </SidebarMenuItem>
-                        <SidebarMenuItem>
-                            <DropdownMenu>
-                                <DropdownMenuTrigger asChild>
-                                    <SidebarMenuButton size="lg" className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground">
-                                        <Languages className="size-4" />
-                                    </SidebarMenuButton>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg" side={isMobile ? "bottom" : "right"} align="end" sideOffset={4}>
-                                    {languageOptions.map((language) => (
-                                        <DropdownMenuItem key={language}>
-                                            <LanguageButton language={language} />
-                                        </DropdownMenuItem>
-                                    ))}
-                                </DropdownMenuContent>
-                            </DropdownMenu>
                         </SidebarMenuItem>
                         <SidebarMenuItem>
                             <DropdownMenu>
@@ -205,20 +188,6 @@ const NavBar = () => {
                         <Link to={makeUrl(l.MODULES, [])} className={navigationMenuTriggerStyle()}>
                             {t("NavBar.settings")}
                         </Link>
-                    </NavigationMenuItem>
-                    <NavigationMenuItem>
-                        <NavigationMenuTrigger>
-                            <Languages className="size-4" />
-                        </NavigationMenuTrigger>
-                        <NavigationMenuContent>
-                            <div className="grid p-2">
-                                {languageOptions.map((language) => (
-                                    <NavigationMenuLink key={language} asChild>
-                                        <LanguageButton language={language} />
-                                    </NavigationMenuLink>
-                                ))}
-                            </div>
-                        </NavigationMenuContent>
                     </NavigationMenuItem>
                     {user ? (
                         <NavigationMenuItem>
