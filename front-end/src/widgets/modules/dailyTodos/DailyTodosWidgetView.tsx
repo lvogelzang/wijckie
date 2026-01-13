@@ -34,7 +34,7 @@ const DailyTodosWidgetView = ({ widget }: Props) => {
     }, [options, isFetchingOptions, items, isFetchingItems, date])
 
     return (
-        <div className="bg-amber-50 relative z-10 break-inside-avoid" data-cy="dailyTodosWidget">
+        <div className="bg-amber-50 relative break-inside-avoid" data-cy="dailyTodosWidget">
             <DateSelector date={date} setDate={setDate} />
             {widget.name}
             {data?.todos.map((todo) => <DailyTodoView key={`${data.date.toISODate()}_${todo.option.id}`} option={todo.option} date={data.date} initialItem={todo.item} />)}

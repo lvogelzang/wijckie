@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils"
 import { cva, type VariantProps } from "class-variance-authority"
 import type React from "react"
 
-const pageVariants = cva("relative w-full pt-[80px] mb-[-60px] pb-[60px]", {
+const pageVariants = cva("relative w-full", {
     variants: {
         variant: {
             anonymous: "bg-[url('/gradient-1.svg')] flex flex-col items-center justify-center",
